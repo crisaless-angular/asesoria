@@ -1,0 +1,72 @@
+﻿@model Web.Data.Cliente
+
+<div class="container page pb-3">
+
+    <br />
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+    <br />
+
+    <table class="table nowrap" id="datatableIndexClientes" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">Código contabilidad</th>
+                <th scope="col">Nombre fiscal</th>
+                <th scope="col">Nombre comercial</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Fax</th>
+                <th scope="col">Móvil</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">N.I.F.</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="IndexdatosClientes">
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        window.onload = function () {
+
+            $.post("Clientes/ObtenerClientesIndex/", function (data) {
+
+                 debugger;
+                let BodyTable = document.getElementById("IndexdatosClientes");
+                let contenido = "";
+
+                $(data).each(function (index, items) {
+
+                    console.log(items);
+                
+                    contenido += "<tr>";
+                    contenido += "<td>" + items.codigoContabilidad + "</td>";
+                    contenido += "<td>" + items.nombreFiscal + "</td>";
+                    contenido += "<td>" + items.nombreComercial + "</td>";
+                    contenido += "<td>" + items.telefono + "</td>";
+                    contenido += "<td>" + items.fax + "</td>";
+                    contenido += "<td>" + items.movil + "</td>";
+                    contenido += "<td>" + items.email + "</td>";
+                    contenido += "<td>" + items.idIdentificacionFiscal + "</td>";
+                    contenido += "<td class='col-md-2'><button class='btn btn-info'>Detalle <span style='font-size: 20px !important';>>>></span></button></td>";
+                    contenido += "</tr>";
+                      
+                });
+
+                BodyTable.innerHTML = contenido;
+                IdiomaTabla("#datatableIndexClientes");
+                $('#datatableIndexClientes').DataTable();
+
+            });
+
+
+        }
+    </script>
+
+}

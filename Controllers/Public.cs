@@ -14,8 +14,7 @@ namespace Web.Controllers
         }
         public string GetLogotipo()
         {
-            return "";
-            //return _unitofwork.EmpresaRepository.GetEntity(variables.IdEmpresa).Logotipo;
+            return _unitofwork.EmpresaRepository.GetEntity(variables.IdEmpresa).Logotipo;
         }
     }
 }

@@ -9,8 +9,9 @@ namespace Web.Business.Services
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AsesoriaContext _context;
-        public IGenericRepository<Cliente> _clienterepository;
         public IGenericRepository<AspNetUser> _Usuarios;
+        public IGenericRepository<Empresa> _Empresa;
+        public IGenericRepository<Cliente> _Cliente;
 
         public UnitOfWork(AsesoriaContext context)
         {
@@ -29,14 +30,26 @@ namespace Web.Business.Services
 
         }
 
+        public IGenericRepository<Empresa> EmpresaRepository
+        {
+            get
+            {
+                if (this._Empresa == null)
+                    this._Empresa = new GenericRepository<Empresa>(_context);
+
+                return _Empresa;
+            }
+
+        }
+
         public IGenericRepository<Cliente> ClienteRepository
         {
             get
             {
-                if (this._clienterepository == null)
-                    this._clienterepository = new GenericRepository<Cliente>(_context);
+                if (this._Cliente == null)
+                    this._Cliente = new GenericRepository<Cliente>(_context);
 
-                return _clienterepository;
+                return _Cliente;
             }
 
         }

@@ -24,6 +24,11 @@ namespace Web.Business.Genericrepository
             return _dbSet.ToList();
         }
 
+        public async Task<IQueryable<TEntity>> GetAllAsync()
+        {
+            return (IQueryable<TEntity>)await _dbSet.ToListAsync();
+        }
+
         public TEntity GetEntity(int id)
         {
             return _dbSet.Find(id);

@@ -37,7 +37,7 @@ namespace BA002.Web.Controllers
 
         public string GetLogo()
         {
-            return ""; //_unitofwork.EmpresaRepository.GetEntity(variables.IdEmpresa).Logo;
+            return _unitofwork.EmpresaRepository.GetEntity(variables.IdEmpresa).Logo;
         }
 
         public IActionResult Portada()

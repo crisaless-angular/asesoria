@@ -29,6 +29,7 @@ namespace Web.Data
         public virtual DbSet<ClienteCuenta> ClienteCuentas { get; set; }
         public virtual DbSet<ClienteDireccione> ClienteDirecciones { get; set; }
         public virtual DbSet<ClienteEmail> ClienteEmails { get; set; }
+        public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<EstadosTicket> EstadosTickets { get; set; }
         public virtual DbSet<Mandato> Mandatos { get; set; }
         public virtual DbSet<NotaArchivo> NotaArchivos { get; set; }
@@ -328,6 +329,30 @@ namespace Web.Data
                     .WithMany(p => p.ClienteEmails)
                     .HasForeignKey(d => d.IdCliente)
                     .HasConstraintName("FK_CLIENTE_EMAILS_CLIENTES");
+            });
+
+            modelBuilder.Entity<Empresa>(entity =>
+            {
+                entity.HasKey(e => e.IdEmpresa)
+                    .HasName("PK_Empresas");
+
+                entity.ToTable("Empresa");
+
+                entity.Property(e => e.Cif)
+                    .HasMaxLength(50)
+                    .HasColumnName("CIF");
+
+                entity.Property(e => e.Email).HasMaxLength(500);
+
+                entity.Property(e => e.Logo).HasMaxLength(50);
+
+                entity.Property(e => e.Logotipo).HasMaxLength(50);
+
+                entity.Property(e => e.Nombre).HasMaxLength(50);
+
+                entity.Property(e => e.TelefonoFijo).HasMaxLength(50);
+
+                entity.Property(e => e.TelefonoMovil).HasMaxLength(50);
             });
 
             modelBuilder.Entity<EstadosTicket>(entity =>
