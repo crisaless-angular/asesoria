@@ -1,0 +1,359 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+:root {
+    --blanco: #ffffff;
+    --negro: #000000;
+    --azul: #124B9D;
+    --amarillo: #F8B500;
+    --naranjasolido: #f8b500;
+    --grisbody: #F2F2F2;
+    --azulbotones: #134699;
+    --verde: #158F46;
+    --amarilointenso: #ffae00;
+}
+
+body {
+    background: var(--grisbody) !important;
+    box-sizing: border-box;
+}
+
+.page {
+    background: var(--blanco) !important;
+    height: auto;
+}
+
+h1 {
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+}
+
+input, select {
+    background: rgba(183, 213, 212, 0.3) !important;
+}
+
+input:focus {
+    border-color: rgba(183, 213, 212, 0.3) !important;
+}
+
+.btn {
+    border-radius: 7px !important;
+    width: 200px !important;
+    padding: 3px !important;
+    font-size: 18px !important;
+    color: var(--blanco) !important;
+}
+
+.btn:hover {
+    text-decoration: underline !important;
+}
+
+input:disabled, input:read-only {
+    background: rgba(72, 130, 134, 0.3) !important;
+}
+
+.primarybuttons {
+    background-color: #305252 !important;
+    border-color: #305252 !important;
+}
+
+.sucessbuttons {
+    background: var(--verde) !important;
+    border-color: var(--verde) !important;
+}
+
+.addbuttons {
+    background: #E71D36 !important;
+    border-color: #E71D36 !important;
+}
+
+
+.card-header {
+    background: var(--amarillo) !important;
+}
+
+thead {
+    background: var(--naranjasolido) !important;
+    color: var(--blanco);
+}
+
+.navbar{
+    background: var(--azul) !important;
+}
+
+.dropdown-menu {
+    background-color: var(--azul) !important;
+}
+
+.dropdown-menu a:hover {
+    text-decoration: underline !important;
+}
+
+.nav-link, .nav-link.active{
+    color: var(--negro) !important;
+}
+
+.navbar a {
+    color: var(--blanco) !important;
+}
+
+.salir {
+    color: var(--blanco) !important;
+    border: solid var(--blanco) 1px !important;
+}
+
+.salir:hover {
+    text-decoration: none !important;
+    border: solid var(--blanco) 2px !important;
+}
+
+.btn-info {
+    background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(9,9,121,1) 0%, rgba(0,128,201,1) 100%);
+    border: solid 1px var(--azulbotones) !important;
+}
+
+input[type=submit] {
+    background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(9,9,121,1) 0%, rgba(0,128,201,1) 100%);
+    border: solid 1px var(--azulbotones) !important;
+}
+
+.btn-info:hover {
+    text-decoration: none !important;
+}
+
+.btn-primary:hover {
+    text-decoration: none !important;
+}
+
+.btn-info > span {
+    font-size: 14px !important;
+    transition: font-weight 0.5s !important;
+}
+
+.btn-info:hover > span {
+    font-weight: bold !important;
+}
+
+.btn-primary > span {
+    font-size: 14px !important;
+    transition: font-weight 0.5s !important;
+}
+
+.btn-primary:hover > span {
+    font-weight: bold !important;
+}
+
+/*Poratda*/
+.portada > .row:not(:first-child), .portada > .row > .col {
+    border: 2px solid var(--azul);
+}
+
+.logo {
+    width: 20%;
+    margin: 0 auto;
+}
+
+.portada > .row {
+    justify-content: center;
+    padding: 10px;
+}
+
+.col {
+    height: 250px;
+    margin: 15px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.7s;
+}
+
+    .col:not(:last-child):hover {
+        opacity: 1;
+    }
+
+    .col > h3 > span {
+        color: var(--amarilointenso);
+        font-family: 'Bebas Neue', cursive;        
+        font-weight: bolder;
+    }
+
+.title {
+    background: var(--azul);
+    color: var(--blanco);
+    margin-top: 15px;
+}
+
+.facturas > .col:nth-child(1) {
+    background: url(../images/Facturas.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.facturas > .col:nth-child(2) {
+    background: url(../images/crearfactura.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.facturas > .col:nth-child(3) {
+    background: url(../images/informes.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.presupuestos > .col:nth-child(1) {
+    background: url(../images/todopresupuestos.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.presupuestos > .col:nth-child(2) {
+    background: url(../images/crearpresupuesto.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.presupuestos > .col:nth-child(3) {
+    background: url(../images/informespresupuestos.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.clientes > .col:nth-child(1) {
+    background: url(../images/clientes.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.clientes > .col:nth-child(2) {
+    background: url(../images/crearcliente.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+.clientes > .col:nth-child(3) {
+    background: url(../images/Informesclientes.png) no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: var(--blanco);
+}
+
+/*###########################*/
+/* Login */
+/*###########################*/
+.login {
+    width: 400px;
+    margin: 16px auto;
+    font-size: 16px;
+}
+
+    /* Reset top and bottom margins from certain elements */
+    .login-header,
+    .login p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+/* The triangle form is achieved by a CSS hack */
+.login-triangle {
+    width: 0;
+    margin-right: auto;
+    margin-left: auto;
+    border: 12px solid transparent;
+    border-bottom-color: var(--azul);
+}
+
+.login-header {
+    background: var(--azul);
+    padding: 20px;
+    font-size: 1.4em;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.login-container {
+    background: #ebebeb;
+    padding: 12px;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.login p {
+    padding: 12px;
+}
+
+.login input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    padding: 16px;
+    outline: 0;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+
+    .login input[type="email"],
+    .login input[type="password"] {
+        background: #fff;
+        border-color: #bbb;
+        color: #555;
+    }
+
+        /* Text fields' focus effect */
+        .login input[type="email"]:focus,
+        .login input[type="password"]:focus {
+            border-color: #888;
+        }
+
+    .login input[type="submit"] {
+        background: var(--azul);
+        border-color: transparent;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        .login input[type="submit"]:hover {
+            background: #17c;
+        }
+
+        /* Buttons' focus effect */
+        .login input[type="submit"]:focus {
+            border-color: #05a;
+        }
+
+/*###########################*/
+/* Login */
+/*###########################*/
+
+
+
+
+

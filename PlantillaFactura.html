@@ -1,0 +1,62 @@
+<div style="max-width: 1300px; margin:0 auto; width: 97%; box-sizing: content-box; padding: 0.5em; font-size:18px;">
+
+    <div style="margin-top: 10px; width: 100%; float: left; text-align: center; padding: 0.5em;">
+        <!-- <img src="@@LogoEmpresa@@" alt="@Model.empresa.Nombre" width="150" height="100" /> -->
+    </div>
+
+    <div style="margin-top: 25px; width: 100%; float: left; padding: 0.5em;">
+
+        <div style="width: 40%; float: left; padding: 0.5em; overflow:hidden;">
+            <span style="width: 100%; float: left; padding: 0.5em; ">@@Nombre@@ <br /> @Model.empresa.Email <br /> @Model.empresa.TelefonoMovil <br /> @Model.empresa.Direccion</span>
+        </div>
+
+        <div style="float: right; width: 40%; padding: 0.5em; overflow: hidden;">
+            <span style="width: 100%; float: left; padding: 0.5em; ">@Model.Nombre <br /> @Model.Direccion</span>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 10px; width: 100%; float: left; padding: 0.5em;">
+
+        <div style="width: 100%; float: left; min-height: 50%;">
+
+            <table style="width: 100%; float: left;">
+                <thead>
+                    <tr>
+                        <th style="border-top: 1px solid; border-bottom: 2px solid;">Descripción del trabajo</th>
+                        <th style="border-top: 1px solid; border-bottom: 2px solid;">Cantidad</th>
+                        <th style="border-top: 1px solid; border-bottom: 2px solid;">Importe</th>
+                        <th style="border-top: 1px solid; border-bottom: 2px solid;">SubTotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Web.Data.Concepto concepto in Model.Conceptos)
+                        {
+                            <tr>
+                                <td style="width: 65%; max-width: 40%; float: left; text-align:left;">@concepto.Descripcion</td>
+                                <td style="width: 10%; float: left; text-align: center; ">@concepto.Cantidad</td>
+                                <td style="width: 10%; float: left; text-align: center; ">@concepto.Importe</td>
+                                <td style="width: 10%; float: left; text-align: center;">@concepto.SubTotal</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+
+    <div style="margin-top: 5px; width: 100%; float: left; padding: 0.5em;">
+
+        <div style="border-top: 1px solid; border-bottom: 2px solid; float: left; width: 30%; padding: 0.5em; text-align: center;">Base: @Model.Importe€</div>
+        <div style="border-top: 1px solid; border-bottom: 2px solid; float: left; width: 30%; margin: 0 5px 0 5px; padding: 0.5em; text-align: center; ">Iva: @decimal.Parse((Math.Truncate(Model.Importe * decimal.Parse(Model.Iva))/100).ToString())€</div>
+        <div style="border-top: 1px solid; border-bottom: 2px solid; float: left; width: 30%; padding: 0.5em; text-align: right;"><b>Total: </b>@decimal.Parse((Math.Truncate(Model.Importe * decimal.Parse(Model.Iva))/100 + Model.Importe).ToString())€</div>
+
+    </div>
+
+    <div style="margin-top: 10px; width: 30%; float: left; padding: 0.5em;">
+        <div style="border-bottom: 1px solid; padding: 0.5em; text-align:left;">Forma de pago: <b>@Model.FormaPago</b></div>
+    </div>
+
+</div>

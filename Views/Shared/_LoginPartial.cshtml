@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              @User.Identity.Name
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Cambiar contraseña</a>
+               <form class="form-inline col-sm-3" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" id="BtnSalir" class="nav-link btn btn-link salir">Salir</button>
+               </form>
+              <form id="formexitCrear" class="form-inline col-sm-3" style="display:none;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" id="BtnSalirCrear" class="nav-link btn btn-link salir">Salir</button>
+              </form>
+            </div>
+        </li>
+       
+    }
+    else
+    {
+        @*<li class="nav-item">
+            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Acceder</a>
+        </li>*@
+    }
+</ul>

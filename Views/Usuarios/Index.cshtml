@@ -1,0 +1,63 @@
+﻿@{
+
+}
+
+<div class="container page pb-3">
+
+    <br />
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+    <br />
+
+    <table class="table nowrap" id="datatableIndexusuarios" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">Usuarios de acceso</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Email</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="IndexdatosUsuarios">
+        </tbody>
+    </table>
+
+</div>
+
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+
+    window.onload = function () {
+
+        $.get("Usuarios/QueryObtenerUsuariosIndex/", function (data) {
+
+            let BodyTable = document.getElementById("IndexdatosUsuarios");
+            let contenido = "";
+
+            $(data).each(function (index, items) {
+                console.log(items);
+                
+                contenido += "<tr>";
+                contenido += "<td>" + items.userName + "</td>";
+                contenido += "<td>" + items.nombre + "</td>";
+                contenido += "<td>" + items.email + "</td>";
+                contenido += "<td class='col-md-2'><button class='btn btn-info'>Detalle <span style='font-size: 20px !important';>>>></span></button></td>";
+                contenido += "</tr>";
+                      
+            });
+
+            BodyTable.innerHTML = contenido;
+            IdiomaTabla("#datatableIndexusuarios");
+            $('#datatableIndexusuarios').DataTable();
+
+        });
+
+
+    }
+</script>
+
+}
