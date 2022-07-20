@@ -12,10 +12,23 @@ namespace Web.Business.Services
         public IGenericRepository<AspNetUser> _Usuarios;
         public IGenericRepository<Empresa> _Empresa;
         public IGenericRepository<Cliente> _Cliente;
+        public IGenericRepository<ClienteEmail> _ClienteEmail;
 
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
+        }
+
+        public IGenericRepository<ClienteEmail> ClienteEmailRepository
+        {
+            get
+            {
+                if (this._ClienteEmail == null)
+                    this._ClienteEmail = new GenericRepository<ClienteEmail>(_context);
+
+                return _ClienteEmail;
+            }
+
         }
 
         public IGenericRepository<AspNetUser> UsuariosRepository

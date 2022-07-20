@@ -42,6 +42,7 @@ namespace Web.Data
         public bool? CesionDatos { get; set; }
         public bool? EnviooComunicaciones { get; set; }
         public string CuentaContableTresDigitos { get; set; }
+        public string IdentificacionFiscal { get; set; }
 
         public virtual TipoIdentificacionFiscal IdIdentificacionFiscalNavigation { get; set; }
         public virtual Paise IdPaisNavigation { get; set; }

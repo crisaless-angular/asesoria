@@ -7,7 +7,6 @@ namespace Web.Business.Interfaces
     public interface IGenericRepository<TEntity> where TEntity : class
     {
         List<TEntity> GetAll();
-        Task<IQueryable<TEntity>> GetAllAsync();
         TEntity GetEntity(int id);
         void Add(TEntity Object);
         void Update(TEntity Object);

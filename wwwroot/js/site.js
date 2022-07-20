@@ -178,10 +178,6 @@ $(document).ready(function () {
 
     });
 
-    //Logos
-    $.get("../../Public/GetLogotipo/", function (data) {
-        document.getElementById("logotipo").src = `${window.location.origin}/images/${data}`;
-    });
 
 });
 

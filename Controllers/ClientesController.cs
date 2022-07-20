@@ -24,9 +24,27 @@ namespace Web.Views.Clientes
         }
 
         [HttpPost]
-        public async Task<IQueryable<Cliente>> ObtenerClientesIndex()
+        public List<ClientesViewModel> ObtenerClientesIndex()
         {
-            return await _UnitOfWork.ClienteRepository.GetAllAsync();
+            return (from clientes in this._UnitOfWork.ClienteRepository.GetAll()
+                            join EmailCliente in this._UnitOfWork.ClienteEmailRepository.GetAll() 
+                            on clientes.CodigoCliente equals EmailCliente.IdCliente
+                            where EmailCliente.Activo == true
+
+                            select new ClientesViewModel()
+                            {
+                                CODIGO_CONTABILIDAD = clientes.CodigoContabilidad,
+                                NOMBRE_FISCAL = clientes.NombreFiscal,
+                                NOMBRE_COMERCIAL = clientes.NombreComercial,
+                                TELEFONO = clientes.Telefono,
+                                FAX = clientes.Fax,
+                                MOVIL = clientes.Movil,
+                                EMAILPRINCIPAL = EmailCliente.Email,
+                                IDENTIFICACION_FISCAL = clientes.IdentificacionFiscal
+                            }
+
+                            ).ToList();
+
         }
 
     }

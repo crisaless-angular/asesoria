@@ -1,4 +1,5 @@
 ﻿@model Web.Data.Cliente
+@using Web.Business
 
 <div class="container page pb-3">
 
@@ -32,40 +33,8 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-
         window.onload = function () {
-
-            $.post("Clientes/ObtenerClientesIndex/", function (data) {
-
-                 debugger;
-                let BodyTable = document.getElementById("IndexdatosClientes");
-                let contenido = "";
-
-                $(data).each(function (index, items) {
-
-                    console.log(items);
-                
-                    contenido += "<tr>";
-                    contenido += "<td>" + items.codigoContabilidad + "</td>";
-                    contenido += "<td>" + items.nombreFiscal + "</td>";
-                    contenido += "<td>" + items.nombreComercial + "</td>";
-                    contenido += "<td>" + items.telefono + "</td>";
-                    contenido += "<td>" + items.fax + "</td>";
-                    contenido += "<td>" + items.movil + "</td>";
-                    contenido += "<td>" + items.email + "</td>";
-                    contenido += "<td>" + items.idIdentificacionFiscal + "</td>";
-                    contenido += "<td class='col-md-2'><button class='btn btn-info'>Detalle <span style='font-size: 20px !important';>>>></span></button></td>";
-                    contenido += "</tr>";
-                      
-                });
-
-                BodyTable.innerHTML = contenido;
-                IdiomaTabla("#datatableIndexClientes");
-                $('#datatableIndexClientes').DataTable();
-
-            });
-
-
+            CargarClientes("@variables.MsgNodata");
         }
     </script>
 

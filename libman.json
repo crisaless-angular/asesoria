@@ -18,6 +18,11 @@
         "umd/popper.min.js",
         "umd/popper.min.js.map"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "gulp@4.0.2",
+      "destination": "wwwroot/js/gulp/"
     }
   ]
 }

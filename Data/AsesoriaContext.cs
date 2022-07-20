@@ -39,6 +39,7 @@ namespace Web.Data
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
 
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
@@ -198,6 +199,10 @@ namespace Web.Data
                 entity.Property(e => e.IdIdentificacionFiscal).HasColumnName("ID_IDENTIFICACION_FISCAL");
 
                 entity.Property(e => e.IdPais).HasColumnName("ID_PAIS");
+
+                entity.Property(e => e.IdentificacionFiscal)
+                    .HasMaxLength(200)
+                    .HasColumnName("IDENTIFICACION_FISCAL");
 
                 entity.Property(e => e.MensajeEmergente)
                     .HasMaxLength(300)
