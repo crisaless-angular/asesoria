@@ -47,6 +47,12 @@ namespace Web.Views.Clientes
 
         }
 
+        public IActionResult Crear()
+        {
+            ViewData["Title"] = "Crear un cliente";
+            return View();
+        }
+
     }
 
     

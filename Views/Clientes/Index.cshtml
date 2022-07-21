@@ -1,7 +1,11 @@
 ﻿@model Web.Data.Cliente
 @using Web.Business
 
-<div class="container page pb-3">
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid w-75 p-3 page">
 
     <br />
     <h1>@ViewData["Title"]</h1>
@@ -33,9 +37,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        window.onload = function () {
+        $( document ).ready(function() {
             CargarClientes("@variables.MsgNodata");
-        }
+        });
     </script>
 
 }
