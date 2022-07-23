@@ -161,7 +161,6 @@ input[type=submit] {
 
 .col {
     height: 250px;
-    margin: 15px;
     text-align: center;
     cursor: pointer;
     opacity: 0.4;
@@ -209,6 +208,10 @@ input[type=submit] {
     -o-background-size: cover;
     background-size: cover;
     color: var(--blanco);
+}
+
+.clientes > .col:not(:last-child){
+    margin-right: 15px;
 }
 
 /*###########################*/
