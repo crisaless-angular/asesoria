@@ -224,12 +224,29 @@ function correcto(text) {
     })
 }
 
+function incorrecto(text) {
+    Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: text,
+        showConfirmButton: false,
+        timer: 2000
+    })
+}
+
 function PuntoPorComa(valor) {
     return valor.replace('.', ',');
 }
 
 function UpperCase(valor) {
     return valor.toUpperCase();
+}
+
+function ValidateEmail(email) {
+
+    let regexEmail = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+    let result = regexEmail.test(email);
+    return result;
 }
 
 

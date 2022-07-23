@@ -318,6 +318,12 @@ thead {
     outline: none !important;
 }
 
+/*Validations*/
+.ValidationFail {
+    color: var(--rojo);
+    font-size: 12px;
+    font-weight: bold;
+}
 
 
 

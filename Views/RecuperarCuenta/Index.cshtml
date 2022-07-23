@@ -23,18 +23,58 @@
 
         </div>
         
-        <form class="row">
+        <div class="row" id="formRecuperarContraseña">
 
             <div class="inputgroup">
-                <input type="email" class="input" id="EmailRecuperar" name="Email" placeholder="mail@mail.es" autocomplete="off">
-                <input class="buttonsubmit" value="Recuperar" type="submit">
+                <input type="email" class="input" id="EmailRecuperar" name="Email" placeholder="mail@mail.es" autocomplete="off" required>
+                <input class="buttonsubmit" value="Recuperar" id="BtnEmailRecuperar" type="submit">
             </div>
 
-        </form>
+        </div>
 
     </div>
 
 </div>
+
+@section Scripts {
+    
+    <script>
+        
+        $("#BtnEmailRecuperar").on("click", function() {
+            
+            let email = $("#EmailRecuperar").val();
+
+            if (email == "") {
+                incorrecto("Debe proporcionar un mail");
+                return;
+            }
+                
+
+            if(!ValidateEmail(email)){
+                incorrecto("Debe proporcionar un mail valido");
+                return;
+            }
+            
+            let url = "/RecuperarCuenta/RecuperarContraseña";
+            let data = {
+                Email: email
+            };
+
+            $.ajax({
+              method: "POST",
+              url: url,
+              async: true,
+              data: data
+            }).done(function() {
+                correcto("Correo enviado correctamente!");
+                $("#EmailRecuperar").val('');
+            });
+
+        });
+        
+    </script>
+
+}
 
 
 
