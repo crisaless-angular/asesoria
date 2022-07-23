@@ -220,7 +220,7 @@ function correcto(text) {
         icon: 'success',
         title: text,
         showConfirmButton: false,
-        timer: 1500
+        timer: 2000
     })
 }
 

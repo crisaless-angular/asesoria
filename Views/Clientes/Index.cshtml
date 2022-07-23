@@ -37,9 +37,11 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+
         $( document ).ready(function() {
             CargarClientes("@variables.MsgNodata");
         });
+
     </script>
 
 }

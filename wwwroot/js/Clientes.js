@@ -1,9 +1,8 @@
 ﻿$(".todosclientes").on('click', function () {
-    window.location.href = "/Clientes"
+    window.location.href = "/Clientes";
 });
 
-function CargarClientes(msgdatanotfound)
-{
+function CargarClientes(msgdatanotfound) {
 
     $.post("Clientes/ObtenerClientesIndex/", function (data) {
 
@@ -22,7 +21,7 @@ function CargarClientes(msgdatanotfound)
             contenido += "<td>" + (items.movil == null ? MsgNodata : items.movil) + "</td>";
             contenido += "<td>" + (items.emailprincipal == null ? MsgNodata : items.emailprincipal) + "</td>";
             contenido += "<td>" + (items.identificacioN_FISCAL == null ? MsgNodata : items.identificacioN_FISCAL) + "</td>";
-            contenido += "<td class='col-md-2'><button class='btn btn-info'>Detalle <span style='font-size: 20px !important';>>>></span></button></td>";
+            contenido += "<td class='col-md-2'><button onclick='Detalle(" + items.codigO_CONTABILIDAD +")' class='boton_primario'><span>Detalle</span></button></td>";
             contenido += "</tr>";
 
         });
@@ -33,5 +32,12 @@ function CargarClientes(msgdatanotfound)
 
     });
 
-    
 }
+
+function Detalle(element)
+{
+    //console.log(element);
+    correcto("Aún sin funcionalidad");
+}
+
+
