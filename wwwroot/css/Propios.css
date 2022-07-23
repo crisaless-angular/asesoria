@@ -37,37 +37,6 @@ input:focus {
     border-color: rgba(183, 213, 212, 0.3) !important;
 }
 
-.btn {
-    border-radius: 7px !important;
-    width: 200px !important;
-    padding: 3px !important;
-    font-size: 18px !important;
-    color: var(--blanco) !important;
-}
-
-.btn:hover {
-    text-decoration: underline !important;
-}
-
-input:disabled, input:read-only {
-    background: rgba(72, 130, 134, 0.3) !important;
-}
-
-.primarybuttons {
-    background-color: #305252 !important;
-    border-color: #305252 !important;
-}
-
-.sucessbuttons {
-    background: var(--verde) !important;
-    border-color: var(--verde) !important;
-}
-
-.addbuttons {
-    background: #E71D36 !important;
-    border-color: #E71D36 !important;
-}
-
 
 .card-header {
     background: var(--amarillo) !important;
@@ -106,42 +75,6 @@ thead {
 .salir:hover {
     text-decoration: none !important;
     border: solid var(--blanco) 2px !important;
-}
-
-.btn-info {
-    background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(9,9,121,1) 0%, rgba(0,128,201,1) 100%);
-    border: solid 1px var(--azulbotones) !important;
-}
-
-input[type=submit] {
-    background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(9,9,121,1) 0%, rgba(0,128,201,1) 100%);
-    border: solid 1px var(--azulbotones) !important;
-}
-
-.btn-info:hover {
-    text-decoration: none !important;
-}
-
-.btn-primary:hover {
-    text-decoration: none !important;
-}
-
-.btn-info > span {
-    font-size: 14px !important;
-    transition: font-weight 0.5s !important;
-}
-
-.btn-info:hover > span {
-    font-weight: bold !important;
-}
-
-.btn-primary > span {
-    font-size: 14px !important;
-    transition: font-weight 0.5s !important;
-}
-
-.btn-primary:hover > span {
-    font-weight: bold !important;
 }
 
 /*Poratda*/
@@ -345,6 +278,45 @@ input[type=submit] {
             opacity: 1;
             right: 0;
         }
+
+/*Botones group*/
+.inputgroup {
+    display: flex !important;
+    align-items: center !important;
+}
+
+#EmailRecuperar {
+    width: 300px;
+    min-height: 50px !important;
+    max-width: 300px !important;
+    padding: 0 1rem !important;
+    color: var(--negro) !important;
+    font-size: 15px !important;
+    border: 1px solid var(--azul) !important;
+    border-radius: 6px 0 0 6px !important;
+    background-color: transparent !important;
+}
+
+.buttonsubmit {
+    min-height: 50px !important;
+    padding: .5em 1em !important;
+    border: none !important;
+    border-radius: 0 6px 6px 0 !important;
+    background-color: var(--azul) !important;
+    color: #fff !important;
+    font-size: 15px !important;
+    cursor: pointer !important;
+    transition: background-color .3s ease-in-out !important;
+}
+
+    .buttonsubmit:hover {
+        background-color: var(--azulbotones) !important;
+    }
+
+#EmailRecuperar:focus, #EmailRecuperar:focus-visible {
+    border-color: var(--azulbotones) !important;
+    outline: none !important;
+}
 
 
 
