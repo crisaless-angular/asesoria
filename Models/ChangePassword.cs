@@ -4,7 +4,7 @@ namespace Web.Models
 {
     public class ChangePassword
     {
-        [Required]
+        [Required(ErrorMessage = "El campo es obligatorio")]
         [StringLength(50, ErrorMessage = "La contraseña debe tener al menos 9 carácteres y un máximo de 100 carácteres", MinimumLength = 8)]
         [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "La contraseña debe tener, una letra en mayúscula, un número y un carácter especial. ")]
         [DataType(DataType.Password)]

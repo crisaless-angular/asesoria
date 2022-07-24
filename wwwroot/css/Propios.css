@@ -12,6 +12,9 @@
     --amarilointenso: #ffae00;
     --gris: #73777B;
     --pomelo: #EF5B0C;
+    --AzulFondo: #2196f3;
+    --FondoInputs: rgba(183, 213, 212, 0.3);
+    --ColorInputs: #555;
 }
 
 body {
@@ -297,6 +300,22 @@ thead {
     background-color: transparent !important;
 }
 
+.EmailRecuperar {
+    width: 300px;
+    min-height: 50px !important;
+    max-width: 300px !important;
+    padding: 0 1rem !important;
+    color: var(--negro) !important;
+    font-size: 15px !important;
+    border: 1px solid var(--azul) !important;
+    border-radius: 6px 0 0 6px !important;
+    background-color: transparent !important;
+}
+
+.inputpasswords {
+    pointer-events: none;
+}
+
 .buttonsubmit {
     min-height: 50px !important;
     padding: .5em 1em !important;
@@ -329,6 +348,7 @@ thead {
     background-color: var(--azulbotones) !important;
     color: var(--blanco) !important;
 }
+
 
 
 

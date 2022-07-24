@@ -107,13 +107,13 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CambiarPasswordModel(ChangePassword model)
+        public async Task<IActionResult> CambiarPassword(ChangePassword model)
         {
 
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("All", "Revise los campos, existen errores");
-                return View();
+                return View(model);
             }
 
             IdentityUser user = await _userManager.FindByIdAsync(model.UserId);
