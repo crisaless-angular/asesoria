@@ -325,6 +325,11 @@ thead {
     font-weight: bold;
 }
 
+.azul{
+    background-color: var(--azulbotones) !important;
+    color: var(--blanco) !important;
+}
+
 
 
 

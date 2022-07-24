@@ -50,10 +50,19 @@ namespace Web.Controllers
 
                 try
                 {
+                    
+                    AspNetUserToken UserToken = _unitOfWork.UserTokenRepository.GetAll().Where(x => x.UserId == user.Id).FirstOrDefault();
+                    
+                    if (UserToken != null)
+                    {
+                        _unitOfWork.UserTokenRepository.Delete(UserToken);
+                        _unitOfWork.Save();
+                    }
+
                     string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     token = token.Replace("+", "");
 
-                    AspNetUserToken UserToken = new AspNetUserToken()
+                    UserToken = new AspNetUserToken()
                     {
                         UserId = user.Id,
                         LoginProvider = "Asesoria",
@@ -61,8 +70,6 @@ namespace Web.Controllers
                         Value = token
                     };
 
-                    _unitOfWork.UserTokenRepository.Delete(UserToken);
-                    _unitOfWork.Save();
                     _unitOfWork.UserTokenRepository.Add(UserToken);
                     _unitOfWork.Save();
 
