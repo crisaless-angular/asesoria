@@ -67,10 +67,10 @@
               data: data
             }).done(function(data) {
 
-                let cuerpo = `<p>Para cambiar la contraseña pinche en el siguiente enlace <a href='${window.location.href}/CambiarPassword'> Cambiar contraseña</a></p>`;
+                let cuerpo = `<p>Para cambiar la contraseña pinche en el siguiente enlace <a href='${window.location.href}/CambiarPassword?token=${data}'> Cambiar contraseña</a></p>`;
                 let dataEmail = `{"email" : "${email}", "asunto" : "Cambio de contraseña", "cuerpo" : "${cuerpo}"}`;
                 
-                if(data == "ok")
+                if(data !== "")
                 {
                     $.ajax({
                       method: "POST",

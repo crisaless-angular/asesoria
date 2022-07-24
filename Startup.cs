@@ -15,6 +15,9 @@ using Web.Business.Interfaces;
 using Web.Business.Genericrepository;
 using Web.Business.Services;
 using Web.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BA002.Web
 {
@@ -36,6 +39,7 @@ namespace BA002.Web
             services.AddDbContext<AsesoriaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<BA002IdentityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<BA002IdentityContext>().AddDefaultTokenProviders();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
               .AddRazorPagesOptions(options =>
               {
@@ -55,7 +59,6 @@ namespace BA002.Web
                 ProgressBar = false,
                 PositionClass = ToastPositions.TopRight
             });
-
 
         }
 
