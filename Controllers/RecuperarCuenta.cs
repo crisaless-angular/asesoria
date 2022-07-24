@@ -41,11 +41,25 @@ namespace Web.Controllers
                 //request.asunto = _ConfigRoot["Data_Mail:Subject"];
                 //request.cuerpo = "Prueba body";
                 //await _serviceMail.SendEmailAsync(request);
+                var token = _userManager.GeneratePasswordResetTokenAsync(result);
                 return "ok";
             }
 
             return "fail";
             
+        }
+
+        public IActionResult CambiarPassword()
+        {
+            ViewData["Title"] = "Cambiar contraseña";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CambiarPasswordModel()
+        {
+            ViewData["Title"] = "Cambiar contraseña";
+            return RedirectToAction("Index", "Home");
         }
 
     }

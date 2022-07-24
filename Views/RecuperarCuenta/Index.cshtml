@@ -66,6 +66,9 @@
               async: true,
               data: data
             }).done(function(data) {
+
+                let cuerpo = `<p>Para cambiar la contraseña pinche en el siguiente enlace <a href='${window.location.href}/CambiarPassword'> Cambiar contraseña</a></p>`;
+                let dataEmail = `{"email" : "${email}", "asunto" : "Cambio de contraseña", "cuerpo" : "${cuerpo}"}`;
                 
                 if(data == "ok")
                 {
@@ -73,16 +76,17 @@
                       method: "POST",
                       url: "https://wppruebas.crisaless.es/wp-json/Users/EnvioMail",
                       async: false,
-                      data: '{ "email" : "carlos@crisaless.es", "asunto" : "prueba asunto", "cuerpo" : "prueba cuerpo"}'
+                      data: dataEmail
                     }).done(function() {
-                        correcto("Correo enviado correctamente!");
+                        
                     }).fail(function(data) {
-                        console.log(data);
+                        console.error(data);
                     });
                 }
                 
             });
 
+            correcto("Correo enviado correctamente!");
             $("#EmailRecuperar").val('');
 
         });
