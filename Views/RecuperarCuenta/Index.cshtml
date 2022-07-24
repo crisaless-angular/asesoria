@@ -65,10 +65,25 @@
               url: url,
               async: true,
               data: data
-            }).done(function() {
-                correcto("Correo enviado correctamente!");
-                $("#EmailRecuperar").val('');
+            }).done(function(data) {
+                
+                if(data == "ok")
+                {
+                    $.ajax({
+                      method: "POST",
+                      url: "https://wppruebas.crisaless.es/wp-json/Users/EnvioMail",
+                      async: false,
+                      data: '{ "email" : "carlos@crisaless.es", "asunto" : "prueba asunto", "cuerpo" : "prueba cuerpo"}'
+                    }).done(function() {
+                        correcto("Correo enviado correctamente!");
+                    }).fail(function(data) {
+                        console.log(data);
+                    });
+                }
+                
             });
+
+            $("#EmailRecuperar").val('');
 
         });
         

@@ -31,6 +31,7 @@ namespace BA002.Web
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IMail, Mail>();
 
             services.AddDbContext<AsesoriaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<BA002IdentityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
