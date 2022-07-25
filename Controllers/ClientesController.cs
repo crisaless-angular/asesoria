@@ -27,7 +27,7 @@ namespace Web.Views.Clientes
         public List<ClientesViewModel> ObtenerClientesIndex()
         {
             return (from clientes in this._UnitOfWork.ClienteRepository.GetAll()
-                            join EmailCliente in this._UnitOfWork.ClienteEmailRepository.GetAll() 
+                            join EmailCliente in this._UnitOfWork.ClienteEmailRepository.GetAll()
                             on clientes.CodigoCliente equals EmailCliente.IdCliente
                             where EmailCliente.Activo == true
 

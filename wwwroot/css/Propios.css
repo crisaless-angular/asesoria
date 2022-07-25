@@ -350,6 +350,14 @@ thead {
     color: var(--blanco) !important;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.3em !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: none;
+    border: none;
+}
 
 
 
