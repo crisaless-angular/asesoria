@@ -17,6 +17,7 @@ namespace Web.Data
         {
         }
 
+        public virtual DbSet<Actividad> Actividads { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
@@ -31,18 +32,29 @@ namespace Web.Data
         public virtual DbSet<ClienteEmail> ClienteEmails { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<EstadosTicket> EstadosTickets { get; set; }
+        public virtual DbSet<FormasPago> FormasPagos { get; set; }
         public virtual DbSet<Mandato> Mandatos { get; set; }
         public virtual DbSet<NotaArchivo> NotaArchivos { get; set; }
         public virtual DbSet<Paise> Paises { get; set; }
         public virtual DbSet<PrioridadTicket> PrioridadTickets { get; set; }
         public virtual DbSet<TickectNota> TickectNotas { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<TipoCliente> TipoClientes { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
 
-       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<Actividad>(entity =>
+            {
+                entity.HasKey(e => e.IdActividad)
+                    .HasName("PK_Table_1");
+
+                entity.ToTable("Actividad");
+
+                entity.Property(e => e.Descripcion).HasMaxLength(500);
+            });
 
             modelBuilder.Entity<AspNetRole>(entity =>
             {
@@ -196,13 +208,21 @@ namespace Web.Data
                     .HasColumnType("datetime")
                     .HasColumnName("FECHA_ALTA");
 
+                entity.Property(e => e.IdActividad).HasColumnName("ID_ACTIVIDAD");
+
+                entity.Property(e => e.IdFormaPago).HasColumnName("ID_FORMA_PAGO");
+
                 entity.Property(e => e.IdIdentificacionFiscal).HasColumnName("ID_IDENTIFICACION_FISCAL");
 
                 entity.Property(e => e.IdPais).HasColumnName("ID_PAIS");
 
+                entity.Property(e => e.IdTipoCliente).HasColumnName("ID_TIPO_CLIENTE");
+
                 entity.Property(e => e.IdentificacionFiscal)
                     .HasMaxLength(200)
                     .HasColumnName("IDENTIFICACION_FISCAL");
+
+                entity.Property(e => e.Iva).HasColumnName("IVA");
 
                 entity.Property(e => e.MensajeEmergente)
                     .HasMaxLength(300)
@@ -232,6 +252,10 @@ namespace Web.Data
 
                 entity.Property(e => e.Observaciones).HasColumnName("OBSERVACIONES");
 
+                entity.Property(e => e.PersonaContacto)
+                    .HasMaxLength(50)
+                    .HasColumnName("PERSONA_CONTACTO");
+
                 entity.Property(e => e.Poblacion)
                     .HasMaxLength(50)
                     .HasColumnName("POBLACION");
@@ -240,9 +264,21 @@ namespace Web.Data
                     .HasMaxLength(50)
                     .HasColumnName("PROVINCIA");
 
+                entity.Property(e => e.Recargo).HasColumnName("RECARGO");
+
                 entity.Property(e => e.Telefono)
                     .HasMaxLength(50)
                     .HasColumnName("TELEFONO");
+
+                entity.HasOne(d => d.IdActividadNavigation)
+                    .WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.IdActividad)
+                    .HasConstraintName("FK_CLIENTES_Actividad");
+
+                entity.HasOne(d => d.IdFormaPagoNavigation)
+                    .WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.IdFormaPago)
+                    .HasConstraintName("FK_CLIENTES_FormasPago");
 
                 entity.HasOne(d => d.IdIdentificacionFiscalNavigation)
                     .WithMany(p => p.Clientes)
@@ -253,6 +289,11 @@ namespace Web.Data
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.IdPais)
                     .HasConstraintName("FK_CLIENTES_PAISES");
+
+                entity.HasOne(d => d.IdTipoClienteNavigation)
+                    .WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.IdTipoCliente)
+                    .HasConstraintName("FK_CLIENTES_TipoCliente");
             });
 
             modelBuilder.Entity<ClienteCuenta>(entity =>
@@ -371,6 +412,15 @@ namespace Web.Data
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(200)
                     .HasColumnName("DESCRIPCION");
+            });
+
+            modelBuilder.Entity<FormasPago>(entity =>
+            {
+                entity.HasKey(e => e.IdFomaPago);
+
+                entity.ToTable("FormasPago");
+
+                entity.Property(e => e.Descripcion).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Mandato>(entity =>
@@ -541,6 +591,17 @@ namespace Web.Data
                     .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.IdPrioridad)
                     .HasConstraintName("FK_TICKETS_PRIORIDAD_TICKET");
+            });
+
+            modelBuilder.Entity<TipoCliente>(entity =>
+            {
+                entity.HasKey(e => e.IdTipoCliente);
+
+                entity.ToTable("TipoCliente");
+
+                entity.Property(e => e.TipoCliente1)
+                    .HasMaxLength(100)
+                    .HasColumnName("TipoCliente");
             });
 
             modelBuilder.Entity<TipoIdentificacionFiscal>(entity =>

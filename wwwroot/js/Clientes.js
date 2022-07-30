@@ -40,4 +40,39 @@ function Detalle(element)
     correcto("Aún sin funcionalidad");
 }
 
+function enviarDatos() {
+    debugger;
+    let input = document.getElementById("inputExcelClientes");
+
+    let formData = new FormData();
+
+    formData.append("ArchivoExcel", input.files[0]);
+
+    let url = "/Clientes/RecibirExcel/";
+
+    try {
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            async: true,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (data) {
+
+        }).fail(function (data) {
+            console.error(data);
+        });
+
+    }
+    catch (e) {
+        console.log(e);
+    }
+
+    
+
+
+}
+
 

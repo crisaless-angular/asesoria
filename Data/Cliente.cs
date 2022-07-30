@@ -43,9 +43,18 @@ namespace Web.Data
         public bool? EnviooComunicaciones { get; set; }
         public string CuentaContableTresDigitos { get; set; }
         public string IdentificacionFiscal { get; set; }
+        public string PersonaContacto { get; set; }
+        public int? IdFormaPago { get; set; }
+        public int? IdTipoCliente { get; set; }
+        public int? IdActividad { get; set; }
+        public bool? Iva { get; set; }
+        public bool? Recargo { get; set; }
 
+        public virtual Actividad IdActividadNavigation { get; set; }
+        public virtual FormasPago IdFormaPagoNavigation { get; set; }
         public virtual TipoIdentificacionFiscal IdIdentificacionFiscalNavigation { get; set; }
         public virtual Paise IdPaisNavigation { get; set; }
+        public virtual TipoCliente IdTipoClienteNavigation { get; set; }
         public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; }
         public virtual ICollection<ClienteDireccione> ClienteDirecciones { get; set; }
         public virtual ICollection<ClienteEmail> ClienteEmails { get; set; }

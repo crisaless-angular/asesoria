@@ -1,5 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Business.Interfaces;
@@ -8,13 +14,16 @@ using Web.Models;
 
 namespace Web.Views.Clientes
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         public IUnitOfWork _UnitOfWork;
+        public ILeerExcel _LeerExcel;
 
-        public ClientesController(IUnitOfWork UnitOfWork)
+        public ClientesController(IUnitOfWork UnitOfWork, ILeerExcel LeerExcel)
         {
             this._UnitOfWork = UnitOfWork;
+            this._LeerExcel = LeerExcel;
         }
 
         public IActionResult Index()
@@ -53,8 +62,36 @@ namespace Web.Views.Clientes
             return View();
         }
 
-    }
+        public IActionResult CargarClientes()
+        {
+            ViewData["Title"] = "Cargar clientes";
+            return View();
+        }
 
-    
+
+        [HttpPost]
+        public IActionResult RecibirExcel([FromForm] IFormFile ArchivoExcel)
+        {
+            Stream stream = ArchivoExcel.OpenReadStream();
+
+            IWorkbook MiExcel = null;
+
+            if (Path.GetExtension(ArchivoExcel.FileName) == ".xlsx")
+            {
+                MiExcel = new XSSFWorkbook(stream);
+            }
+            else
+            {
+                MiExcel = new HSSFWorkbook(stream);
+            }
+
+            _LeerExcel.Leerexcel(MiExcel);
+
+
+            return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
+        }
+
+
+    }
 
 }
