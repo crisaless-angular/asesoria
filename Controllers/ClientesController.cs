@@ -38,6 +38,10 @@ namespace Web.Views.Clientes
             return (from clientes in this._UnitOfWork.ClienteRepository.GetAll()
                             join EmailCliente in this._UnitOfWork.ClienteEmailRepository.GetAll()
                             on clientes.CodigoCliente equals EmailCliente.IdCliente
+                            join Agentes in this._UnitOfWork.AgenteRepository.GetAll().DefaultIfEmpty()
+                            on clientes.Agente equals Agentes.IdAgente
+                            join Tipocliente in this._UnitOfWork.TipoClienteRepository.GetAll().DefaultIfEmpty()
+                            on clientes.IdTipoCliente equals Tipocliente.IdTipoCliente
                             where EmailCliente.Activo == true
 
                             select new ClientesViewModel()
@@ -45,11 +49,11 @@ namespace Web.Views.Clientes
                                 CODIGO_CONTABILIDAD = clientes.CodigoContabilidad,
                                 NOMBRE_FISCAL = clientes.NombreFiscal,
                                 NOMBRE_COMERCIAL = clientes.NombreComercial,
-                                TELEFONO = clientes.Telefono,
-                                FAX = clientes.Fax,
                                 MOVIL = clientes.Movil,
                                 EMAILPRINCIPAL = EmailCliente.Email,
-                                IDENTIFICACION_FISCAL = clientes.IdentificacionFiscal
+                                IDENTIFICACION_FISCAL = clientes.IdentificacionFiscal,
+                                AGENTE = Agentes.Agente1,
+                                TIPO_CLIENTE = Tipocliente.TipoCliente1
                             }
 
                             ).ToList();

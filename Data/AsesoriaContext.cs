@@ -18,6 +18,7 @@ namespace Web.Data
         }
 
         public virtual DbSet<Actividad> Actividads { get; set; }
+        public virtual DbSet<Agente> Agentes { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
@@ -54,6 +55,15 @@ namespace Web.Data
                 entity.ToTable("Actividad");
 
                 entity.Property(e => e.Descripcion).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<Agente>(entity =>
+            {
+                entity.HasKey(e => e.IdAgente);
+
+                entity.Property(e => e.Agente1)
+                    .HasMaxLength(300)
+                    .HasColumnName("Agente");
             });
 
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -172,6 +182,8 @@ namespace Web.Data
 
                 entity.Property(e => e.AceptaFacturaElectronica).HasColumnName("ACEPTA_FACTURA_ELECTRONICA");
 
+                entity.Property(e => e.Agente).HasColumnName("AGENTE");
+
                 entity.Property(e => e.CesionDatos).HasColumnName("CESION_DATOS");
 
                 entity.Property(e => e.CodigoContabilidad).HasColumnName("CODIGO_CONTABILIDAD");
@@ -269,6 +281,11 @@ namespace Web.Data
                 entity.Property(e => e.Telefono)
                     .HasMaxLength(50)
                     .HasColumnName("TELEFONO");
+
+                entity.HasOne(d => d.AgenteNavigation)
+                    .WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.Agente)
+                    .HasConstraintName("FK_CLIENTES_Agentes");
 
                 entity.HasOne(d => d.IdActividadNavigation)
                     .WithMany(p => p.Clientes)

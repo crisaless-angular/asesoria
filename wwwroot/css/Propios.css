@@ -25,6 +25,7 @@ body {
 .page {
     background: var(--blanco) !important;
     height: auto;
+    width: auto;
 }
 
 h1 {
@@ -359,6 +360,12 @@ thead {
     border: none;
 }
 
+#datatableIndexClientes{
+    font-size: 13px !important;
+}
 
+    #datatableIndexClientes > boton_primario {
+        font-size: 13px !important;
+    }
 
 

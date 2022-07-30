@@ -33,6 +33,8 @@ namespace Web.Models
         public bool ENVIOO_COMUNICACIONES { get; set; }
         public string CUENTA_CONTABLE_TRES_DIGITOS { get; set; }
         public string EMAILPRINCIPAL { get; set; }
+        public string AGENTE { get; set; }
+        public string TIPO_CLIENTE { get; set; }
 
     }
 }

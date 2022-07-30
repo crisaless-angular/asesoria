@@ -49,7 +49,9 @@ namespace Web.Data
         public int? IdActividad { get; set; }
         public bool? Iva { get; set; }
         public bool? Recargo { get; set; }
+        public int? Agente { get; set; }
 
+        public virtual Agente AgenteNavigation { get; set; }
         public virtual Actividad IdActividadNavigation { get; set; }
         public virtual FormasPago IdFormaPagoNavigation { get; set; }
         public virtual TipoIdentificacionFiscal IdIdentificacionFiscalNavigation { get; set; }

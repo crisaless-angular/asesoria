@@ -14,10 +14,36 @@ namespace Web.Business.Services
         public IGenericRepository<Cliente> _Cliente;
         public IGenericRepository<ClienteEmail> _ClienteEmail;
         public IGenericRepository<AspNetUserToken> _UserToken;
+        public IGenericRepository<Agente> _Agente;
+        public IGenericRepository<TipoCliente> _TipoCliente;
 
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
+        }
+
+        public IGenericRepository<TipoCliente> TipoClienteRepository
+        {
+            get
+            {
+                if (this._TipoCliente == null)
+                    this._TipoCliente = new GenericRepository<TipoCliente>(_context);
+
+                return _TipoCliente;
+            }
+
+        }
+
+        public IGenericRepository<Agente> AgenteRepository
+        {
+            get
+            {
+                if (this._Agente == null)
+                    this._Agente = new GenericRepository<Agente>(_context);
+
+                return _Agente;
+            }
+
         }
 
         public IGenericRepository<AspNetUserToken> UserTokenRepository
