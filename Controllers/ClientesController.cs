@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,13 +19,17 @@ namespace Web.Views.Clientes
     [Authorize]
     public class ClientesController : Controller
     {
-        public IUnitOfWork _UnitOfWork;
-        public ILeerExcel _LeerExcel;
+        private readonly IUnitOfWork _UnitOfWork;
+        private readonly ILeerExcel _LeerExcel;
+        private readonly IAuditoria _Auditoria;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ClientesController(IUnitOfWork UnitOfWork, ILeerExcel LeerExcel)
+        public ClientesController(IUnitOfWork UnitOfWork, ILeerExcel LeerExcel, IAuditoria Auditoria, UserManager<IdentityUser> userManager)
         {
             this._UnitOfWork = UnitOfWork;
             this._LeerExcel = LeerExcel;
+            this._Auditoria = Auditoria;
+            this._userManager = userManager;
         }
 
         public IActionResult Index()
@@ -93,6 +99,15 @@ namespace Web.Views.Clientes
 
 
             return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
+        }
+
+        public IActionResult Detalle(int IdCliente)
+        {
+            string Usuario = _userManager.GetUserName(User);
+            _Auditoria.GuardarAuditoria(new AuditoriaModel() { Accion = $"Accesso a detalle cliente: {IdCliente}", Fecha = DateTime.Now, Usuario = Usuario});
+
+            ViewData["Title"] = "Detalle del cliente";
+            return View();
         }
 
 

@@ -26,6 +26,7 @@ namespace Web.Data
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
+        public virtual DbSet<Auditorium> Auditoria { get; set; }
         public virtual DbSet<CategoriaTicket> CategoriaTickets { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<ClienteCuenta> ClienteCuentas { get; set; }
@@ -157,6 +158,17 @@ namespace Web.Data
                     .WithMany(p => p.AspNetUserTokens)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_AspNetUserTokens_AspNetUsers_UserId");
+            });
+
+            modelBuilder.Entity<Auditorium>(entity =>
+            {
+                entity.HasKey(e => e.IdAuditoria);
+
+                entity.Property(e => e.Accion).HasMaxLength(500);
+
+                entity.Property(e => e.Fecha).HasColumnType("datetime");
+
+                entity.Property(e => e.Usuario).HasMaxLength(100);
             });
 
             modelBuilder.Entity<CategoriaTicket>(entity =>

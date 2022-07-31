@@ -36,6 +36,7 @@ namespace BA002.Web
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMail, Mail>();
             services.AddScoped<ILeerExcel, LeerExcel>();
+            services.AddScoped<IAuditoria, AuditoriaLog>();
 
             services.AddDbContext<AsesoriaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<BA002IdentityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

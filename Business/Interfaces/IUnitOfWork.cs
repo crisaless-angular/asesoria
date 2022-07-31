@@ -11,6 +11,7 @@ namespace Web.Business.Interfaces
         IGenericRepository<AspNetUserToken> UserTokenRepository { get; }
         IGenericRepository<Agente> AgenteRepository { get; }
         IGenericRepository<TipoCliente> TipoClienteRepository { get; }
+        IGenericRepository<Auditorium> AuditoriaRepository { get; }
         void Save();
 
     }

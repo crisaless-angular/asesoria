@@ -16,10 +16,23 @@ namespace Web.Business.Services
         public IGenericRepository<AspNetUserToken> _UserToken;
         public IGenericRepository<Agente> _Agente;
         public IGenericRepository<TipoCliente> _TipoCliente;
+        public IGenericRepository<Auditorium> _Auditoria;
 
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
+        }
+
+        public IGenericRepository<Auditorium> _AuditoriaRepository
+        {
+            get
+            {
+                if (this._Auditoria == null)
+                    this._Auditoria = new GenericRepository<Auditorium>(_context);
+
+                return _Auditoria;
+            }
+
         }
 
         public IGenericRepository<TipoCliente> TipoClienteRepository
