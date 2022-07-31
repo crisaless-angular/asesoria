@@ -364,8 +364,14 @@ thead {
     font-size: 13px !important;
 }
 
-    #datatableIndexClientes > boton_primario {
-        font-size: 13px !important;
-    }
+#datatableIndexClientes > boton_primario {
+    font-size: 13px !important;
+}
+
+#datatableIndexClientes td {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
 
 
