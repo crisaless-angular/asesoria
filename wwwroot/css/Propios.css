@@ -368,10 +368,9 @@ thead {
     font-size: 13px !important;
 }
 
-#datatableIndexClientes td {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: break-all;
+.dataTables_wrapper {
+    overflow: scroll;
 }
+
 
 

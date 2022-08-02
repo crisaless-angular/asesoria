@@ -119,6 +119,8 @@ namespace Web.Business.Services
 
         }
 
+        public IGenericRepository<Auditorium> AuditoriaRepository => throw new NotImplementedException();
+
         public void Save()
         {
             _context.SaveChanges();
