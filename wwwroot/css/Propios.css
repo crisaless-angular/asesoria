@@ -369,7 +369,7 @@ thead {
 }
 
 .dataTables_wrapper {
-    overflow: scroll;
+    overflow: auto;
 }
 
 
