@@ -1,4 +1,4 @@
-﻿@model Web.Data.Cliente
+﻿@model Web.Models.ClientesViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,71 +6,185 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<h4>Cliente</h4>
 <hr />
 
 <div class="container-fluid w-75 p-3">
-    
-    
-    <div class="container">
 
-            <nav>
-            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">General</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Otros datos</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Conceptos</a>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="CrearCliente" asp-controller="Clientes" method="post" id="form-new-client">
+
+        <div class="row mb-5">
+            <a class="fancy" href="#" id="save-new-cliente">
+              <span class="top-key"></span>
+              <span class="text">Guardar y continuar</span>
+              <span class="bottom-key-1"></span>
+              <span class="bottom-key-2"></span>
+            </a>
+        </div> 
+
+        <nav>
+        <div class="nav nav-tabs nav-fill tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active labels tab" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">General</a>
+            <a class="nav-item nav-link labels tab" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Otros datos</a>
+            <a class="nav-item nav-link labels tab" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Conceptos</a>
+        </div>
+        </nav>
+
+        <div class="tab-content py-3 px-3 px-sm-0 p-4" id="nav-tabContent">
+
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    
+                <div class="row">
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="CODIGO_CONTABILIDAD" class="control-label labels"></label>
+                        <input asp-for="CODIGO_CONTABILIDAD" class="form-control inputs" tabindex="1" />
+                        <span asp-validation-for="CODIGO_CONTABILIDAD" class="text-danger"></span>
+                    </div>
+                </div>
+                    
+                <div class="row">
+                        
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="TIPO_IDENTIFICACION_FISCAL" class="control-label labels"></label>
+                        @*<select asp-for="TIPO_IDENTIFICACION_FISCAL" asp-items="@(new SelectList(Model.TIPO_IDENTIFICACION_FISCAL_ITEMS))" tabindex="2"></select>*@
+                        <span asp-validation-for="TIPO_IDENTIFICACION_FISCAL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="IDENTIFICACION_FISCAL" class="control-label labels"></label>
+                        <input asp-for="IDENTIFICACION_FISCAL" class="form-control inputs" tabindex="3"/>
+                        <span asp-validation-for="IDENTIFICACION_FISCAL" class="text-danger"></span>
+                    </div>
+                        
+                </div>
+                    
+                <div class="form-group">
+                    <label asp-for="NOMBRE_FISCAL" class="control-label labels"></label>
+                    <input asp-for="NOMBRE_FISCAL" class="form-control inputs" tabindex="4"/>
+                    <span asp-validation-for="NOMBRE_FISCAL" class="text-danger"></span>
+                </div>
+
+                    <div class="form-group mb-5">
+                    <label asp-for="NOMBRE_COMERCIAL" class="control-label labels"></label>
+                    <input asp-for="NOMBRE_COMERCIAL" class="form-control inputs" tabindex="5"/>
+                    <span asp-validation-for="NOMBRE_COMERCIAL" class="text-danger"></span>
+                </div>
+
+                <hr class="sep-3" />
+
+                <div class="form-group mt-5">
+                    <label asp-for="DOMICILIO" class="control-label labels"></label>
+                    <input asp-for="DOMICILIO" class="form-control inputs" tabindex="5"/>
+                    <span asp-validation-for="DOMICILIO" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="CODIGO_POSTAL" class="control-label labels"></label>
+                    <input asp-for="CODIGO_POSTAL" class="form-control inputs" tabindex="6"/>
+                    <span asp-validation-for="CODIGO_POSTAL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="POBLACION" class="control-label labels"></label>
+                        <input asp-for="POBLACION" class="form-control inputs" tabindex="7"/>
+                        <span asp-validation-for="POBLACION" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="PROVINCIA" class="control-label labels"></label>
+                    <input asp-for="PROVINCIA" class="form-control inputs" tabindex="7"/>
+                    <span asp-validation-for="PROVINCIA" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="PAIS" class="control-label labels"></label>
+                        @*<select asp-for="PAIS" asp-items="@(new SelectList(Model.PAISES))" tabindex="8"></select>*@
+                        <span asp-validation-for="PAIS" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr class="sep-3" />
+
+                <div class="row mt-5 mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="TELEFONO" class="control-label labels"></label>
+                        <input asp-for="TELEFONO" class="form-control inputs" tabindex="7"/>
+                        <span asp-validation-for="TELEFONO" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="MOVIL" class="control-label labels"></label>
+                        <input asp-for="MOVIL" class="form-control inputs" tabindex="7"/>
+                        <span asp-validation-for="MOVIL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="EMAILPRINCIPAL" class="control-label labels"></label>
+                        <input asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="7"/>
+                        <span asp-validation-for="EMAILPRINCIPAL" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr class="sep-3" />
+
+                <div class="row mt-5 mb-5">
+
+                    <div class="form-group col-lg-8 col-md-8 col-xs-12">
+                        <label asp-for="IBAN" class="control-label labels"></label>
+                        <input asp-for="IBAN" class="form-control inputs" tabindex="7"/>
+                        <span asp-validation-for="IBAN" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-xs-6">
+                        <label asp-for="BIC" class="control-label labels"></label>
+                        <input asp-for="BIC" class="form-control inputs" tabindex="7"/>
+                        <span asp-validation-for="BIC" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="BANCO" class="control-label labels"></label>
+                        <input asp-for="BANCO" class="form-control inputs" tabindex="7"/>
+                        <span asp-validation-for="BANCO" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr class="sep-3" />
+
             </div>
-            </nav>
 
-            <div class="tab-content py-3 px-3 px-sm-0 p-4" id="nav-tabContent">
-
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    General
-                </div>
-
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    Otros Datos
-                </div>
-
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    Conceptos
-                </div>
-
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                Otros Datos
             </div>
-                
-    </div>
 
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                Conceptos
+            </div>
+
+        </div>
+
+
+
+    </form>
 
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="View">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CodigoContabilidad" class="control-label"></label>
-                <input asp-for="CodigoContabilidad" class="form-control" />
-                <span asp-validation-for="CodigoContabilidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdIdentificacionFiscal" class="control-label"></label>
-                <select asp-for="IdIdentificacionFiscal" class ="form-control" asp-items="ViewBag.IdIdentificacionFiscal"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="NombreFiscal" class="control-label"></label>
-                <input asp-for="NombreFiscal" class="form-control" />
-                <span asp-validation-for="NombreFiscal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NombreComercial" class="control-label"></label>
-                <input asp-for="NombreComercial" class="form-control" />
-                <span asp-validation-for="NombreComercial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Domicilio" class="control-label"></label>
-                <input asp-for="Domicilio" class="form-control" />
-                <span asp-validation-for="Domicilio" class="text-danger"></span>
-            </div>
+        
+            
+            
+            
+            
+           
+            @*
             <div class="form-group">
                 <label asp-for="CodigoPostal" class="control-label"></label>
                 <input asp-for="CodigoPostal" class="form-control" />
@@ -182,12 +296,6 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+            </div>*@
+        
 

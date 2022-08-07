@@ -71,9 +71,10 @@ function enviarDatos() {
         console.log(e);
     }
 
-    
-
-
 }
+
+$("#save-new-cliente").on('click', function () {
+    $("#form-new-client").submit();
+});
 
 
