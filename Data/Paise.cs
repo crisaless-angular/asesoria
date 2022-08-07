@@ -14,6 +14,7 @@ namespace Web.Data
 
         public int IdPais { get; set; }
         public string Descripcion { get; set; }
+        public string Claim { get; set; }
 
         public virtual ICollection<Cliente> Clientes { get; set; }
     }

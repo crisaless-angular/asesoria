@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -68,8 +69,17 @@ namespace Web.Views.Clientes
 
         public IActionResult Crear()
         {
+            ClientesViewModel model = new ClientesViewModel();
+            model.PAISES = _UnitOfWork.PaisesRepository.GetAll();
+            model.TIPO_IDENTIFICACION_FISCAL_ITEMS = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
             ViewData["Title"] = "Crear un cliente";
-            return View();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CrearCliente(ClientesViewModel model)
+        {
+            return Ok();
         }
 
         public IActionResult CargarClientes()

@@ -497,6 +497,10 @@ namespace Web.Data
 
                 entity.Property(e => e.IdPais).HasColumnName("ID_PAIS");
 
+                entity.Property(e => e.Claim)
+                    .HasMaxLength(50)
+                    .HasColumnName("CLAIM");
+
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(200)
                     .HasColumnName("DESCRIPCION");

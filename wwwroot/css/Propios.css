@@ -105,7 +105,8 @@ thead {
     transition: opacity 0.7s;
 }
 
-.col:first-child:hover {
+/*Cambiar opacidad en imagenes*/
+.col:not(:last-child):hover{
     opacity: 1;
 }
 
@@ -420,6 +421,7 @@ hr.sep-3::after {
     position: relative;
     background: var(--azul);
     border: solid var(--azul) 1px;
+    height: 50px;
 }
 
 .tabs:hover {
@@ -429,6 +431,10 @@ hr.sep-3::after {
 .tab{
     color: var(--blanco) !important;
     font-size: 16px !important;
+}
+
+.tab.active{
+    font-size: 20px !important;
 }
 
 .tab-content {
@@ -548,6 +554,49 @@ hr.sep-3::after {
             width: 0;
         }
 /*Boton guardar*/
+
+/* Volver arriba */
+#volver_arriba {
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: var(--azul);
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px var(--azul);
+    z-index: 100;
+    border: #004dff;
+    transition: 0.7s;
+}
+
+    #volver_arriba:hover {
+        transform: scale(1.1);
+    }
+
+    #volver_arriba:active {
+        background-color: var(--azul);
+    }
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35%;
+    margin-bottom: 60%;
+    border-bottom: 15px solid var(--blanco);
+}
+
+.btn-arriba{
+    text-align:end;
+    margin-top: 25px;
+}
+/* Volver arriba */
 
 
 

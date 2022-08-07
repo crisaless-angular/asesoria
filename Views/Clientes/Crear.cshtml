@@ -46,7 +46,7 @@
                         
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="TIPO_IDENTIFICACION_FISCAL" class="control-label labels"></label>
-                        @*<select asp-for="TIPO_IDENTIFICACION_FISCAL" asp-items="@(new SelectList(Model.TIPO_IDENTIFICACION_FISCAL_ITEMS))" tabindex="2"></select>*@
+                        <select asp-for="TIPO_IDENTIFICACION_FISCAL" asp-items="@(new SelectList(Model.TIPO_IDENTIFICACION_FISCAL_ITEMS, "IdTipoIdentificacionFiscal", "Descripcion"))" tabindex="2"></select>
                         <span asp-validation-for="TIPO_IDENTIFICACION_FISCAL" class="text-danger"></span>
                     </div>
 
@@ -74,7 +74,7 @@
 
                 <div class="form-group mt-5">
                     <label asp-for="DOMICILIO" class="control-label labels"></label>
-                    <input asp-for="DOMICILIO" class="form-control inputs" tabindex="5"/>
+                    <input asp-for="DOMICILIO" class="form-control inputs" tabindex="6"/>
                     <span asp-validation-for="DOMICILIO" class="text-danger"></span>
                 </div>
 
@@ -82,13 +82,13 @@
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                     <label asp-for="CODIGO_POSTAL" class="control-label labels"></label>
-                    <input asp-for="CODIGO_POSTAL" class="form-control inputs" tabindex="6"/>
+                    <input asp-for="CODIGO_POSTAL" class="form-control inputs" tabindex="7"/>
                     <span asp-validation-for="CODIGO_POSTAL" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="POBLACION" class="control-label labels"></label>
-                        <input asp-for="POBLACION" class="form-control inputs" tabindex="7"/>
+                        <input asp-for="POBLACION" class="form-control inputs" tabindex="8"/>
                         <span asp-validation-for="POBLACION" class="text-danger"></span>
                     </div>
 
@@ -98,13 +98,13 @@
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                     <label asp-for="PROVINCIA" class="control-label labels"></label>
-                    <input asp-for="PROVINCIA" class="form-control inputs" tabindex="7"/>
+                    <input asp-for="PROVINCIA" class="form-control inputs" tabindex="9"/>
                     <span asp-validation-for="PROVINCIA" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="PAIS" class="control-label labels"></label>
-                        @*<select asp-for="PAIS" asp-items="@(new SelectList(Model.PAISES))" tabindex="8"></select>*@
+                        <select asp-for="PAIS" asp-items="@(new SelectList(Model.PAISES, "IdPais", "Descripcion", 74))" tabindex="10"></select>
                         <span asp-validation-for="PAIS" class="text-danger"></span>
                     </div>
 
@@ -116,19 +116,19 @@
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="TELEFONO" class="control-label labels"></label>
-                        <input asp-for="TELEFONO" class="form-control inputs" tabindex="7"/>
+                        <input asp-for="TELEFONO" class="form-control inputs" tabindex="11"/>
                         <span asp-validation-for="TELEFONO" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="MOVIL" class="control-label labels"></label>
-                        <input asp-for="MOVIL" class="form-control inputs" tabindex="7"/>
+                        <input asp-for="MOVIL" class="form-control inputs" tabindex="12"/>
                         <span asp-validation-for="MOVIL" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-12 col-md-12 col-xs-12">
                         <label asp-for="EMAILPRINCIPAL" class="control-label labels"></label>
-                        <input asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="7"/>
+                        <input asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="13"/>
                         <span asp-validation-for="EMAILPRINCIPAL" class="text-danger"></span>
                     </div>
 
@@ -140,25 +140,35 @@
 
                     <div class="form-group col-lg-8 col-md-8 col-xs-12">
                         <label asp-for="IBAN" class="control-label labels"></label>
-                        <input asp-for="IBAN" class="form-control inputs" tabindex="7"/>
+                        <input asp-for="IBAN" class="form-control inputs" tabindex="14"/>
                         <span asp-validation-for="IBAN" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-4 col-md-4 col-xs-6">
                         <label asp-for="BIC" class="control-label labels"></label>
-                        <input asp-for="BIC" class="form-control inputs" tabindex="7"/>
+                        <input asp-for="BIC" class="form-control inputs" tabindex="15"/>
                         <span asp-validation-for="BIC" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-12 col-md-12 col-xs-12">
                         <label asp-for="BANCO" class="control-label labels"></label>
-                        <input asp-for="BANCO" class="form-control inputs" tabindex="7"/>
+                        <input asp-for="BANCO" class="form-control inputs" tabindex="16"/>
                         <span asp-validation-for="BANCO" class="text-danger"></span>
                     </div>
 
                 </div>
 
                 <hr class="sep-3" />
+
+                <div class="row mt-5">
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="OBSERVACIONES" class="control-label labels"></label>
+                        <textarea asp-for="OBSERVACIONES" class="form-control inputs" tabindex="7" rows="10"></textarea>
+                        <span asp-validation-for="OBSERVACIONES" class="text-danger"></span>
+                    </div>
+
+                </div>
 
             </div>
 
@@ -175,6 +185,12 @@
 
 
     </form>
+
+    <div class="btn-arriba">
+        <button id="volver_arriba">
+            <div class="arrow-up"></div>
+        </button>
+    </div>
 
 </div>
 

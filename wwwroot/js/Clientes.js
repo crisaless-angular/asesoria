@@ -2,6 +2,10 @@
     window.location.href = "/Clientes";
 });
 
+$(".crearcliente").on('click', function () {
+    window.location.href = "/Clientes/Crear";
+});
+
 function CargarClientes(msgdatanotfound) {
 
     $.post("Clientes/ObtenerClientesIndex/", function (data) {
@@ -75,6 +79,20 @@ function enviarDatos() {
 
 $("#save-new-cliente").on('click', function () {
     $("#form-new-client").submit();
+});
+
+$('#volver_arriba').click(function () {
+        $('body, html').animate({
+            scrollTop: '0px'
+        }, 300);
+    });
+
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 0) {
+        $('.ir-arriba').slideDown(300);
+    } else {
+        $('.ir-arriba').slideUp(300);
+    }
 });
 
 

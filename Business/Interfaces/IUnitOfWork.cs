@@ -12,6 +12,8 @@ namespace Web.Business.Interfaces
         IGenericRepository<Agente> AgenteRepository { get; }
         IGenericRepository<TipoCliente> TipoClienteRepository { get; }
         IGenericRepository<Auditorium> AuditoriaRepository { get; }
+        IGenericRepository<Paise> PaisesRepository { get; }
+        IGenericRepository<TipoIdentificacionFiscal> TipoIdentificacionFiscalRepository { get; }
         void Save();
 
     }

@@ -17,13 +17,39 @@ namespace Web.Business.Services
         public IGenericRepository<Agente> _Agente;
         public IGenericRepository<TipoCliente> _TipoCliente;
         public IGenericRepository<Auditorium> _Auditoria;
-
+        public IGenericRepository<Paise> _Paises;
+        public IGenericRepository<TipoIdentificacionFiscal> _TipoIdentificacionFiscal;
+        
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
         }
 
-        public IGenericRepository<Auditorium> _AuditoriaRepository
+        public IGenericRepository<TipoIdentificacionFiscal> TipoIdentificacionFiscalRepository
+        {
+            get
+            {
+                if (this._TipoIdentificacionFiscal == null)
+                    this._TipoIdentificacionFiscal = new GenericRepository<TipoIdentificacionFiscal>(_context);
+
+                return _TipoIdentificacionFiscal;
+            }
+
+        }
+
+        public IGenericRepository<Paise> PaisesRepository
+        {
+            get
+            {
+                if (this._Paises == null)
+                    this._Paises = new GenericRepository<Paise>(_context);
+
+                return _Paises;
+            }
+
+        }
+
+        public IGenericRepository<Auditorium> AuditoriaRepository
         {
             get
             {
@@ -118,8 +144,6 @@ namespace Web.Business.Services
             }
 
         }
-
-        public IGenericRepository<Auditorium> AuditoriaRepository => throw new NotImplementedException();
 
         public void Save()
         {
