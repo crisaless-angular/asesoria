@@ -368,9 +368,14 @@ thead {
     font-size: 13px !important;
 }
 
-.dataTables_wrapper {
+/*.dataTables_wrapper {
     overflow: auto;
+}*/
+
+table.dataTable.nowrap th, table.dataTable.nowrap td {
+    white-space: normal !important;
 }
+
 
 
 

@@ -14,10 +14,10 @@ function CargarClientes(msgdatanotfound) {
             debugger;
             contenido += "<tr class='tr'>";
             contenido += "<td>" + (items.codigO_CONTABILIDAD == null ? MsgNodata : items.codigO_CONTABILIDAD) + "</td>";
-            contenido += "<td>" + (items.nombrE_FISCAL == null ? MsgNodata : items.nombrE_FISCAL) + "</td>";
-            contenido += "<td>" + (items.nombrE_COMERCIAL == null ? MsgNodata : items.nombrE_COMERCIAL) + "</td>";
+            contenido += "<td class='bigword'>" + (items.nombrE_FISCAL == null ? MsgNodata : items.nombrE_FISCAL) + "</td>";
+            contenido += "<td class='bigword'>" + (items.nombrE_COMERCIAL == null ? MsgNodata : items.nombrE_COMERCIAL) + "</td>";
             contenido += "<td>" + (items.movil == null ? MsgNodata : items.movil) + "</td>";
-            contenido += "<td>" + (items.emailprincipal == null ? MsgNodata : items.emailprincipal) + "</td>";
+            contenido += "<td class='bigword'>" + (items.emailprincipal == null ? MsgNodata : items.emailprincipal) + "</td>";
             contenido += "<td>" + (items.identificacioN_FISCAL == null ? MsgNodata : items.identificacioN_FISCAL) + "</td>";
             contenido += "<td>" + (items.agente == null ? MsgNodata : items.agente) + "</td>";
             contenido += "<td>" + (items.tipO_CLIENTE == null ? MsgNodata : items.tipO_CLIENTE) + "</td>";
