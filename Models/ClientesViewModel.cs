@@ -14,7 +14,6 @@ namespace Web.Models
 
         [Display(Name = "Tipo identificación fiscal")]
         public string TIPO_IDENTIFICACION_FISCAL { get; set; }
-        public List<TipoIdentificacionFiscal> TIPO_IDENTIFICACION_FISCAL_ITEMS { get; set; }
 
         [Display(Name = "Identificación fiscal")]
         public string IDENTIFICACION_FISCAL { get; set; }
@@ -28,6 +27,9 @@ namespace Web.Models
         [Display(Name = "Domicilio")]
         public string DOMICILIO { get; set; }
 
+        [RegularExpression("0[1-9][0-9]{3}|[1-4][0-9]{4}|5[0-2][0-9]{3}", ErrorMessage = "Indique un código postal correcto")]
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "Longitud incorrecta")]
+        [Range(0, int.MaxValue, ErrorMessage = "Solo se permiten numeros")]
         [Display(Name = "Código postal")]
         public string CODIGO_POSTAL { get; set; }
 
@@ -69,6 +71,8 @@ namespace Web.Models
         public string CUENTA_CONTABLE_TRES_DIGITOS { get; set; }
 
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string EMAILPRINCIPAL { get; set; }
 
         [Display(Name = "Agente")]
@@ -76,8 +80,6 @@ namespace Web.Models
 
         [Display(Name = "Tipo de cliente")]
         public string TIPO_CLIENTE { get; set; }
-
-        public List<Paise> PAISES { get; set; }
 
         public string IBAN { get; set; }
         public string BIC { get; set; }

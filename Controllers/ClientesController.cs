@@ -69,17 +69,33 @@ namespace Web.Views.Clientes
 
         public IActionResult Crear()
         {
-            ClientesViewModel model = new ClientesViewModel();
-            model.PAISES = _UnitOfWork.PaisesRepository.GetAll();
-            model.TIPO_IDENTIFICACION_FISCAL_ITEMS = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
+            ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
+            ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
             ViewData["Title"] = "Crear un cliente";
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult CrearCliente(ClientesViewModel model)
+        public IActionResult Crear(ClientesViewModel model)
         {
-            return Ok();
+            ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
+            ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
+            
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (model.IBAN != null)
+            {
+                if (!Utilidades.Utilidades.ValidateIban(model.IBAN))
+                {
+                    ModelState.AddModelError("", "Campo IBAN no es valido");
+                    ModelState.AddModelError("IBAN", "El IBAN no es valido");
+                    ViewData["Title"] = "Crear un cliente";
+                    return View(model);
+                }
+            }
+
+            return RedirectToAction("Index", "Clientes");
         }
 
         public IActionResult CargarClientes()

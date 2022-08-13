@@ -15,7 +15,7 @@ function CargarClientes(msgdatanotfound) {
         let MsgNodata = msgdatanotfound;
 
         $(data).each(function (index, items) {
-            debugger;
+            
             contenido += "<tr class='tr'>";
             contenido += "<td>" + (items.codigO_CONTABILIDAD == null ? MsgNodata : items.codigO_CONTABILIDAD) + "</td>";
             contenido += "<td class='bigword'>" + (items.nombrE_FISCAL == null ? MsgNodata : items.nombrE_FISCAL) + "</td>";
@@ -46,7 +46,7 @@ function Detalle(element)
 }
 
 function enviarDatos() {
-    debugger;
+    
     let input = document.getElementById("inputExcelClientes");
 
     let formData = new FormData();
@@ -95,4 +95,11 @@ $(window).scroll(function () {
     }
 });
 
+
+$("#CodigoPostal").on("keypress", function myfunction(e) {
+
+    if (soloNumeros(e))
+        e.preventDefault();
+    
+});
 
