@@ -80,7 +80,8 @@ function enviarDatos() {
 }
 
 $("#save-new-cliente").on('click', function () {
-    $("#form-new-client").submit();
+    correcto("Aún sin funcionalidad");
+    //$("#form-new-client").submit();
 });
 
 $('#volver_arriba').click(function () {

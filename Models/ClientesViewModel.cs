@@ -55,10 +55,10 @@ namespace Web.Models
 
         [Required(ErrorMessage = "La fecha de alta es obligatoria")]
         [Display(Name = "Fecha de alta")]
-        public DateTime FECHA_ALTA { get; set; }
+        public DateTime FECHA_ALTA { get; set; } = DateTime.Now;
 
         [Display(Name = "Modificado")]
-        public DateTime MODIFICADO { get; set; } 
+        public DateTime MODIFICADO { get; set; } = DateTime.Now;
 
         [Display(Name = "Dirección web")]
         public string DIRECCION_WEB { get; set; }

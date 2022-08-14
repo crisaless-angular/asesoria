@@ -76,7 +76,10 @@ namespace Web.Views.Clientes
             ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
             ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
             ViewData["Title"] = "Crear un cliente";
-            return View();
+
+            ClientesViewModel model = new ClientesViewModel();
+
+            return View(model);
         }
 
         [HttpPost]
@@ -196,7 +199,7 @@ namespace Web.Views.Clientes
                 Movil = model.MOVIL,
                 Observaciones = model.OBSERVACIONES,
                 FechaAlta = model.FECHA_ALTA,
-                Modificado = DateTime.Now,
+                Modificado = model.FECHA_ALTA,
                 DireccionWeb = model.DIRECCION_WEB,
                 MensajeEmergente = model.MENSAJE_EMERGENTE,
                 CodigoProveedor = model.CODIGO_PROVEEDOR,
