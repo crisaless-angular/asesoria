@@ -8,13 +8,15 @@ namespace Web.Models
     public class ClientesViewModel
     {
         public int CODIGO_CLIENTE { get; set; }
-        
+
+        [Required(ErrorMessage = "El Código contabilidad es obligatorio")]
         [Display(Name = "Código contabilidad")]
         public string CODIGO_CONTABILIDAD { get; set; }
 
         [Display(Name = "Tipo identificación fiscal")]
         public string TIPO_IDENTIFICACION_FISCAL { get; set; }
 
+        [Required(ErrorMessage = "La Identificación fiscal es obligatoria")]
         [Display(Name = "Identificación fiscal")]
         public string IDENTIFICACION_FISCAL { get; set; }
 
@@ -51,25 +53,48 @@ namespace Web.Models
         [Display(Name = "Observaciones")]
         public string OBSERVACIONES { get; set; }
 
+        [Required(ErrorMessage = "La fecha de alta es obligatoria")]
         [Display(Name = "Fecha de alta")]
         public DateTime FECHA_ALTA { get; set; }
 
         [Display(Name = "Modificado")]
-        public DateTime MODIFICADO { get; set; }
+        public DateTime MODIFICADO { get; set; } 
 
         [Display(Name = "Dirección web")]
         public string DIRECCION_WEB { get; set; }
+
+        [Display(Name = "Mensaje emergente")]
         public string MENSAJE_EMERGENTE { get; set; }
+
+        [Display(Name = "Código de proveedor")]
         public string CODIGO_PROVEEDOR { get; set; }
+
+
+        [Display(Name = "No realizar facturas a este cliente")]
         public bool NO_FACTURAS { get; set; }
+
+        [Display(Name = "Crear recibo al remitir factura")]
         public bool CREAR_RECIBO { get; set; }
+
+        [Display(Name = "Acepta factura electrónica")]
         public bool ACEPTA_FACTURA_ELECTRONICA { get; set; }
+
+        [Display(Name = "No vender a este cliente")]
         public bool NO_VENDER { get; set; }
+
+        [Display(Name = "No imprimir en los listados")]
         public bool NO_IMPRIMIR_EN_LISTADOS { get; set; }
+
+        [Display(Name = "Acepta la cesión de sus datos")]
         public bool CESION_DATOS { get; set; }
+
+        [Display(Name = "Acepta el envío de comunicaciones")]
         public bool ENVIOO_COMUNICACIONES { get; set; }
+
+        [Display(Name = "Cuenta contable a 3 dígitos")]
         public string CUENTA_CONTABLE_TRES_DIGITOS { get; set; }
 
+        [Required(ErrorMessage = "El Email es obligatorio")]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
@@ -85,6 +110,19 @@ namespace Web.Models
         public string BIC { get; set; }
         public string BANCO { get; set; }
 
+        [Display(Name = "Actividad")]
+        public string ACTIVIDAD { get; set; }
 
+        [Display(Name = "Iva")]
+        public bool IVA { get; set; }
+
+        [Display(Name = "Forma de pago")]
+        public int FORMA_PAGO { get; set; }
+
+        [Display(Name = "Recargo")]
+        public bool RECARGO { get; set; }
+
+        [Display(Name = "Persona de contacto")]
+        public string PERSONA_CONTACTO { get; set; }
     }
 }

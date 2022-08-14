@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Paise> PaisesList = ViewData["PAISES"] as List<Paise>;
     List<TipoIdentificacionFiscal> TipoIdentificacionFiscal = ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] as List<TipoIdentificacionFiscal>;
+    List<TipoCliente> TipoClienteList = ViewData["TIPO_CLIENTE"] as List<TipoCliente>;
+    List<Agente> AgenteList = ViewData["AGENTE"] as List<Agente>;
+    List<FormasPago> FormaPagoList = ViewData["FORMA_PAGO"] as List<FormasPago>;
+    List<Actividad> ActividadList = ViewData["ACTIVIDAD"] as List<Actividad>;
+
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -25,6 +30,10 @@
             </a>
         </div> 
 
+        <div class="loader hide">
+        <span>Cargando...</span>
+        </div> 
+
         <nav>
         <div class="nav nav-tabs nav-fill tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active labels tab" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">General</a>
@@ -39,9 +48,19 @@
                     
                 <div class="row">
                     <div class="form-group col-lg-4 col-md-4 col-xs-12">
-                        <label asp-for="CODIGO_CONTABILIDAD" class="control-label labels"></label>
+                        <label asp-for="CODIGO_CONTABILIDAD" class="control-label labels obligatorio"></label>
                         <input asp-for="CODIGO_CONTABILIDAD" class="form-control inputs" tabindex="1" />
                         <span asp-validation-for="CODIGO_CONTABILIDAD" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="TIPO_CLIENTE" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="TIPO_CLIENTE" asp-items="@(new SelectList(TipoClienteList, "IdTipoCliente", "TipoCliente1"))" tabindex="2"></select>
+                        <span asp-validation-for="TIPO_CLIENTE" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="AGENTE" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="AGENTE" asp-items="@(new SelectList(AgenteList, "IdAgente", "Agente1"))" tabindex="3"></select>
+                        <span asp-validation-for="AGENTE" class="text-danger"></span>
                     </div>
                 </div>
                     
@@ -49,13 +68,13 @@
                         
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="TIPO_IDENTIFICACION_FISCAL" class="control-label labels"></label>
-                        <select class="inputs selects" asp-for="TIPO_IDENTIFICACION_FISCAL" asp-items="@(new SelectList(TipoIdentificacionFiscal, "IdTipoIdentificacionFiscal", "Descripcion"))" tabindex="2"></select>
+                        <select class="inputs selects" asp-for="TIPO_IDENTIFICACION_FISCAL" asp-items="@(new SelectList(TipoIdentificacionFiscal, "IdTipoIdentificacionFiscal", "Descripcion"))" tabindex="4"></select>
                         <span asp-validation-for="TIPO_IDENTIFICACION_FISCAL" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
-                        <label asp-for="IDENTIFICACION_FISCAL" class="control-label labels"></label>
-                        <input asp-for="IDENTIFICACION_FISCAL" class="form-control inputs" tabindex="3"/>
+                        <label asp-for="IDENTIFICACION_FISCAL" class="control-label labels obligatorio"></label>
+                        <input id="identificacion_fiscal" asp-for="IDENTIFICACION_FISCAL" class="form-control inputs" tabindex="5"/>
                         <span asp-validation-for="IDENTIFICACION_FISCAL" class="text-danger"></span>
                     </div>
                         
@@ -63,13 +82,13 @@
                     
                 <div class="form-group">
                     <label asp-for="NOMBRE_FISCAL" class="control-label labels"></label>
-                    <input asp-for="NOMBRE_FISCAL" class="form-control inputs" tabindex="4"/>
+                    <input asp-for="NOMBRE_FISCAL" class="form-control inputs" tabindex="6"/>
                     <span asp-validation-for="NOMBRE_FISCAL" class="text-danger"></span>
                 </div>
 
                     <div class="form-group mb-5">
                     <label asp-for="NOMBRE_COMERCIAL" class="control-label labels"></label>
-                    <input asp-for="NOMBRE_COMERCIAL" class="form-control inputs" tabindex="5"/>
+                    <input asp-for="NOMBRE_COMERCIAL" class="form-control inputs" tabindex="7"/>
                     <span asp-validation-for="NOMBRE_COMERCIAL" class="text-danger"></span>
                 </div>
 
@@ -77,7 +96,7 @@
 
                 <div class="form-group mt-5">
                     <label asp-for="DOMICILIO" class="control-label labels"></label>
-                    <input asp-for="DOMICILIO" class="form-control inputs" tabindex="6"/>
+                    <input asp-for="DOMICILIO" class="form-control inputs" tabindex="8"/>
                     <span asp-validation-for="DOMICILIO" class="text-danger"></span>
                 </div>
 
@@ -85,13 +104,13 @@
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                     <label asp-for="CODIGO_POSTAL" class="control-label labels"></label>
-                    <input id="CodigoPostal" asp-for="CODIGO_POSTAL" class="form-control inputs" tabindex="7" maxlength="5"/>
+                    <input id="CodigoPostal" asp-for="CODIGO_POSTAL" class="form-control inputs" tabindex="9" maxlength="5"/>
                     <span asp-validation-for="CODIGO_POSTAL" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="POBLACION" class="control-label labels"></label>
-                        <input asp-for="POBLACION" class="form-control inputs" tabindex="8"/>
+                        <input id="poblacion" asp-for="POBLACION" class="form-control inputs" tabindex="10"/>
                         <span asp-validation-for="POBLACION" class="text-danger"></span>
                     </div>
 
@@ -101,13 +120,13 @@
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                     <label asp-for="PROVINCIA" class="control-label labels"></label>
-                    <input asp-for="PROVINCIA" class="form-control inputs" tabindex="9"/>
+                    <input id="provincia" asp-for="PROVINCIA" class="form-control inputs" tabindex="11"/>
                     <span asp-validation-for="PROVINCIA" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="PAIS" class="control-label labels"></label>
-                        <select class="inputs selects" asp-for="PAIS" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="10"></select>
+                        <select class="inputs selects" asp-for="PAIS" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="12"></select>
                         <span asp-validation-for="PAIS" class="text-danger"></span>
                     </div>
 
@@ -119,19 +138,19 @@
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="TELEFONO" class="control-label labels"></label>
-                        <input asp-for="TELEFONO" class="form-control inputs" tabindex="11"/>
+                        <input asp-for="TELEFONO" class="form-control inputs" tabindex="13"/>
                         <span asp-validation-for="TELEFONO" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-6 col-md-6 col-xs-12">
                         <label asp-for="MOVIL" class="control-label labels"></label>
-                        <input asp-for="MOVIL" class="form-control inputs" tabindex="12"/>
+                        <input asp-for="MOVIL" class="form-control inputs" tabindex="14"/>
                         <span asp-validation-for="MOVIL" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-12 col-md-12 col-xs-12">
-                        <label asp-for="EMAILPRINCIPAL" class="control-label labels"></label>
-                        <input asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="13"/>
+                        <label asp-for="EMAILPRINCIPAL" class="control-label labels obligatorio"></label>
+                        <input id="email_principal" asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="15"/>
                         <span asp-validation-for="EMAILPRINCIPAL" class="text-danger"></span>
                     </div>
 
@@ -143,19 +162,19 @@
 
                     <div class="form-group col-lg-8 col-md-8 col-xs-12">
                         <label asp-for="IBAN" class="control-label labels"></label>
-                        <input asp-for="IBAN" class="form-control inputs" tabindex="14" placeholder="ES32 1465 0100 91 1741004148"/>
+                        <input id="iban" asp-for="IBAN" class="form-control inputs" tabindex="16" placeholder="ES3214650100911841004150"/>
                         <span asp-validation-for="IBAN" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-4 col-md-4 col-xs-6">
                         <label asp-for="BIC" class="control-label labels"></label>
-                        <input asp-for="BIC" class="form-control inputs" tabindex="15"/>
+                        <input asp-for="BIC" class="form-control inputs" tabindex="17"/>
                         <span asp-validation-for="BIC" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-lg-12 col-md-12 col-xs-12">
                         <label asp-for="BANCO" class="control-label labels"></label>
-                        <input asp-for="BANCO" class="form-control inputs" tabindex="16"/>
+                        <input id="banco" asp-for="BANCO" class="form-control inputs" tabindex="18"/>
                         <span asp-validation-for="BANCO" class="text-danger"></span>
                     </div>
 
@@ -167,7 +186,7 @@
 
                     <div class="form-group col-lg-12 col-md-12 col-xs-12">
                         <label asp-for="OBSERVACIONES" class="control-label labels"></label>
-                        <textarea asp-for="OBSERVACIONES" class="form-control inputs" tabindex="7" rows="10"></textarea>
+                        <textarea asp-for="OBSERVACIONES" class="form-control inputs" tabindex="19" rows="10"></textarea>
                         <span asp-validation-for="OBSERVACIONES" class="text-danger"></span>
                     </div>
 
@@ -175,13 +194,172 @@
 
             </div>
 
+            @*///////////////////// Otros datos ///////////////////*@
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                Otros Datos
-            </div>
+                
+                <div class="row">
+                        
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="FECHA_ALTA" class="control-label labels obligatorio"></label>
+                        <input asp-for="FECHA_ALTA" class="form-control inputs" tabindex="20"/>
+                        <span asp-validation-for="FECHA_ALTA" class="text-danger"></span>
+                    </div>
 
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="MODIFICADO" class="control-label labels"></label>
+                        <input disabled asp-for="MODIFICADO" class="form-control inputs" tabindex="21"/>
+                        <span asp-validation-for="MODIFICADO" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="DIRECCION_WEB" class="control-label labels"></label>
+                        <input asp-for="DIRECCION_WEB" class="form-control inputs" tabindex="22" />
+                        <span asp-validation-for="DIRECCION_WEB" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="MENSAJE_EMERGENTE" class="control-label labels"></label>
+                        <input asp-for="MENSAJE_EMERGENTE" class="form-control inputs" tabindex="23" />
+                        <span asp-validation-for="MENSAJE_EMERGENTE" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="CODIGO_PROVEEDOR" class="control-label labels"></label>
+                        <input asp-for="CODIGO_PROVEEDOR" class="form-control inputs" tabindex="24" />
+                        <span asp-validation-for="CODIGO_PROVEEDOR" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="FORMA_PAGO" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="FORMA_PAGO" asp-items="@(new SelectList(FormaPagoList, "IdFomaPago", "Descripcion", 5))" tabindex="25"></select>
+                        <span asp-validation-for="FORMA_PAGO" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="ACTIVIDAD" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="ACTIVIDAD" asp-items="@(new SelectList(ActividadList, "IdActividad", "Descripcion"))" tabindex="26"></select>
+                        <span asp-validation-for="ACTIVIDAD" class="text-danger"></span>
+                    </div>
+                 </div>
+
+                 <div class="row">
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="PERSONA_CONTACTO" class="control-label labels"></label>
+                        <input asp-for="PERSONA_CONTACTO" class="form-control inputs" tabindex="27" />
+                        <span asp-validation-for="PERSONA_CONTACTO" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="CUENTA_CONTABLE_TRES_DIGITOS" class="control-label labels"></label>
+                        <input asp-for="CUENTA_CONTABLE_TRES_DIGITOS" class="form-control inputs" tabindex="28" maxlength="3"/>
+                        <span asp-validation-for="CUENTA_CONTABLE_TRES_DIGITOS" class="text-danger"></span>
+                    </div>
+                 </div>
+
+                <div class="row">
+                    
+                    <div class="form-group col-lg-3 col-md-3 col-xs-3">
+                        <label asp-for="CREAR_RECIBO" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="CREAR_RECIBO" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="CREAR_RECIBO" class="text-danger"></span>
+                     </div>
+
+                     <div class="form-group col-lg-3 col-md-3 col-xs-3">
+                        <label asp-for="NO_FACTURAS" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="NO_FACTURAS" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="NO_FACTURAS" class="text-danger"></span>
+                     </div>
+
+                     <div class="form-group col-lg-3 col-md-3 col-xs-3">
+                        <label asp-for="ACEPTA_FACTURA_ELECTRONICA" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="ACEPTA_FACTURA_ELECTRONICA" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="ACEPTA_FACTURA_ELECTRONICA" class="text-danger"></span>
+                     </div>
+                     
+                     <div class="form-group col-lg-3 col-md-3 col-xs-3">
+                        <label asp-for="NO_VENDER" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="NO_VENDER" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="NO_VENDER" class="text-danger"></span>
+                     </div>
+
+                </div>
+
+                <div class="row">
+                    
+                    <div class="form-group col-lg-3 col-md-3 col-xs-4">
+                        <label asp-for="NO_IMPRIMIR_EN_LISTADOS" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="NO_IMPRIMIR_EN_LISTADOS" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="NO_IMPRIMIR_EN_LISTADOS" class="text-danger"></span>
+                     </div>
+
+                     <div class="form-group col-lg-3 col-md-3 col-xs-4">
+                        <label asp-for="CESION_DATOS" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="CESION_DATOS" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="CESION_DATOS" class="text-danger"></span>
+                     </div>
+
+                     <div class="form-group col-lg-3 col-md-3 col-xs-4">
+                        <label asp-for="ENVIOO_COMUNICACIONES" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="ENVIOO_COMUNICACIONES" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="ENVIOO_COMUNICACIONES" class="text-danger"></span>
+                     </div>
+
+                     <div class="form-group col-lg-3 col-md-3 col-xs-4">
+                        <label asp-for="IVA" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="IVA" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="IVA" class="text-danger"></span>
+                     </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-lg-3 col-md-3 col-xs-4">
+                        <label asp-for="RECARGO" class="control-label labels"></label>
+                        <label class="switch">
+                            <input asp-for="RECARGO" class="form-control bool"/>
+                            <span class="slider"></span>
+                        </label>
+                        <span asp-validation-for="RECARGO" class="text-danger"></span>
+                     </div>
+
+                </div>
+                     
+             </div>
+             
+              @*///////////////////// Conceptos ///////////////////*@
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 Conceptos
             </div>
+            
 
         </div>
 
@@ -196,125 +374,5 @@
     </div>
 
 </div>
-
-        
-            
-            
-            
-            
-           
-            @*
-            <div class="form-group">
-                <label asp-for="CodigoPostal" class="control-label"></label>
-                <input asp-for="CodigoPostal" class="form-control" />
-                <span asp-validation-for="CodigoPostal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Poblacion" class="control-label"></label>
-                <input asp-for="Poblacion" class="form-control" />
-                <span asp-validation-for="Poblacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Provincia" class="control-label"></label>
-                <input asp-for="Provincia" class="form-control" />
-                <span asp-validation-for="Provincia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdPais" class="control-label"></label>
-                <select asp-for="IdPais" class ="form-control" asp-items="ViewBag.IdPais"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fax" class="control-label"></label>
-                <input asp-for="Fax" class="form-control" />
-                <span asp-validation-for="Fax" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Movil" class="control-label"></label>
-                <input asp-for="Movil" class="form-control" />
-                <span asp-validation-for="Movil" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Observaciones" class="control-label"></label>
-                <input asp-for="Observaciones" class="form-control" />
-                <span asp-validation-for="Observaciones" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaAlta" class="control-label"></label>
-                <input asp-for="FechaAlta" class="form-control" />
-                <span asp-validation-for="FechaAlta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Modificado" class="control-label"></label>
-                <input asp-for="Modificado" class="form-control" />
-                <span asp-validation-for="Modificado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DireccionWeb" class="control-label"></label>
-                <input asp-for="DireccionWeb" class="form-control" />
-                <span asp-validation-for="DireccionWeb" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MensajeEmergente" class="control-label"></label>
-                <input asp-for="MensajeEmergente" class="form-control" />
-                <span asp-validation-for="MensajeEmergente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CodigoProveedor" class="control-label"></label>
-                <input asp-for="CodigoProveedor" class="form-control" />
-                <span asp-validation-for="CodigoProveedor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NoFacturas" class="control-label"></label>
-                <input asp-for="NoFacturas" class="form-control" />
-                <span asp-validation-for="NoFacturas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrearRecibo" class="control-label"></label>
-                <input asp-for="CrearRecibo" class="form-control" />
-                <span asp-validation-for="CrearRecibo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AceptaFacturaElectronica" class="control-label"></label>
-                <input asp-for="AceptaFacturaElectronica" class="form-control" />
-                <span asp-validation-for="AceptaFacturaElectronica" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NoVender" class="control-label"></label>
-                <input asp-for="NoVender" class="form-control" />
-                <span asp-validation-for="NoVender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NoImprimirEnListados" class="control-label"></label>
-                <input asp-for="NoImprimirEnListados" class="form-control" />
-                <span asp-validation-for="NoImprimirEnListados" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CesionDatos" class="control-label"></label>
-                <input asp-for="CesionDatos" class="form-control" />
-                <span asp-validation-for="CesionDatos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EnviooComunicaciones" class="control-label"></label>
-                <input asp-for="EnviooComunicaciones" class="form-control" />
-                <span asp-validation-for="EnviooComunicaciones" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CuentaContableTresDigitos" class="control-label"></label>
-                <input asp-for="CuentaContableTresDigitos" class="form-control" />
-                <span asp-validation-for="CuentaContableTresDigitos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdentificacionFiscal" class="control-label"></label>
-                <input asp-for="IdentificacionFiscal" class="form-control" />
-                <span asp-validation-for="IdentificacionFiscal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>*@
-        
-
+         
+         

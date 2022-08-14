@@ -602,7 +602,139 @@ hr.sep-3::after {
     width: 100%;
 }
 
+/* bools */
+.switch .bool {
+    display: none;
+}
 
+.switch {
+    width: 60px;
+    height: 30px;
+    position: relative;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 30px;
+    box-shadow: 0 0 0 2px #777, 0 0 4px #777;
+    cursor: pointer;
+    border: 4px solid transparent;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #777;
+        border-radius: 30px;
+        transform: translateX(-30px);
+        /*translateX(-(w-h))*/
+        transition: 0.2s;
+    }
+
+.bool:checked + .slider:before {
+    transform: translateX(30px);
+    /*translateX(w-h)*/
+    background-color: limeGreen;
+}
+
+.bool:checked + .slider {
+    box-shadow: 0 0 0 2px limeGreen, 0 0 8px limeGreen;
+}
+
+.switch200 .slider:before {
+    width: 200%;
+    transform: translateX(-82px);
+    /*translateX(-(w-h))*/
+}
+
+.switch200 .bool:checked + .slider:before {
+    background-color: red;
+}
+
+.switch200 .bool:checked + .slider {
+    box-shadow: 0 0 0 2px red, 0 0 8px red;
+}
+/* bools */
+
+
+/* Loader */
+.loader {
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border-top: 5px solid #e74c3c;
+    position: relative;
+    animation: load 2s linear infinite;
+    background-color: var(--azul);
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+    z-index: 999;
+}
+
+    .loader::before, .loader::after {
+        content: '';
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        box-sizing: border-box;
+        border-radius: 50%;
+    }
+
+    .loader::before {
+        border-top: 5px solid #e67e22;
+        transform: rotate(120deg);
+    }
+
+    .loader::after {
+        border-top: 5px solid #3498db;
+        transform: rotate(240deg);
+    }
+
+    .loader span {
+        position: absolute;
+        font-size: small;
+        width: 100px;
+        height: 100px;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
+        animation: a2 2s linear infinite;
+    }
+
+@keyframes load {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes a2 {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+/* Loader */
+
+.hide{
+    display: none !important;
+}
+
+.obligatorio:before {
+    content: "* ";
+    color: red;
+}
 
 
 

@@ -33,7 +33,9 @@ function CargarClientes(msgdatanotfound) {
 
         BodyTable.innerHTML = contenido;
         IdiomaTabla("#datatableIndexClientes");
-        $('#datatableIndexClientes').DataTable();
+        let tableIndexCliente = $('#datatableIndexClientes').DataTable();
+        tableIndexCliente.order([0, 'desc']).draw();
+        
 
     });
 
@@ -102,4 +104,29 @@ $("#CodigoPostal").on("keypress", function myfunction(e) {
         e.preventDefault();
     
 });
+
+$('#identificacion_fiscal').keyup(function () {
+    this.value = UpperCase(this.value);
+});
+
+$('#poblacion').keyup(function () {
+    this.value = UpperCase(this.value);
+});
+
+$('#provincia').keyup(function () {
+    this.value = UpperCase(this.value);
+});
+
+$('#email_principal').keyup(function () {
+    this.value = LowerCase(this.value);
+});
+
+$('#iban').keyup(function () {
+    this.value = UpperCase(this.value);
+});
+
+$('#banco').keyup(function () {
+    this.value = UpperCase(this.value);
+});
+
 

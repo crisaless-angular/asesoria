@@ -71,6 +71,10 @@ namespace Web.Views.Clientes
         {
             ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
             ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
+            ViewData["TIPO_CLIENTE"] = _UnitOfWork.TipoClienteRepository.GetAll();
+            ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
+            ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
+            ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
             ViewData["Title"] = "Crear un cliente";
             return View();
         }
@@ -80,22 +84,61 @@ namespace Web.Views.Clientes
         {
             ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
             ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
-            
+            ViewData["TIPO_CLIENTE"] = _UnitOfWork.TipoClienteRepository.GetAll();
+            ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
+            ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
+            ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
+
+            bool Save = false;
+
+            if (model.IBAN != null && !Utilidades.Utilidades.ValidateIban(model.IBAN))
+            {
+                ModelState.AddModelError("", "Campo IBAN no es valido");
+                ModelState.AddModelError("IBAN", "El IBAN no es valido");
+            }
+
+            try
+            {
+
+                bool CodigoContabilidad = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoContabilidad == model.CODIGO_CONTABILIDAD).Count() > 0;
+                
+                if(CodigoContabilidad)
+                {
+                    ModelState.AddModelError("", "Campo código contabilidad no es valido");
+                    ModelState.AddModelError("CODIGO_CONTABILIDAD", "El código contabilidad ya existe");
+                }
+
+                if (!ModelState.IsValid)
+                    return View(model);
+
+                _UnitOfWork.ClienteRepository.Add(Cast_Cliente_ViewCliente(model));
+                _UnitOfWork.Save();
+                model.CODIGO_CLIENTE = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoContabilidad == model.CODIGO_CONTABILIDAD).FirstOrDefault().CodigoCliente;
+                Save = true;
+            }
+            catch(Exception e)
+            {
+                ModelState.AddModelError("", e.Message.ToString());
+            }
+
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.IBAN != null)
+            if (model.EMAILPRINCIPAL != null && Save)
             {
-                if (!Utilidades.Utilidades.ValidateIban(model.IBAN))
-                {
-                    ModelState.AddModelError("", "Campo IBAN no es valido");
-                    ModelState.AddModelError("IBAN", "El IBAN no es valido");
-                    ViewData["Title"] = "Crear un cliente";
-                    return View(model);
-                }
+                _UnitOfWork.ClienteEmailRepository.Add(Cast_ClienteMail_ViewCliente(model));
+                _UnitOfWork.Save();
+            }
+
+            if(model.IBAN != null && Save)
+            {
+                _UnitOfWork.ClienteCuentaRepository.Add(Cast_ClienteCuenta_ViewCliente(model));
+                _UnitOfWork.Save();
             }
 
             return RedirectToAction("Index", "Clientes");
+            
+
         }
 
         public IActionResult CargarClientes()
@@ -136,6 +179,74 @@ namespace Web.Views.Clientes
             return View();
         }
 
+        public Cliente Cast_Cliente_ViewCliente(ClientesViewModel model)
+        {
+            Cliente cliente = new Cliente()
+            {
+                CodigoContabilidad = model.CODIGO_CONTABILIDAD,
+                IdIdentificacionFiscal = int.Parse(model.TIPO_IDENTIFICACION_FISCAL),
+                NombreFiscal = model.NOMBRE_FISCAL,
+                NombreComercial = model.NOMBRE_COMERCIAL,
+                Domicilio = model.DOMICILIO,
+                CodigoPostal = model.CODIGO_POSTAL,
+                Poblacion = model.POBLACION,
+                Provincia = model.PROVINCIA,
+                IdPais = int.Parse(model.PAIS),
+                Telefono = model.TELEFONO,
+                Movil = model.MOVIL,
+                Observaciones = model.OBSERVACIONES,
+                FechaAlta = model.FECHA_ALTA,
+                Modificado = DateTime.Now,
+                DireccionWeb = model.DIRECCION_WEB,
+                MensajeEmergente = model.MENSAJE_EMERGENTE,
+                CodigoProveedor = model.CODIGO_PROVEEDOR,
+                NoFacturas = model.NO_FACTURAS,
+                CrearRecibo = model.CREAR_RECIBO,
+                AceptaFacturaElectronica = model.ACEPTA_FACTURA_ELECTRONICA,
+                NoVender = model.NO_VENDER,
+                NoImprimirEnListados = model.NO_IMPRIMIR_EN_LISTADOS,
+                CesionDatos = model.CESION_DATOS,
+                EnviooComunicaciones = model.ENVIOO_COMUNICACIONES,
+                CuentaContableTresDigitos = model.CUENTA_CONTABLE_TRES_DIGITOS,
+                IdentificacionFiscal = model.IDENTIFICACION_FISCAL,
+                IdFormaPago = model.FORMA_PAGO,
+                IdTipoCliente = int.Parse(model.TIPO_CLIENTE),
+                IdActividad = int.Parse(model.ACTIVIDAD),
+                Iva = model.IVA,
+                Recargo = model.RECARGO,
+                Agente = int.Parse(model.AGENTE),
+                PersonaContacto = model.PERSONA_CONTACTO
+            };
+
+            return cliente;
+            
+        }
+
+        public ClienteEmail Cast_ClienteMail_ViewCliente(ClientesViewModel model)
+        {
+            ClienteEmail ClienteMail = new ClienteEmail()
+            {
+                IdCliente = model.CODIGO_CLIENTE,
+                Email = model.EMAILPRINCIPAL,
+                Activo = true
+            };
+
+            return ClienteMail;
+        }
+
+        public ClienteCuenta Cast_ClienteCuenta_ViewCliente(ClientesViewModel model)
+        {
+            ClienteCuenta clienteCuenta = new ClienteCuenta()
+            {
+                Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
+                Iban = model.IBAN.Replace(" ", ""),
+                Banco = model.BANCO,
+                IdCliente = model.CODIGO_CLIENTE,
+                Activa = true
+            };
+
+            return clienteCuenta;
+        }
 
     }
 

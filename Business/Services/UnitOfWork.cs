@@ -19,10 +19,49 @@ namespace Web.Business.Services
         public IGenericRepository<Auditorium> _Auditoria;
         public IGenericRepository<Paise> _Paises;
         public IGenericRepository<TipoIdentificacionFiscal> _TipoIdentificacionFiscal;
-        
+        public IGenericRepository<FormasPago> _FormasPago;
+        public IGenericRepository<Actividad> _Actividad;
+        public IGenericRepository<ClienteCuenta> _ClienteCuenta;
+
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
+        }
+
+        public IGenericRepository<ClienteCuenta> ClienteCuentaRepository
+        {
+            get
+            {
+                if (this._ClienteCuenta == null)
+                    this._ClienteCuenta = new GenericRepository<ClienteCuenta>(_context);
+
+                return _ClienteCuenta;
+            }
+
+        }
+
+        public IGenericRepository<Actividad> ActividadRepository
+        {
+            get
+            {
+                if (this._Actividad == null)
+                    this._Actividad = new GenericRepository<Actividad>(_context);
+
+                return _Actividad;
+            }
+
+        }
+
+        public IGenericRepository<FormasPago> FormasPagoRepository
+        {
+            get
+            {
+                if (this._FormasPago == null)
+                    this._FormasPago = new GenericRepository<FormasPago>(_context);
+
+                return _FormasPago;
+            }
+
         }
 
         public IGenericRepository<TipoIdentificacionFiscal> TipoIdentificacionFiscalRepository

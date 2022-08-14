@@ -58,20 +58,6 @@ function getnumIBAN(letra) {
     return ls_letras.search(letra) + 10;
 }
 
-
-function actualizarFactura() {
-
-    let tabla = $('.datatable').DataTable();
-    let data = tabla.row($('.btn-actualizarFactura').parent().data()).data();
-    let Nfactura = data[0];
-
-    window.location.href = "/Facturas/VerEditar?NFactura=" + Nfactura;
-
-}
-
-
-
-
 function verFactura(Nfactura) {
 
     let iframe = "";
@@ -135,20 +121,7 @@ function GenerarFacturaEditada(IdFactura, iva, formapago, Pagada) {
 
 //correcto('Cliente asociado correctamente a la factura.');
 
-
-function ObtenerNumeroFactura() {
-    let tabla = $('.datatable').DataTable();
-    let data = tabla.row($('.btn-ObtenerIdCliente').parent().data()).data();
-    return data[0];
-}
-
 $(document).ready(function () {
-
-    $("[name='CrearFactura']").on('click', function () {
-        if ($('.idcliente').val() === null) {
-            alert('Debe seleccionar un cliente');
-        }
-    });
 
     $('.datatable tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected'))
@@ -242,6 +215,10 @@ function UpperCase(valor) {
     return valor.toUpperCase();
 }
 
+function LowerCase(valor) {
+    return valor.toLowerCase();
+}
+
 function ValidateEmail(email) {
 
     let regexEmail = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
@@ -249,7 +226,13 @@ function ValidateEmail(email) {
     return result;
 }
 
+function MostrarLoader() {
+    $(".loader").removeClass("hide")
+}
 
+function NoMostrarLoader() {
+    $(".loader").addClass("hide");
+}
 
 
 
