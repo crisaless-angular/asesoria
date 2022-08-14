@@ -96,7 +96,7 @@ namespace Web.Models
 
         [Required(ErrorMessage = "El Email es obligatorio")]
         [Display(Name = "Email")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress, ErrorMessage = "El formato de email no es correcto")]
         [EmailAddress]
         public string EMAILPRINCIPAL { get; set; }
 
