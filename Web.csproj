@@ -53,6 +53,13 @@
   <ItemGroup>
     <Folder Include="Business\Repositories\" />
     <Folder Include="Rotativa\" />
+    <Folder Include="Views\Clientes\partials\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

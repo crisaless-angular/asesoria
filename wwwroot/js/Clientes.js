@@ -43,8 +43,8 @@ function CargarClientes(msgdatanotfound) {
 
 function Detalle(element)
 {
-    //console.log(element);
-    correcto("Aún sin funcionalidad");
+    window.location = "/Clientes/Detalle?codigoContabilidad=" + element;
+    /*correcto("Aún sin funcionalidad");*/
 }
 
 function enviarDatos() {
@@ -129,5 +129,9 @@ $('#iban').keyup(function () {
 $('#banco').keyup(function () {
     this.value = UpperCase(this.value);
 });
+
+/*detalle*/
+
+/*detalle*/
 
 

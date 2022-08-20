@@ -15,6 +15,7 @@
     --AzulFondo: #2196f3;
     --FondoInputs: rgba(183, 213, 212, 0.3);
     --ColorInputs: #555;
+    --CajasDetalle: #b0bec5;
 }
 
 body {
@@ -97,7 +98,7 @@ thead {
     padding: 10px;
 }
 
-.col {
+.columna {
     height: 250px;
     text-align: center;
     cursor: pointer;
@@ -106,13 +107,13 @@ thead {
 }
 
 /*Cambiar opacidad en imagenes*/
-.col:not(:last-child):hover{
+.columna:not(:last-child):hover {
     opacity: 1;
 }
 
-.col > h3 > span {
+.columna > h3 > span {
     color: var(--amarilointenso);
-    font-family: 'Bebas Neue', cursive;        
+    font-family: 'Bebas Neue', cursive;
     font-weight: bolder;
 }
 
@@ -122,7 +123,7 @@ thead {
     margin-top: 15px;
 }
 
-.clientes > .col:nth-child(1) {
+.clientes > .columna:nth-child(1) {
     background: url(../images/clientes.png) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -131,7 +132,7 @@ thead {
     color: var(--blanco);
 }
 
-.clientes > .col:nth-child(2) {
+.clientes > .columna:nth-child(2) {
     background: url(../images/crearcliente.png) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -140,7 +141,7 @@ thead {
     color: var(--blanco);
 }
 
-.clientes > .col:nth-child(3) {
+.clientes > .columna:nth-child(3) {
     background: url(../images/Informesclientes.png) no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -149,7 +150,7 @@ thead {
     color: var(--blanco);
 }
 
-.clientes > .col:not(:last-child){
+.clientes > .columna:not(:last-child) {
     margin-right: 15px;
 }
 
@@ -574,6 +575,7 @@ hr.sep-3::after {
 
     #volver_arriba:hover {
         transform: scale(1.1);
+        cursor:pointer;
     }
 
     #volver_arriba:active {
@@ -736,5 +738,83 @@ hr.sep-3::after {
     color: red;
 }
 
+/*Detalle cliente*/
+.caja-detalle {
+    height: auto;
+}
+.cajas-detalle {
+    min-height: 200px;
+    height: 200px;
+    border: solid 1px var(--CajasDetalle);
+    text-align:center;
+    padding: 2em;
+}
+.cajas-detalle {
+    margin:5px;
+}
+
+.cajas-detalle:hover {
+    -webkit-box-shadow: 0px 2px 7px 2px var(--azul);
+    -moz-box-shadow: 0px 2px 7px 2px var(--azul);
+    box-shadow: 0px 2px 7px 2px var(--azul);
+}
+.cajas-detalle > h3{
+    font-weight: 900;
+    font-family:Consolas;
+    color: var(--azul);
+}
+
+.cajas-detalle > .src-general {
+    content: url('../icons/house-fill.svg');
+    width: 80px;
+}
+.cajas-detalle > .src-otros {
+    content: url('../icons/credit-card-2-front-fill.svg');
+    width: 80px;
+}
+.cajas-detalle > .src-conceptos {
+    content: url('../icons/bank2.svg');
+    width: 80px;
+}
+.cajas-detalle > .src-documentos {
+    content: url('../icons/archive-fill.svg');
+    width: 80px;
+}
+
+/*ButtonCard*/
+.card-button {
+    transform: translate(50%, 50%);
+    width: 100px;
+    border-radius: 1rem;
+    border: none;
+    background-color: var(--azul);
+    color: #fff;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    opacity: 0;
+    position: relative;
+    left: 20%;
+    transition: 0.3s ease-out;
+}
+
+.cajas-detalle:hover .card-button {
+    transform: translate(-60%, 50%);
+    opacity: 1;
+    cursor: pointer;
+}
+/*ButtonCard*/
+
+/*modals*/
+.modal-title {
+    font-weight: 900;
+    font-family: Consolas;
+    color: var(--azul);
+}
+
+.btn-guardar {
+    background: var(--azul);
+}
+
+/*Detalle cliente*/
 
 

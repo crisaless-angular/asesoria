@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -24,13 +25,16 @@ namespace Web.Views.Clientes
         private readonly ILeerExcel _LeerExcel;
         private readonly IAuditoria _Auditoria;
         private readonly UserManager<IdentityUser> _userManager;
+        private IConfigurationRoot _ConfigRoot;
 
-        public ClientesController(IUnitOfWork UnitOfWork, ILeerExcel LeerExcel, IAuditoria Auditoria, UserManager<IdentityUser> userManager)
+        public ClientesController(IUnitOfWork UnitOfWork, ILeerExcel LeerExcel, IAuditoria Auditoria,
+            UserManager<IdentityUser> userManager, IConfiguration configRoot)
         {
             this._UnitOfWork = UnitOfWork;
             this._LeerExcel = LeerExcel;
             this._Auditoria = Auditoria;
             this._userManager = userManager;
+            this._ConfigRoot = (IConfigurationRoot)configRoot;
         }
 
         public IActionResult Index()
@@ -173,13 +177,30 @@ namespace Web.Views.Clientes
             return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
         }
 
-        public IActionResult Detalle(int IdCliente)
+        public IActionResult Detalle(string codigoContabilidad)
         {
-            string Usuario = _userManager.GetUserName(User);
-            _Auditoria.GuardarAuditoria(new AuditoriaModel() { Accion = $"Accesso a detalle cliente: {IdCliente}", Fecha = DateTime.Now, Usuario = Usuario});
+            IEnumerable<Cliente> Findcliente = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoContabilidad == codigoContabilidad);
+            Cliente cliente = null;
+            
+            if(Findcliente.Count() > 0)
+            {
+                cliente = Findcliente.FirstOrDefault();
 
-            ViewData["Title"] = "Detalle del cliente";
-            return View();
+                string Usuario = _userManager.GetUserName(User);
+                _Auditoria.GuardarAuditoria(new AuditoriaModel() { Accion = $"Accesso a detalle cliente: {cliente.CodigoContabilidad}", Fecha = DateTime.Now, Usuario = Usuario });
+            }
+            else
+                return RedirectToAction("Index", "Clientes");
+
+            ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
+            ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
+            ViewData["TIPO_CLIENTE"] = _UnitOfWork.TipoClienteRepository.GetAll();
+            ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
+            ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
+            ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
+            ViewData["Title"] = $"Detalle del cliente: {(cliente.NombreComercial == null ? cliente.NombreFiscal : cliente.NombreComercial)}";
+            
+            return View(Cast_ViewCliente_Cliente(cliente));
         }
 
         public Cliente Cast_Cliente_ViewCliente(ClientesViewModel model)
@@ -250,6 +271,48 @@ namespace Web.Views.Clientes
 
             return clienteCuenta;
         }
+
+        public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
+        {
+            
+            ClientesViewModel cliente = new ClientesViewModel() 
+            {
+                CODIGO_CLIENTE = model.CodigoCliente,
+                CODIGO_CONTABILIDAD = model.CodigoContabilidad,
+                TIPO_IDENTIFICACION_FISCAL = model.IdIdentificacionFiscal == null ? ReturnNoData() : model.IdIdentificacionFiscal.ToString(),
+                NOMBRE_FISCAL = model.NombreFiscal,
+                NOMBRE_COMERCIAL = model.NombreComercial,
+                DOMICILIO = model.Domicilio,
+                CODIGO_POSTAL = model.CodigoPostal,
+                POBLACION = model.Poblacion,
+                PROVINCIA = model.Provincia,
+                PAIS = model.IdPais.ToString(),
+                TELEFONO = model.Telefono,
+                MOVIL = model.Movil,
+                OBSERVACIONES = model.Observaciones,
+                FECHA_ALTA = model.FechaAlta.Value,
+                MODIFICADO = model.Modificado.Value,
+                DIRECCION_WEB = model.DireccionWeb,
+                MENSAJE_EMERGENTE = model.MensajeEmergente,
+                CODIGO_PROVEEDOR = model.CodigoProveedor,
+                NO_FACTURAS = model.NoFacturas.Value,
+                CREAR_RECIBO = model.CrearRecibo.Value,
+                ACEPTA_FACTURA_ELECTRONICA = model.AceptaFacturaElectronica.Value,
+                NO_VENDER = model.NoVender.Value,
+                NO_IMPRIMIR_EN_LISTADOS = model.NoImprimirEnListados.Value,
+                CESION_DATOS = model.CesionDatos.Value,
+                ENVIOO_COMUNICACIONES = model.EnviooComunicaciones.Value,
+                CUENTA_CONTABLE_TRES_DIGITOS = model.CuentaContableTresDigitos,
+                IDENTIFICACION_FISCAL = model.IdentificacionFiscal
+            };
+
+            return cliente;
+        }
+
+        public string ReturnNoData()
+        {
+            return "No datos";
+        } 
 
     }
 
