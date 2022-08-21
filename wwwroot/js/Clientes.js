@@ -82,6 +82,12 @@ function enviarDatos() {
 $("#save-new-cliente").on('click', function () {
     correcto("Aún sin funcionalidad");
     //$("#form-new-client").submit();
+
+    $.post("mensajeInstantaneo?mensaje=guardar", function (data) {
+
+    });
+
+    
 });
 
 $('#volver_arriba').click(function () {

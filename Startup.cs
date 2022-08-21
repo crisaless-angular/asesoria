@@ -18,6 +18,7 @@ using Web.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Web.Utilidades;
 
 namespace BA002.Web
 {
@@ -62,6 +63,8 @@ namespace BA002.Web
                 PositionClass = ToastPositions.TopRight
             });
 
+            services.AddSignalR();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -96,6 +99,7 @@ namespace BA002.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<NotificacionesHub>("/notificaciones");
             });
 
             Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa");

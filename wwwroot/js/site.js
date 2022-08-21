@@ -234,5 +234,18 @@ function NoMostrarLoader() {
     $(".loader").addClass("hide");
 }
 
+/*SignalR*/
+var connectionSignalr = new signalR.HubConnectionBuilder().withUrl("/notificaciones").build();
+connectionSignalr.start().then(function () {
+    /*console.log("connected");*/
+}).catch(function (err) {
+    return console.error(err.toString());
+});
+
+connectionSignalr.on("RecibirMensaje", function (message) {
+    console.log(message);
+});
+/*SignalR*/
+
 
 

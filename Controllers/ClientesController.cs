@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 using Web.Business.Interfaces;
 using Web.Data;
 using Web.Models;
+using Web.Utilidades;
 
 namespace Web.Views.Clientes
 {
@@ -26,15 +28,17 @@ namespace Web.Views.Clientes
         private readonly IAuditoria _Auditoria;
         private readonly UserManager<IdentityUser> _userManager;
         private IConfigurationRoot _ConfigRoot;
+        private IHubContext<NotificacionesHub> _hubContext;
 
         public ClientesController(IUnitOfWork UnitOfWork, ILeerExcel LeerExcel, IAuditoria Auditoria,
-            UserManager<IdentityUser> userManager, IConfiguration configRoot)
+            UserManager<IdentityUser> userManager, IConfiguration configRoot, IHubContext<NotificacionesHub> hubContext)
         {
             this._UnitOfWork = UnitOfWork;
             this._LeerExcel = LeerExcel;
             this._Auditoria = Auditoria;
             this._userManager = userManager;
             this._ConfigRoot = (IConfigurationRoot)configRoot;
+            _hubContext = hubContext;
         }
 
         public IActionResult Index()
@@ -312,7 +316,15 @@ namespace Web.Views.Clientes
         public string ReturnNoData()
         {
             return "No datos";
-        } 
+        }
+
+        [HttpPost]
+        public async void mensajeInstantaneo(string mensaje)
+        {
+            //envio mesaje realtime
+            await _hubContext.Clients.All.SendAsync("RecibirMensaje", mensaje);
+            //envio mesaje realtime
+        }
 
     }
 
