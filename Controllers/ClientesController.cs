@@ -326,6 +326,12 @@ namespace Web.Views.Clientes
             //envio mesaje realtime
         }
 
+        [HttpPost]
+        public async void GDriveModule()
+        {
+            Gdrive.Coonnect();
+        }
+
     }
 
 }
