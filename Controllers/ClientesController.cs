@@ -329,7 +329,8 @@ namespace Web.Views.Clientes
         [HttpPost]
         public async void GDriveModule()
         {
-            Gdrive.Coonnect();
+            _ = await Gdrive.GuardarArchivo();
+            Gdrive.ListararchivosGdrive();
         }
 
     }
