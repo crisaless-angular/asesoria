@@ -11,6 +11,9 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Web.Business;
+using Web.Business.Interfaces;
+using Web.Data;
 
 namespace Web.Utilidades
 {
@@ -56,11 +59,13 @@ namespace Web.Utilidades
         {
             var uploadString = "Test";
             var fileName = "ploadFileString.txt";
+            string CarpetaPrincipal = variables.CarpetaPrincipalGdrive;
+            
             // Upload file Metadata
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
                 Name = fileName,
-                Parents = new List<string>() { "1lnmBDWOLJSadhj9akmfo717HD6JwOy6m" }  // folder to upload the file to
+                Parents = new List<string>() { CarpetaPrincipal }  // folder to upload the file to
             };
 
             var fsSource = new MemoryStream(Encoding.UTF8.GetBytes(uploadString ?? ""));
@@ -79,6 +84,27 @@ namespace Web.Utilidades
             }
             // the file id of the new file we created
             uploadedFileId = request.ResponseBody?.Id;
+            
+            return true;
+        }
+
+        public static Task<bool> CrearCarpeta(string NombreCarpeta)
+        {
+            string CarpetaPrincipal = variables.CarpetaPrincipalGdrive;
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = NombreCarpeta,
+                MimeType = "application/vnd.google-apps.folder",
+                Parents = new List<string>() { CarpetaPrincipal }
+            };
+
+            // Create a new folder on drive.
+            var request = Coonnect().Result.Files.Create(fileMetadata);
+            request.Fields = "id";
+            var file = request.Execute();
+            
+            // Prints the created folder id.
+           // file.Id
             
             return true;
         }

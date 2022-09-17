@@ -32,6 +32,7 @@ namespace Web.Data
         public virtual DbSet<ClienteCuenta> ClienteCuentas { get; set; }
         public virtual DbSet<ClienteDireccione> ClienteDirecciones { get; set; }
         public virtual DbSet<ClienteEmail> ClienteEmails { get; set; }
+        public virtual DbSet<Configuracione> Configuraciones { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<EstadosTicket> EstadosTickets { get; set; }
         public virtual DbSet<FormasPago> FormasPagos { get; set; }
@@ -43,7 +44,7 @@ namespace Web.Data
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TipoCliente> TipoClientes { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
@@ -404,6 +405,15 @@ namespace Web.Data
                     .WithMany(p => p.ClienteEmails)
                     .HasForeignKey(d => d.IdCliente)
                     .HasConstraintName("FK_CLIENTE_EMAILS_CLIENTES");
+            });
+
+            modelBuilder.Entity<Configuracione>(entity =>
+            {
+                entity.HasKey(e => e.IdConfiguracion);
+
+                entity.Property(e => e.Descripcion).HasMaxLength(300);
+
+                entity.Property(e => e.NombreConfiguracion).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Empresa>(entity =>

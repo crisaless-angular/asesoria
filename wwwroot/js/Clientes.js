@@ -87,9 +87,10 @@ $("#save-new-cliente").on('click', function () {
 
     });
 
-    $.post("GDriveModule", function () {
+    //Ejemplo llamada a Gdrive
+    //$.post("GDriveModule", function () {
 
-    });
+    //});
 
     
 });

@@ -17,6 +17,7 @@ namespace Web.Business.Interfaces
         IGenericRepository<FormasPago> FormasPagoRepository { get; }
         IGenericRepository<Actividad> ActividadRepository { get; }
         IGenericRepository<ClienteCuenta> ClienteCuentaRepository { get; }
+        IGenericRepository<Configuracione> ConfiguracionRepository { get; }
         void Save();
 
     }

@@ -329,8 +329,15 @@ namespace Web.Views.Clientes
         [HttpPost]
         public async void GDriveModule()
         {
-            _ = await Gdrive.GuardarArchivo();
-            Gdrive.ListararchivosGdrive();
+            Configuracione ConfiguracionGdrive = _UnitOfWork.ConfiguracionRepository.GetAll().Where(x => x.NombreConfiguracion == "GDrive").FirstOrDefault();
+
+            if (ConfiguracionGdrive != null && ConfiguracionGdrive.Activa == true)
+            {
+                //_ = await Gdrive.GuardarArchivo();
+                //_ = await Gdrive.CrearCarpeta("Prueba");
+                Gdrive.ListararchivosGdrive();
+            }
+            
         }
 
     }

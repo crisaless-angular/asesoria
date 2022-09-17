@@ -22,10 +22,23 @@ namespace Web.Business.Services
         public IGenericRepository<FormasPago> _FormasPago;
         public IGenericRepository<Actividad> _Actividad;
         public IGenericRepository<ClienteCuenta> _ClienteCuenta;
+        public IGenericRepository<Configuracione> _Configuracion;
 
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
+        }
+
+        public IGenericRepository<Configuracione> ConfiguracionRepository
+        {
+            get
+            {
+                if (this._Configuracion == null)
+                    this._Configuracion = new GenericRepository<Configuracione>(_context);
+
+                return _Configuracion;
+            }
+
         }
 
         public IGenericRepository<ClienteCuenta> ClienteCuentaRepository
