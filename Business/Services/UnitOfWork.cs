@@ -21,7 +21,7 @@ namespace Web.Business.Services
         public IGenericRepository<TipoIdentificacionFiscal> _TipoIdentificacionFiscal;
         public IGenericRepository<FormasPago> _FormasPago;
         public IGenericRepository<Actividad> _Actividad;
-        public IGenericRepository<ClienteCuenta> _ClienteCuenta;
+        public IGenericRepository<Cuenta> _Cuenta;
         public IGenericRepository<Configuracione> _Configuracion;
 
         public UnitOfWork(AsesoriaContext context)
@@ -41,14 +41,14 @@ namespace Web.Business.Services
 
         }
 
-        public IGenericRepository<ClienteCuenta> ClienteCuentaRepository
+        public IGenericRepository<Cuenta> CuentaRepository
         {
             get
             {
-                if (this._ClienteCuenta == null)
-                    this._ClienteCuenta = new GenericRepository<ClienteCuenta>(_context);
+                if (this._Cuenta == null)
+                    this._Cuenta = new GenericRepository<Cuenta>(_context);
 
-                return _ClienteCuenta;
+                return _Cuenta;
             }
 
         }

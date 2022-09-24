@@ -61,8 +61,6 @@ namespace Web.Views.Clientes
 
                             select new ClientesViewModel()
                             {
-                                CODIGO_CONTABILIDAD = clientes.CodigoContabilidad,
-                                NOMBRE_FISCAL = clientes.NombreFiscal,
                                 NOMBRE_COMERCIAL = clientes.NombreComercial,
                                 MOVIL = clientes.Movil,
                                 EMAILPRINCIPAL = EmailCliente.Email,
@@ -110,21 +108,13 @@ namespace Web.Views.Clientes
 
             try
             {
-
-                bool CodigoContabilidad = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoContabilidad == model.CODIGO_CONTABILIDAD).Count() > 0;
                 
-                if(CodigoContabilidad)
-                {
-                    ModelState.AddModelError("", "Campo código contabilidad no es valido");
-                    ModelState.AddModelError("CODIGO_CONTABILIDAD", "El código contabilidad ya existe");
-                }
-
                 if (!ModelState.IsValid)
                     return View(model);
 
                 _UnitOfWork.ClienteRepository.Add(Cast_Cliente_ViewCliente(model));
                 _UnitOfWork.Save();
-                model.CODIGO_CLIENTE = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoContabilidad == model.CODIGO_CONTABILIDAD).FirstOrDefault().CodigoCliente;
+                model.CODIGO_CLIENTE = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == model.CODIGO_CLIENTE).FirstOrDefault().CodigoCliente;
                 Save = true;
             }
             catch(Exception e)
@@ -141,11 +131,11 @@ namespace Web.Views.Clientes
                 _UnitOfWork.Save();
             }
 
-            if(model.IBAN != null && Save)
-            {
-                _UnitOfWork.ClienteCuentaRepository.Add(Cast_ClienteCuenta_ViewCliente(model));
-                _UnitOfWork.Save();
-            }
+            //if(model.IBAN != null && Save)
+            //{
+            //    _UnitOfWork.CuentaRepository.Add(Cast_ClienteCuenta_ViewCliente(model));
+            //    _UnitOfWork.Save();
+            //}
 
             return RedirectToAction("Index", "Clientes");
             
@@ -181,9 +171,9 @@ namespace Web.Views.Clientes
             return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
         }
 
-        public IActionResult Detalle(string codigoContabilidad)
+        public IActionResult Detalle(int CodigoCliente)
         {
-            IEnumerable<Cliente> Findcliente = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoContabilidad == codigoContabilidad);
+            IEnumerable<Cliente> Findcliente = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == CodigoCliente);
             Cliente cliente = null;
             
             if(Findcliente.Count() > 0)
@@ -191,7 +181,7 @@ namespace Web.Views.Clientes
                 cliente = Findcliente.FirstOrDefault();
 
                 string Usuario = _userManager.GetUserName(User);
-                _Auditoria.GuardarAuditoria(new AuditoriaModel() { Accion = $"Accesso a detalle cliente: {cliente.CodigoContabilidad}", Fecha = DateTime.Now, Usuario = Usuario });
+                _Auditoria.GuardarAuditoria(new AuditoriaModel() { Accion = $"Accesso a detalle cliente: {cliente.CodigoCliente}", Fecha = DateTime.Now, Usuario = Usuario });
             }
             else
                 return RedirectToAction("Index", "Clientes");
@@ -202,7 +192,7 @@ namespace Web.Views.Clientes
             ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
             ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
             ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
-            ViewData["Title"] = $"Detalle del cliente: {(cliente.NombreComercial == null ? cliente.NombreFiscal : cliente.NombreComercial)}";
+            //ViewData["Title"] = $"Detalle del cliente: {(cliente.NombreCompleto == null ? cliente.NombreCompleto : cliente.NombreComercial)}";
             
             return View(Cast_ViewCliente_Cliente(cliente));
         }
@@ -211,9 +201,7 @@ namespace Web.Views.Clientes
         {
             Cliente cliente = new Cliente()
             {
-                CodigoContabilidad = model.CODIGO_CONTABILIDAD,
                 IdIdentificacionFiscal = int.Parse(model.TIPO_IDENTIFICACION_FISCAL),
-                NombreFiscal = model.NOMBRE_FISCAL,
                 NombreComercial = model.NOMBRE_COMERCIAL,
                 Domicilio = model.DOMICILIO,
                 CodigoPostal = model.CODIGO_POSTAL,
@@ -229,21 +217,15 @@ namespace Web.Views.Clientes
                 MensajeEmergente = model.MENSAJE_EMERGENTE,
                 CodigoProveedor = model.CODIGO_PROVEEDOR,
                 NoFacturas = model.NO_FACTURAS,
-                CrearRecibo = model.CREAR_RECIBO,
                 AceptaFacturaElectronica = model.ACEPTA_FACTURA_ELECTRONICA,
-                NoVender = model.NO_VENDER,
-                NoImprimirEnListados = model.NO_IMPRIMIR_EN_LISTADOS,
                 CesionDatos = model.CESION_DATOS,
                 EnviooComunicaciones = model.ENVIOO_COMUNICACIONES,
-                CuentaContableTresDigitos = model.CUENTA_CONTABLE_TRES_DIGITOS,
                 IdentificacionFiscal = model.IDENTIFICACION_FISCAL,
                 IdFormaPago = model.FORMA_PAGO,
                 IdTipoCliente = int.Parse(model.TIPO_CLIENTE),
                 IdActividad = int.Parse(model.ACTIVIDAD),
                 Iva = model.IVA,
-                Recargo = model.RECARGO,
-                Agente = int.Parse(model.AGENTE),
-                PersonaContacto = model.PERSONA_CONTACTO
+                Agente = int.Parse(model.AGENTE)
             };
 
             return cliente;
@@ -262,19 +244,19 @@ namespace Web.Views.Clientes
             return ClienteMail;
         }
 
-        public ClienteCuenta Cast_ClienteCuenta_ViewCliente(ClientesViewModel model)
-        {
-            ClienteCuenta clienteCuenta = new ClienteCuenta()
-            {
-                Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
-                Iban = model.IBAN.Replace(" ", ""),
-                Banco = model.BANCO,
-                IdCliente = model.CODIGO_CLIENTE,
-                Activa = true
-            };
+        //public Cuenta Cast_ClienteCuenta_ViewCliente(ClientesViewModel model)
+        //{
 
-            return clienteCuenta;
-        }
+        //    Cuenta Cuenta = new Cuenta()
+        //    {
+        //        Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
+        //        Iban = model.IBAN.Replace(" ", ""),
+        //        Banco = model.BANCO,
+        //        Activa = true
+        //    };
+
+        //    return Cuenta;
+        //}
 
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
@@ -282,9 +264,7 @@ namespace Web.Views.Clientes
             ClientesViewModel cliente = new ClientesViewModel() 
             {
                 CODIGO_CLIENTE = model.CodigoCliente,
-                CODIGO_CONTABILIDAD = model.CodigoContabilidad,
                 TIPO_IDENTIFICACION_FISCAL = model.IdIdentificacionFiscal == null ? ReturnNoData() : model.IdIdentificacionFiscal.ToString(),
-                NOMBRE_FISCAL = model.NombreFiscal,
                 NOMBRE_COMERCIAL = model.NombreComercial,
                 DOMICILIO = model.Domicilio,
                 CODIGO_POSTAL = model.CodigoPostal,
@@ -300,14 +280,16 @@ namespace Web.Views.Clientes
                 MENSAJE_EMERGENTE = model.MensajeEmergente,
                 CODIGO_PROVEEDOR = model.CodigoProveedor,
                 NO_FACTURAS = model.NoFacturas.Value,
-                CREAR_RECIBO = model.CrearRecibo.Value,
                 ACEPTA_FACTURA_ELECTRONICA = model.AceptaFacturaElectronica.Value,
-                NO_VENDER = model.NoVender.Value,
-                NO_IMPRIMIR_EN_LISTADOS = model.NoImprimirEnListados.Value,
                 CESION_DATOS = model.CesionDatos.Value,
                 ENVIOO_COMUNICACIONES = model.EnviooComunicaciones.Value,
-                CUENTA_CONTABLE_TRES_DIGITOS = model.CuentaContableTresDigitos,
-                IDENTIFICACION_FISCAL = model.IdentificacionFiscal
+                IDENTIFICACION_FISCAL = model.IdentificacionFiscal,
+                NOMBRE_COMPLETO = model.NombreCompleto,
+                APELLIDO_UNO = model.ApellidoUno,
+                APELLIDO_DOS = model.ApellidoDos,
+                FECHA_CONTRATACION_TH = model.FechaContratacionTh.Value,
+                FECHA_ALTA_ACTIVIDAD = model.FechaAltaActividad.Value
+
             };
 
             return cliente;

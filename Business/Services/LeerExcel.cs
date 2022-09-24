@@ -33,10 +33,8 @@ namespace Web.Business.Services
 
                     Cliente cliente = new Cliente()
                     {
-                        CodigoContabilidad = cells[0] == "Null"? "NULL" : cells[0],
                         IdentificacionFiscal = cells[2] == "Null" ? "NULL" : cells[2],
                         IdFormaPago = cells[3] == "Null" ? 5 : int.Parse(cells[3].Split('-')[0]),
-                        NombreFiscal = cells[4] == "Null" ? "NULL" : cells[4],
                         NombreComercial = cells[6] == "Null" ? "NULL" : cells[6],
                         Domicilio = cells[8] == "Null" ? "NULL" : cells[8],
                         CodigoPostal = cells[10] == "Null" ? "NULL" : cells[10],
@@ -46,9 +44,7 @@ namespace Web.Business.Services
                         Provincia = cells[14] == "Null" ? "NULL" : cells[14],
                         Movil = cells[20] == "Null" ? "NULL" : cells[20],
                         IdActividad = cells[21] == "Null" ? 1 : int.Parse(cells[21].ToString().Substring(1)),
-                        PersonaContacto = cells[22] == "Null" ? "NULL" : cells[22],
                         Iva = cells[23] == "Null" ? false : cells[23].ToLower() == "si" ? false : true,
-                        Recargo = cells[25] == "Null" ? false : cells[25].ToLower() == "si" ? false : true,
                         FechaAlta = cells[30] == "Null" ? DateTime.Now : DateTime.Parse(cells[30])
                     };
 

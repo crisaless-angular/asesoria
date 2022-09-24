@@ -124,5 +124,20 @@ namespace Web.Models
 
         [Display(Name = "Persona de contacto")]
         public string PERSONA_CONTACTO { get; set; }
+        
+        [Display(Name = "Nombre")]
+        public string NOMBRE_COMPLETO { get; set; }
+        
+        [Display(Name = "Apellido uno")]
+        public string APELLIDO_UNO { get; set; }
+        
+        [Display(Name = "Apellido dos")]
+        public string APELLIDO_DOS { get; set; }
+        
+        [Display(Name = "Fecha de contratación TH")]
+        public DateTime FECHA_CONTRATACION_TH { get; set; }
+        
+        [Display(Name = "Fecha de actividad")]
+        public DateTime FECHA_ALTA_ACTIVIDAD { get; set; }
     }
 }

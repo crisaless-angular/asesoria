@@ -17,7 +17,6 @@ function CargarClientes(msgdatanotfound) {
         $(data).each(function (index, items) {
             
             contenido += "<tr class='tr'>";
-            contenido += "<td>" + (items.codigO_CONTABILIDAD == null ? MsgNodata : items.codigO_CONTABILIDAD) + "</td>";
             contenido += "<td class='bigword'>" + (items.nombrE_FISCAL == null ? MsgNodata : items.nombrE_FISCAL) + "</td>";
             contenido += "<td class='bigword'>" + (items.nombrE_COMERCIAL == null ? MsgNodata : items.nombrE_COMERCIAL) + "</td>";
             contenido += "<td>" + (items.movil == null ? MsgNodata : items.movil) + "</td>";

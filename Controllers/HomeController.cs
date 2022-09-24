@@ -26,7 +26,7 @@ namespace BA002.Web.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }

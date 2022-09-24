@@ -12,23 +12,69 @@
     <hr />
     <br />
 
-    <table class="table nowrap" id="datatableIndexClientes" style="width:100%">
-        <thead>
-            <tr class="tr">
-                <th scope="col">Código contabilidad</th>
-                <th scope="col">Nombre fiscal</th>
-                <th scope="col">Nombre comercial</th>
-                <th scope="col">Móvil</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">N.I.F.</th>
-                <th scope="col">Agente</th>
-                <th scope="col">Tipo de Cliente</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody id="IndexdatosClientes">
-        </tbody>
-    </table>
+    <div class="row">
+
+        <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 boxFilters">
+
+            <div>
+                <p class="boxTitle">Tipo cliente</p>
+
+                <div class="options">
+
+                    <label class="cl-checkbox">
+                      <input type="checkbox">
+                      <span>Autónomos</span>
+                    </label>
+
+                    <label class="cl-checkbox">
+                      <input type="checkbox">
+                      <span>Empresa</span>
+                    </label>
+
+                </div>
+                
+            </div>
+
+            <div>
+                <p class="boxTitle">Ordenar</p>
+
+                <div class="options">
+
+                    <label class="radio-inline">
+                        <input class="radio_orden" type="radio" name="orden" value="Ascendente" checked> Ascendente
+                    </label>
+
+                    <label class="radio-inline">
+                        <input class="radio_orden" type="radio" name="orden" value="Descendente"> Descendente
+                    </label>
+
+                </div>
+                
+
+            </div>
+
+        </div>
+    
+        <table class="table nowrap col-sm-12 col-md-10 col-lg-10 col-xl-10" id="datatableIndexClientes">
+            <thead>
+                <tr class="tr">
+                    <th scope="col">Código contabilidad</th>
+                    <th scope="col">Nombre fiscal</th>
+                    <th scope="col">Nombre comercial</th>
+                    <th scope="col">Móvil</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">N.I.F.</th>
+                    <th scope="col">Agente</th>
+                    <th scope="col">Tipo de Cliente</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="IndexdatosClientes">
+            </tbody>
+        </table>
+
+    </div>
+    
 
 </div>
 
@@ -38,9 +84,9 @@
 
     <script>
 
-        $( document ).ready(function() {
-            CargarClientes("@variables.MsgNodata");
-        });
+        //$( document ).ready(function() {
+        //    CargarClientes("@variables.MsgNodata");
+        //});
 
     </script>
 

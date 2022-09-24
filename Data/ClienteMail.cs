@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Web.Data
 {
-    public partial class ClienteCuenta
+    public partial class ClienteMail
     {
         public int IdCliente { get; set; }
-        public int IdCuenta { get; set; }
+        public int IdMail { get; set; }
 
         public virtual Cliente IdClienteNavigation { get; set; }
-        public virtual Cuenta IdCuentaNavigation { get; set; }
+        public virtual Email IdMailNavigation { get; set; }
     }
 }

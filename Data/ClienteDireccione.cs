@@ -11,6 +11,6 @@ namespace Web.Data
         public string Descripcion { get; set; }
         public int? IdCliente { get; set; }
 
-        public virtual Cliente IdClienteNavigation { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

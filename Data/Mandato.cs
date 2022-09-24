@@ -9,7 +9,7 @@ namespace Web.Data
     {
         public Mandato()
         {
-            ClienteCuenta = new HashSet<ClienteCuenta>();
+            Cuenta = new HashSet<Cuenta>();
         }
 
         public int IdMandato { get; set; }
@@ -17,6 +17,6 @@ namespace Web.Data
         public DateTime? FechaFirma { get; set; }
         public bool? Activo { get; set; }
 
-        public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; }
+        public virtual ICollection<Cuenta> Cuenta { get; set; }
     }
 }
