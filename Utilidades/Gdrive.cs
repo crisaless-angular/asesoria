@@ -88,7 +88,7 @@ namespace Web.Utilidades
             return true;
         }
 
-        public static Task<bool> CrearCarpeta(string NombreCarpeta)
+        public static string CrearCarpeta(string NombreCarpeta)
         {
             string CarpetaPrincipal = variables.CarpetaPrincipalGdrive;
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
@@ -103,10 +103,7 @@ namespace Web.Utilidades
             request.Fields = "id";
             var file = request.Execute();
             
-            // Prints the created folder id.
-           // file.Id
-            
-            return true;
+            return file.Id;
         }
         
     }

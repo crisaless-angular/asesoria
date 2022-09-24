@@ -334,7 +334,7 @@ namespace Web.Views.Clientes
             if (ConfiguracionGdrive != null && ConfiguracionGdrive.Activa == true)
             {
                 //_ = await Gdrive.GuardarArchivo();
-                //_ = await Gdrive.CrearCarpeta("Prueba");
+                //string IdCarpetaCreada = Gdrive.CrearCarpeta("Prueba");
                 Gdrive.ListararchivosGdrive();
             }
             
