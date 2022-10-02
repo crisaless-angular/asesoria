@@ -51,25 +51,28 @@ namespace Web.Views.Clientes
         public List<ClientesViewModel> ObtenerClientesIndex()
         {
             return (from clientes in this._UnitOfWork.ClienteRepository.GetAll()
-                            join EmailCliente in this._UnitOfWork.ClienteEmailRepository.GetAll()
-                            on clientes.CodigoCliente equals EmailCliente.IdCliente
-                            join Agentes in this._UnitOfWork.AgenteRepository.GetAll().DefaultIfEmpty()
-                            on clientes.Agente equals Agentes.IdAgente
-                            join Tipocliente in this._UnitOfWork.TipoClienteRepository.GetAll().DefaultIfEmpty()
-                            on clientes.IdTipoCliente equals Tipocliente.IdTipoCliente
-                            where EmailCliente.Activo == true
+                    join EmailCliente in this._UnitOfWork.ClienteEmailRepository.GetAll()
+                    on clientes.CodigoCliente equals EmailCliente.IdCliente
+                    join Email in this._UnitOfWork.EmailRepository.GetAll().DefaultIfEmpty()
+                    on EmailCliente.IdMail equals Email.IdEmailCliente
+                    join Agentes in this._UnitOfWork.AgenteRepository.GetAll().DefaultIfEmpty()
+                    on clientes.Agente equals Agentes.IdAgente
+                    join Tipocliente in this._UnitOfWork.TipoClienteRepository.GetAll().DefaultIfEmpty()
+                    on clientes.IdTipoCliente equals Tipocliente.IdTipoCliente
+                    where Email.Activo == true
 
-                            select new ClientesViewModel()
-                            {
-                                NOMBRE_COMERCIAL = clientes.NombreComercial,
-                                MOVIL = clientes.Movil,
-                                EMAILPRINCIPAL = EmailCliente.Email,
-                                IDENTIFICACION_FISCAL = clientes.IdentificacionFiscal,
-                                AGENTE = Agentes.Agente1,
-                                TIPO_CLIENTE = Tipocliente.TipoCliente1
-                            }
+                    select new ClientesViewModel()
+                    {
+                        NOMBRE_COMPLETO = clientes.NombreCompleto,
+                        FECHA_CONTRATACION_TH = clientes.FechaContratacionTh.Value,
+                        MOVIL = clientes.Movil,
+                        EMAILPRINCIPAL = Email.Email1,
+                        IDENTIFICACION_FISCAL = clientes.IdentificacionFiscal,
+                        AGENTE = Agentes.Agente1,
+                        TIPO_CLIENTE = Tipocliente.TipoCliente1,
+                    }
 
-                            ).ToList();
+                            ).ToList().OrderBy(x => x.NOMBRE_COMPLETO).ToList();
 
         }
 
@@ -108,7 +111,7 @@ namespace Web.Views.Clientes
 
             try
             {
-                
+
                 if (!ModelState.IsValid)
                     return View(model);
 
@@ -117,7 +120,7 @@ namespace Web.Views.Clientes
                 model.CODIGO_CLIENTE = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == model.CODIGO_CLIENTE).FirstOrDefault().CodigoCliente;
                 Save = true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ModelState.AddModelError("", e.Message.ToString());
             }
@@ -127,8 +130,17 @@ namespace Web.Views.Clientes
 
             if (model.EMAILPRINCIPAL != null && Save)
             {
-                _UnitOfWork.ClienteEmailRepository.Add(Cast_ClienteMail_ViewCliente(model));
+                Email NewMail = Cast_ClienteMail_ViewCliente(model);
+                _UnitOfWork.EmailRepository.Add(NewMail);
                 _UnitOfWork.Save();
+
+                ClienteMail clienteEmail = new ClienteMail();
+                clienteEmail.IdCliente = model.CODIGO_CLIENTE;
+                clienteEmail.IdMail = NewMail.IdEmailCliente;
+
+                _UnitOfWork.ClienteEmailRepository.Add(clienteEmail);
+                _UnitOfWork.Save();
+
             }
 
             //if(model.IBAN != null && Save)
@@ -138,7 +150,7 @@ namespace Web.Views.Clientes
             //}
 
             return RedirectToAction("Index", "Clientes");
-            
+
 
         }
 
@@ -175,8 +187,8 @@ namespace Web.Views.Clientes
         {
             IEnumerable<Cliente> Findcliente = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == CodigoCliente);
             Cliente cliente = null;
-            
-            if(Findcliente.Count() > 0)
+
+            if (Findcliente.Count() > 0)
             {
                 cliente = Findcliente.FirstOrDefault();
 
@@ -193,7 +205,7 @@ namespace Web.Views.Clientes
             ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
             ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
             //ViewData["Title"] = $"Detalle del cliente: {(cliente.NombreCompleto == null ? cliente.NombreCompleto : cliente.NombreComercial)}";
-            
+
             return View(Cast_ViewCliente_Cliente(cliente));
         }
 
@@ -229,15 +241,15 @@ namespace Web.Views.Clientes
             };
 
             return cliente;
-            
+
         }
 
-        public ClienteEmail Cast_ClienteMail_ViewCliente(ClientesViewModel model)
+        public Email Cast_ClienteMail_ViewCliente(ClientesViewModel model)
         {
-            ClienteEmail ClienteMail = new ClienteEmail()
+            Email ClienteMail = new Email()
             {
-                IdCliente = model.CODIGO_CLIENTE,
-                Email = model.EMAILPRINCIPAL,
+                IdEmailCliente = model.CODIGO_CLIENTE,
+                Email1 = model.EMAILPRINCIPAL,
                 Activo = true
             };
 
@@ -260,8 +272,8 @@ namespace Web.Views.Clientes
 
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
-            
-            ClientesViewModel cliente = new ClientesViewModel() 
+
+            ClientesViewModel cliente = new ClientesViewModel()
             {
                 CODIGO_CLIENTE = model.CodigoCliente,
                 TIPO_IDENTIFICACION_FISCAL = model.IdIdentificacionFiscal == null ? ReturnNoData() : model.IdIdentificacionFiscal.ToString(),
@@ -319,7 +331,7 @@ namespace Web.Views.Clientes
                 //string IdCarpetaCreada = Gdrive.CrearCarpeta("Prueba");
                 Gdrive.ListararchivosGdrive();
             }
-            
+
         }
 
     }

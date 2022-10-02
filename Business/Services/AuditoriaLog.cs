@@ -9,7 +9,7 @@ namespace Web.Business.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private IConfigurationRoot _ConfigRoot;
-        
+
         public AuditoriaLog(IUnitOfWork unitOfWork, IConfiguration configRoot)
         {
             this._unitOfWork = unitOfWork;
@@ -21,7 +21,7 @@ namespace Web.Business.Services
 
             string Guardar = _ConfigRoot.GetSection("Auditoria:Auditar").Value.ToString();
 
-            if(Guardar.ToLower() == "true")
+            if (Guardar.ToLower() == "true")
             {
                 Auditorium Auditoria = new Auditorium()
                 {
@@ -37,8 +37,8 @@ namespace Web.Business.Services
             }
 
             return false;
-            
+
         }
-        
+
     }
 }

@@ -10,6 +10,7 @@ namespace Web.Data
         public Cliente()
         {
             ClienteCuenta = new HashSet<ClienteCuenta>();
+            ClienteDirecciones = new HashSet<ClienteDireccione>();
             ClienteMails = new HashSet<ClienteMail>();
             Tickets = new HashSet<Ticket>();
         }
@@ -52,13 +53,13 @@ namespace Web.Data
         public string CuotaMensual { get; set; }
 
         public virtual Agente AgenteNavigation { get; set; }
-        public virtual ClienteDireccione CodigoClienteNavigation { get; set; }
         public virtual Actividad IdActividadNavigation { get; set; }
         public virtual FormasPago IdFormaPagoNavigation { get; set; }
         public virtual TipoIdentificacionFiscal IdIdentificacionFiscalNavigation { get; set; }
         public virtual Paise IdPaisNavigation { get; set; }
         public virtual TipoCliente IdTipoClienteNavigation { get; set; }
         public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; }
+        public virtual ICollection<ClienteDireccione> ClienteDirecciones { get; set; }
         public virtual ICollection<ClienteMail> ClienteMails { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

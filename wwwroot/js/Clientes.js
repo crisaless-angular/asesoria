@@ -6,38 +6,94 @@ $(".crearcliente").on('click', function () {
     window.location.href = "/Clientes/Crear";
 });
 
-function CargarClientes(msgdatanotfound) {
+$("#OrderAscIndex").on('click', function () {
+    Filtrar("nombrE_COMPLETO", true)
+});
 
-    $.post("Clientes/ObtenerClientesIndex/", function (data) {
+$("#OrderDescIndex").on('click', function () {
+    Filtrar("nombrE_COMPLETO", false)
+});
 
-        let BodyTable = document.getElementById("IndexdatosClientes");
+async function Filtrar(campo, asc)
+{
+    let responseData = await ExtraerDatosClientes();
+    
+    //responseData = responseData.filter(function (i, campo) {
+    //    return campo.nombrE_COMPLETO === 'google';
+    //});
+
+    if (asc) {
+
+        responseData = responseData.sort(function (a, b) {
+            return (a["nombrE_COMPLETO"] > b["nombrE_COMPLETO"]) ? 1 : ((a["nombrE_COMPLETO"] < b["nombrE_COMPLETO"]) ? -1 : 0);
+        });
+
+    } else {
+
+        responseData = responseData.sort(function (a, b) {
+            return (b["nombrE_COMPLETO"] > a["nombrE_COMPLETO"]) ? 1 : ((b["nombrE_COMPLETO"] < a["nombrE_COMPLETO"]) ? -1 : 0);
+        });
+
+    }
+    
+    CargarTablaIndex(responseData, "No hay datos");
+}
+
+async function CargarClientes() {
+
+    let responseData = await ExtraerDatosClientes();
+    CargarTablaIndex(responseData, "No hay datos");
+    
+}
+
+function ExtraerDatosClientes()
+{ 
+   return $.post("Clientes/ObtenerClientesIndex/", function (data) { });   
+}
+
+function CargarTablaIndex(data, msgdatanotfound)
+{
+    
+    if (data != null)
+    {
+        let tableId = document.getElementById("datatableIndexClientes_wrapper");
+
+        if (tableId)
+            tableId.remove();
+
+        let table = '<table class="table nowrap col-sm-12 col-md-10 col-lg-10 col-xl-10" id="datatableIndexClientes">';
+        table += '<thead><tr class="tr"><th scope="col">Nombre</th><th scope="col">Fecha contratación TH</th>';
+        table += '<th scope="col">Móvil</th><th scope="col">E-mail</th><th scope="col">N.I.F.</th><th scope="col">Agente</th>';
+        table += '<th scope="col">Tipo de Cliente</th><th scope="col"></th></tr></thead>';
+        table += '<tbody id="IndexdatosClientes"></tbody></table>';    
+
+        $("#CuerpoIndex").append(table);
+             
+        BodyTable = $("#IndexdatosClientes");
         let contenido = "";
         let MsgNodata = msgdatanotfound;
-
+        
         $(data).each(function (index, items) {
             
             contenido += "<tr class='tr'>";
-            contenido += "<td class='bigword'>" + (items.nombrE_FISCAL == null ? MsgNodata : items.nombrE_FISCAL) + "</td>";
-            contenido += "<td class='bigword'>" + (items.nombrE_COMERCIAL == null ? MsgNodata : items.nombrE_COMERCIAL) + "</td>";
+            contenido += "<td class='bigword'>" + (items.nombrE_COMPLETO == null ? MsgNodata : items.nombrE_COMPLETO) + "</td>";
+            contenido += "<td class='bigword'>" + (items.fechA_CONTRATACION_TH == null ? MsgNodata : items.fechA_CONTRATACION_TH) + "</td>";
             contenido += "<td>" + (items.movil == null ? MsgNodata : items.movil) + "</td>";
             contenido += "<td class='bigword'>" + (items.emailprincipal == null ? MsgNodata : items.emailprincipal) + "</td>";
             contenido += "<td>" + (items.identificacioN_FISCAL == null ? MsgNodata : items.identificacioN_FISCAL) + "</td>";
             contenido += "<td>" + (items.agente == null ? MsgNodata : items.agente) + "</td>";
             contenido += "<td>" + (items.tipO_CLIENTE == null ? MsgNodata : items.tipO_CLIENTE) + "</td>";
-            
-            contenido += "<td class='col-md-2'><button onclick='Detalle(" + items.codigO_CONTABILIDAD +")' class='boton_primario'><span>Detalle</span></button></td>";
+
+            contenido += "<td class='col-md-2'><button onclick='Detalle(" + items.codigO_CONTABILIDAD + ")' class='boton_primario'><span>Detalle</span></button></td>";
             contenido += "</tr>";
 
         });
 
-        BodyTable.innerHTML = contenido;
         IdiomaTabla("#datatableIndexClientes");
-        let tableIndexCliente = $('#datatableIndexClientes').DataTable();
-        tableIndexCliente.order([0, 'desc']).draw();
-        
+        BodyTable.append(contenido);
 
-    });
-
+    }
+    
 }
 
 function Detalle(element)

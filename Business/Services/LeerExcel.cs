@@ -51,18 +51,18 @@ namespace Web.Business.Services
                     _unitOfWork.ClienteRepository.Add(cliente);
                     _unitOfWork.Save();
 
-                    ClienteEmail clienteMail = new ClienteEmail()
-                    {
-                        IdCliente = cliente.CodigoCliente,
-                        Email = cells[26],
-                        Activo = true
-                    };
-                    
-                    _unitOfWork.ClienteEmailRepository.Add(clienteMail);
+                    //ClienteEmail clienteMail = new ClienteEmail()
+                    //{
+                    //    IdCliente = cliente.CodigoCliente,
+                    //    Email = cells[26],
+                    //    Activo = true
+                    //};
+
+                    //_unitOfWork.ClienteEmailRepository.Add(clienteMail);
                     _unitOfWork.Save();
 
                     cells.Clear();
-                    
+
                 }
 
                 if (fila.GetCell(1) != null)
@@ -76,7 +76,7 @@ namespace Web.Business.Services
                     cells.Add("Null");
             }
 
-            
+
         }
 
 

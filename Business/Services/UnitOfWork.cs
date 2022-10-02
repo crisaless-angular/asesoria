@@ -12,7 +12,7 @@ namespace Web.Business.Services
         public IGenericRepository<AspNetUser> _Usuarios;
         public IGenericRepository<Empresa> _Empresa;
         public IGenericRepository<Cliente> _Cliente;
-        public IGenericRepository<ClienteEmail> _ClienteEmail;
+        public IGenericRepository<ClienteMail> _ClienteEmail;
         public IGenericRepository<AspNetUserToken> _UserToken;
         public IGenericRepository<Agente> _Agente;
         public IGenericRepository<TipoCliente> _TipoCliente;
@@ -23,6 +23,7 @@ namespace Web.Business.Services
         public IGenericRepository<Actividad> _Actividad;
         public IGenericRepository<Cuenta> _Cuenta;
         public IGenericRepository<Configuracione> _Configuracion;
+        public IGenericRepository<Email> _Email;
 
         public UnitOfWork(AsesoriaContext context)
         {
@@ -149,12 +150,12 @@ namespace Web.Business.Services
 
         }
 
-        public IGenericRepository<ClienteEmail> ClienteEmailRepository
+        public IGenericRepository<ClienteMail> ClienteEmailRepository
         {
             get
             {
                 if (this._ClienteEmail == null)
-                    this._ClienteEmail = new GenericRepository<ClienteEmail>(_context);
+                    this._ClienteEmail = new GenericRepository<ClienteMail>(_context);
 
                 return _ClienteEmail;
             }
@@ -193,6 +194,18 @@ namespace Web.Business.Services
                     this._Cliente = new GenericRepository<Cliente>(_context);
 
                 return _Cliente;
+            }
+
+        }
+
+        public IGenericRepository<Email> EmailRepository
+        {
+            get
+            {
+                if (this._Email == null)
+                    this._Email = new GenericRepository<Email>(_context);
+
+                return _Email;
             }
 
         }

@@ -20,12 +20,12 @@ namespace Web.Utilidades
     public class Gdrive
     {
         private const string PathToCredentials = @"credentials.json";
-        
+
         private async static Task<DriveService> Coonnect()
         {
 
             UserCredential credential;
-            
+
             await using (var stream = new FileStream(PathToCredentials, FileMode.Open, FileAccess.Read))
             {
                 // Requesting Authentication or loading previously stored authentication for userName
@@ -36,7 +36,7 @@ namespace Web.Utilidades
                         CancellationToken.None)
                     .Result;
             }
-                
+
             return new DriveService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential
@@ -60,7 +60,7 @@ namespace Web.Utilidades
             var uploadString = "Test";
             var fileName = "ploadFileString.txt";
             string CarpetaPrincipal = variables.CarpetaPrincipalGdrive;
-            
+
             // Upload file Metadata
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
@@ -84,7 +84,7 @@ namespace Web.Utilidades
             }
             // the file id of the new file we created
             uploadedFileId = request.ResponseBody?.Id;
-            
+
             return true;
         }
 
@@ -102,9 +102,9 @@ namespace Web.Utilidades
             var request = Coonnect().Result.Files.Create(fileMetadata);
             request.Fields = "id";
             var file = request.Execute();
-            
+
             return file.Id;
         }
-        
+
     }
 }

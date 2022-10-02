@@ -150,8 +150,7 @@ $(document).ready(function () {
         });
 
     });
-
-
+    
 });
 
 function IdiomaTabla(clase) {
@@ -178,6 +177,7 @@ function IdiomaTabla(clase) {
             }
         },
         responsive: true,
+        "searching": true
     });
 }
 

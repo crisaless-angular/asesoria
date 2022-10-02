@@ -19,7 +19,7 @@ namespace BA002.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private IUnitOfWork _unitofwork;
-        
+
         public HomeController(ILogger<HomeController> logger, IUnitOfWork unitofwork)
         {
             this._unitofwork = unitofwork;

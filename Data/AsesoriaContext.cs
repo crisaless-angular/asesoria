@@ -29,7 +29,6 @@ namespace Web.Data
         public virtual DbSet<Auditorium> Auditoria { get; set; }
         public virtual DbSet<CategoriaTicket> CategoriaTickets { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<Cliente1> Clientes1 { get; set; }
         public virtual DbSet<ClienteCuenta> ClienteCuentas { get; set; }
         public virtual DbSet<ClienteDireccione> ClienteDirecciones { get; set; }
         public virtual DbSet<ClienteMail> ClienteMails { get; set; }
@@ -47,7 +46,7 @@ namespace Web.Data
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TipoCliente> TipoClientes { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
@@ -194,9 +193,7 @@ namespace Web.Data
 
                 entity.ToTable("Cliente");
 
-                entity.Property(e => e.CodigoCliente)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("CODIGO_CLIENTE");
+                entity.Property(e => e.CodigoCliente).HasColumnName("CODIGO_CLIENTE");
 
                 entity.Property(e => e.AceptaFacturaElectronica).HasColumnName("ACEPTA_FACTURA_ELECTRONICA");
 
@@ -313,12 +310,6 @@ namespace Web.Data
                     .HasForeignKey(d => d.Agente)
                     .HasConstraintName("FK_Cliente_Agentes");
 
-                entity.HasOne(d => d.CodigoClienteNavigation)
-                    .WithOne(p => p.Cliente)
-                    .HasForeignKey<Cliente>(d => d.CodigoCliente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cliente_CLIENTE_DIRECCIONES");
-
                 entity.HasOne(d => d.IdActividadNavigation)
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.IdActividad)
@@ -343,115 +334,6 @@ namespace Web.Data
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.IdTipoCliente)
                     .HasConstraintName("FK_Cliente_TipoCliente");
-            });
-
-            modelBuilder.Entity<Cliente1>(entity =>
-            {
-                entity.HasKey(e => e.CodigoCliente);
-
-                entity.ToTable("CLIENTES");
-
-                entity.Property(e => e.CodigoCliente).HasColumnName("CODIGO_CLIENTE");
-
-                entity.Property(e => e.AceptaFacturaElectronica).HasColumnName("ACEPTA_FACTURA_ELECTRONICA");
-
-                entity.Property(e => e.Agente).HasColumnName("AGENTE");
-
-                entity.Property(e => e.CesionDatos).HasColumnName("CESION_DATOS");
-
-                entity.Property(e => e.CodigoPostal)
-                    .HasMaxLength(50)
-                    .HasColumnName("CODIGO_POSTAL");
-
-                entity.Property(e => e.CodigoProveedor)
-                    .HasMaxLength(100)
-                    .HasColumnName("CODIGO_PROVEEDOR");
-
-                entity.Property(e => e.CrearRecibo).HasColumnName("CREAR_RECIBO");
-
-                entity.Property(e => e.CuentaContableTresDigitos)
-                    .HasMaxLength(3)
-                    .HasColumnName("CUENTA_CONTABLE_TRES_DIGITOS");
-
-                entity.Property(e => e.DireccionWeb)
-                    .HasMaxLength(100)
-                    .HasColumnName("DIRECCION_WEB");
-
-                entity.Property(e => e.Domicilio)
-                    .HasMaxLength(500)
-                    .HasColumnName("DOMICILIO");
-
-                entity.Property(e => e.EnviooComunicaciones).HasColumnName("ENVIOO_COMUNICACIONES");
-
-                entity.Property(e => e.Fax)
-                    .HasMaxLength(50)
-                    .HasColumnName("FAX");
-
-                entity.Property(e => e.FechaAlta)
-                    .HasColumnType("datetime")
-                    .HasColumnName("FECHA_ALTA");
-
-                entity.Property(e => e.IdActividad).HasColumnName("ID_ACTIVIDAD");
-
-                entity.Property(e => e.IdFormaPago).HasColumnName("ID_FORMA_PAGO");
-
-                entity.Property(e => e.IdIdentificacionFiscal).HasColumnName("ID_IDENTIFICACION_FISCAL");
-
-                entity.Property(e => e.IdPais).HasColumnName("ID_PAIS");
-
-                entity.Property(e => e.IdTipoCliente).HasColumnName("ID_TIPO_CLIENTE");
-
-                entity.Property(e => e.IdentificacionFiscal)
-                    .HasMaxLength(200)
-                    .HasColumnName("IDENTIFICACION_FISCAL");
-
-                entity.Property(e => e.Iva).HasColumnName("IVA");
-
-                entity.Property(e => e.MensajeEmergente)
-                    .HasMaxLength(300)
-                    .HasColumnName("MENSAJE_EMERGENTE");
-
-                entity.Property(e => e.Modificado)
-                    .HasColumnType("datetime")
-                    .HasColumnName("MODIFICADO");
-
-                entity.Property(e => e.Movil)
-                    .HasMaxLength(50)
-                    .HasColumnName("MOVIL");
-
-                entity.Property(e => e.NoFacturas).HasColumnName("NO_FACTURAS");
-
-                entity.Property(e => e.NoImprimirEnListados).HasColumnName("NO_IMPRIMIR_EN_LISTADOS");
-
-                entity.Property(e => e.NoVender).HasColumnName("NO_VENDER");
-
-                entity.Property(e => e.NombreComercial)
-                    .HasMaxLength(100)
-                    .HasColumnName("NOMBRE_COMERCIAL");
-
-                entity.Property(e => e.NombreCompleto)
-                    .HasMaxLength(100)
-                    .HasColumnName("NOMBRE_COMPLETO");
-
-                entity.Property(e => e.Observaciones).HasColumnName("OBSERVACIONES");
-
-                entity.Property(e => e.PersonaContacto)
-                    .HasMaxLength(50)
-                    .HasColumnName("PERSONA_CONTACTO");
-
-                entity.Property(e => e.Poblacion)
-                    .HasMaxLength(50)
-                    .HasColumnName("POBLACION");
-
-                entity.Property(e => e.Provincia)
-                    .HasMaxLength(50)
-                    .HasColumnName("PROVINCIA");
-
-                entity.Property(e => e.Recargo).HasColumnName("RECARGO");
-
-                entity.Property(e => e.Telefono)
-                    .HasMaxLength(50)
-                    .HasColumnName("TELEFONO");
             });
 
             modelBuilder.Entity<ClienteCuenta>(entity =>
@@ -491,6 +373,11 @@ namespace Web.Data
                     .HasColumnName("DESCRIPCION");
 
                 entity.Property(e => e.IdCliente).HasColumnName("ID_CLIENTE");
+
+                entity.HasOne(d => d.IdClienteNavigation)
+                    .WithMany(p => p.ClienteDirecciones)
+                    .HasForeignKey(d => d.IdCliente)
+                    .HasConstraintName("FK_CLIENTE_DIRECCIONES_Cliente");
             });
 
             modelBuilder.Entity<ClienteMail>(entity =>

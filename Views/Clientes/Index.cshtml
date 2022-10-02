@@ -12,7 +12,7 @@
     <hr />
     <br />
 
-    <div class="row">
+    <div class="row" id="CuerpoIndex">
 
         <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 boxFilters">
 
@@ -41,11 +41,11 @@
                 <div class="options">
 
                     <label class="radio-inline">
-                        <input class="radio_orden" type="radio" name="orden" value="Ascendente" checked> Ascendente
+                        <input class="radio_orden" type="radio" name="orden" value="Ascendente" checked id="OrderAscIndex"> Ascendente
                     </label>
 
                     <label class="radio-inline">
-                        <input class="radio_orden" type="radio" name="orden" value="Descendente"> Descendente
+                        <input class="radio_orden" type="radio" name="orden" value="Descendente" id="OrderDescIndex"> Descendente
                     </label>
 
                 </div>
@@ -55,24 +55,6 @@
 
         </div>
     
-        <table class="table nowrap col-sm-12 col-md-10 col-lg-10 col-xl-10" id="datatableIndexClientes">
-            <thead>
-                <tr class="tr">
-                    <th scope="col">Código contabilidad</th>
-                    <th scope="col">Nombre fiscal</th>
-                    <th scope="col">Nombre comercial</th>
-                    <th scope="col">Móvil</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">N.I.F.</th>
-                    <th scope="col">Agente</th>
-                    <th scope="col">Tipo de Cliente</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody id="IndexdatosClientes">
-            </tbody>
-        </table>
-
     </div>
     
 
@@ -83,11 +65,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-
-        //$( document ).ready(function() {
-        //    CargarClientes("@variables.MsgNodata");
-        //});
-
+         $( document ).ready(function() {
+            CargarClientes();
+        });
     </script>
 
 }

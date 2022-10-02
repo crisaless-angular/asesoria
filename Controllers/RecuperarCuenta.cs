@@ -39,8 +39,8 @@ namespace Web.Controllers
         public async Task<string> RecuperarContraseña(string Email)
         {
             IdentityUser user = await _userManager.FindByEmailAsync(Email);
-            
-            if(user != null)
+
+            if (user != null)
             {
                 //JsonMail request = new JsonMail();
                 //request.email = Email;
@@ -50,9 +50,9 @@ namespace Web.Controllers
 
                 try
                 {
-                    
+
                     AspNetUserToken UserToken = _unitOfWork.UserTokenRepository.GetAll().Where(x => x.UserId == user.Id).FirstOrDefault();
-                    
+
                     if (UserToken != null)
                     {
                         _unitOfWork.UserTokenRepository.Delete(UserToken);
@@ -76,24 +76,24 @@ namespace Web.Controllers
                     return token;
 
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return "fail";
                 }
-                
+
 
                 return "ok";
             }
 
             return "fail";
-            
+
         }
 
         public IActionResult CambiarPassword(string token = "")
         {
             AspNetUserToken UserToken = _unitOfWork.UserTokenRepository.GetAll().Where(x => x.Value == token).FirstOrDefault();
-            
-            if(UserToken != null)
+
+            if (UserToken != null)
             {
                 ChangePassword Model = new ChangePassword() { UserId = UserToken.UserId };
 
@@ -118,7 +118,7 @@ namespace Web.Controllers
 
             IdentityUser user = await _userManager.FindByIdAsync(model.UserId);
             string TokenResetPassword = await _userManager.GeneratePasswordResetTokenAsync(user);
-            
+
             if (user != null)
             {
                 var result = await _userManager.ResetPasswordAsync(user, TokenResetPassword, model.NewPassword);
@@ -136,9 +136,9 @@ namespace Web.Controllers
                     _unitOfWork.UserTokenRepository.Delete(UserToken);
                     _unitOfWork.Save();
                 }
-                    
+
             }
-               
+
 
             return RedirectToAction("Index", "Home");
         }
