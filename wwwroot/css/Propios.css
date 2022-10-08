@@ -117,11 +117,21 @@ thead {
     border: 1px solid var(--pomelo);
     padding:0px;
     margin-right:10px;
+    height: 300px;
 }
 
 .options{
     padding-left: 0.3em;
 }
+
+#datatableIndexClientes {
+    width: 100% !important;
+}
+
+.selectindex{
+   margin-bottom: 10px;
+}
+
 
 /*Cambiar opacidad en imagenes*/
 .columna:not(:last-child):hover {
@@ -393,6 +403,10 @@ thead {
 
 table.dataTable.nowrap th, table.dataTable.nowrap td {
     white-space: normal !important;
+}
+
+#datatableIndexClientes_info, .dataTables_empty {
+    display: none;
 }
 
 hr.sep-3 {

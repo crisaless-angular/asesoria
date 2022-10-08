@@ -7,36 +7,124 @@ $(".crearcliente").on('click', function () {
 });
 
 $("#OrderAscIndex").on('click', function () {
-    Filtrar("nombrE_COMPLETO", true)
+    Filtrar();
 });
 
 $("#OrderDescIndex").on('click', function () {
-    Filtrar("nombrE_COMPLETO", false)
+    Filtrar();
 });
 
-async function Filtrar(campo, asc)
+$("#checkAutonomos").on('click', function () {
+    $("#checkEmpresa").prop('checked', false); 
+    Filtrar();
+});
+
+$("#checkEmpresa").on('click', function () {
+    $("#checkAutonomos").prop('checked', false); 
+    Filtrar();
+});
+
+$(".selectindex").on('change', function () {
+
+    if (this.value !== '0') {
+        $("#datatableIndexClientes_filter").css("display", "block");
+        Filtrar();
+    }
+    else 
+        $("#datatableIndexClientes_filter").css("display", "none");
+
+});
+
+//aQUI NO ENTRA
+$("#datatableIndexClientes_filter input").on('keyup', function () {
+    Filtrar();
+});
+
+async function Filtrar()
 {
     let responseData = await ExtraerDatosClientes();
-    
-    //responseData = responseData.filter(function (i, campo) {
-    //    return campo.nombrE_COMPLETO === 'google';
-    //});
 
-    if (asc) {
+    responseData = FiltrarCampo(responseData);
+    responseData = Filtarorden(responseData, $(".selectindex option:selected").text());
+   
+    CargarTablaIndex(responseData, "No hay datos");
+}
+
+function FiltrarCampo(responseData)
+{
+   
+    let autonomo = "#checkAutonomos";
+    let empresa = "#checkEmpresa";
+    let campo = "#datatableIndexClientes_filter"
+    let valor = "";
+
+    if ($(autonomo).prop("checked"))
+        valor = "Autónomo";
+    else if ($(empresa).prop("checked")) 
+        valor = "Empresa";
+
+
+    if ($(campo).val() !== "") {
+        responseData = responseData.filter(function (filtro, i) {
+            return filtro.tipO_CLIENTE === campo;
+        });
+    }
+
+    if (valor != "")
+    {
+        responseData = responseData.filter(function (filtro, i) {
+            return filtro.tipO_CLIENTE === valor;
+        });
+    }
+ 
+    return responseData;
+
+}
+
+function Filtarorden(responseData, campo)
+{
+
+    switch (campo) {
+        case "Nombre":
+            campo = "nombrE_COMPLETO";
+            break;
+        case "Contratación TH":
+            campo = "fechA_CONTRATACION_TH";
+            break;
+        case "Móvil":
+            campo = "movil";
+            break;
+        case "E-mail":
+            campo = "emailprincipal";
+            break;
+        case "N.I.F":
+            campo = "identificacioN_FISCAL";
+            break;
+        case "Agente":
+            campo = "agente";
+            break;
+        case "Tipo cliente":
+            campo = "tipO_CLIENTE";
+            break;
+    }
+    
+    let filter = "nombrE_COMPLETO";
+    if (campo !== "Selección")
+        filter = campo;
+    
+    if ($('#OrderDescIndex').is(':checked')) {
 
         responseData = responseData.sort(function (a, b) {
-            return (a["nombrE_COMPLETO"] > b["nombrE_COMPLETO"]) ? 1 : ((a["nombrE_COMPLETO"] < b["nombrE_COMPLETO"]) ? -1 : 0);
+            return (b[filter] > a[filter]) ? 1 : ((b[filter] < a[filter]) ? -1 : 0);
         });
 
     } else {
-
         responseData = responseData.sort(function (a, b) {
-            return (b["nombrE_COMPLETO"] > a["nombrE_COMPLETO"]) ? 1 : ((b["nombrE_COMPLETO"] < a["nombrE_COMPLETO"]) ? -1 : 0);
+            return (a[filter] > b[filter]) ? 1 : ((a[filter] < b[filter]) ? -1 : 0);
         });
-
     }
-    
-    CargarTablaIndex(responseData, "No hay datos");
+
+    return responseData;
 }
 
 async function CargarClientes() {
@@ -53,7 +141,7 @@ function ExtraerDatosClientes()
 
 function CargarTablaIndex(data, msgdatanotfound)
 {
-    
+    console.log(data);
     if (data != null)
     {
         let tableId = document.getElementById("datatableIndexClientes_wrapper");
@@ -67,7 +155,7 @@ function CargarTablaIndex(data, msgdatanotfound)
         table += '<th scope="col">Tipo de Cliente</th><th scope="col"></th></tr></thead>';
         table += '<tbody id="IndexdatosClientes"></tbody></table>';    
 
-        $("#CuerpoIndex").append(table);
+        $("#table-index").append(table);
              
         BodyTable = $("#IndexdatosClientes");
         let contenido = "";
@@ -91,6 +179,11 @@ function CargarTablaIndex(data, msgdatanotfound)
 
         IdiomaTabla("#datatableIndexClientes");
         BodyTable.append(contenido);
+
+        if ($(".selectindex").val() !== '0')
+            $("#datatableIndexClientes_filter").css("display", "block");
+        else
+            $("#datatableIndexClientes_filter").css("display", "none");
 
     }
     

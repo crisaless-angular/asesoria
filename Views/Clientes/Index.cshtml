@@ -17,17 +17,37 @@
         <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 boxFilters">
 
             <div>
+                <p class="boxTitle">Campo</p>
+
+                <div class="options">
+
+                    <select class="form-select selectindex" aria-label="Default select example">
+                      <option value="0" selected>Selección</option>
+                      <option value="1">Nombre</option>
+                      <option value="2">Contratación TH</option>
+                      <option value="3">Móvil</option>
+                      <option value="4">E-mail</option>
+                      <option value="5">N.I.F</option>
+                      <option value="6">Agente</option>
+                      <option value="7">Tipo cliente</option>
+                    </select>
+
+                </div>
+                
+            </div>
+
+            <div>
                 <p class="boxTitle">Tipo cliente</p>
 
                 <div class="options">
 
                     <label class="cl-checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" id="checkAutonomos">
                       <span>Autónomos</span>
                     </label>
 
                     <label class="cl-checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" id="checkEmpresa">
                       <span>Empresa</span>
                     </label>
 
@@ -54,6 +74,8 @@
             </div>
 
         </div>
+
+        <div id="table-index" class="col-sm-12 col-md-10 col-lg-10 col-xl-10"></div>
     
     </div>
     
