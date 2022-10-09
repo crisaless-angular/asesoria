@@ -27,18 +27,28 @@ $("#checkEmpresa").on('click', function () {
 $(".selectindex").on('change', function () {
 
     if (this.value !== '0') {
-        $("#datatableIndexClientes_filter").css("display", "block");
         Filtrar();
     }
-    else 
-        $("#datatableIndexClientes_filter").css("display", "none");
-
+      
 });
 
-//aQUI NO ENTRA
-$("#datatableIndexClientes_filter input").on('keyup', function () {
-    Filtrar();
+$(document).ready(function () {
+
+    let CampoBuscar = "<p id='bloqueBuscarIndex'><label> Buscar: <input type='text' id='BuscarIndex'/></label><button id='BtnBuscarIndex' class='boton_primario'><span>Buscar</span></button></p>";
+    $("#table-index").prepend(CampoBuscar);
+
+    $("#BtnBuscarIndex").hide();
+
+    $("#BuscarIndex").keyup(function () {
+        $("#BtnBuscarIndex").show();
+    });  
+
+    $("#BtnBuscarIndex").on('click', function () {
+        Filtrar();
+    });
+    
 });
+
 
 async function Filtrar()
 {
@@ -55,7 +65,7 @@ function FiltrarCampo(responseData)
    
     let autonomo = "#checkAutonomos";
     let empresa = "#checkEmpresa";
-    let campo = "#datatableIndexClientes_filter"
+    let campo = "#BuscarIndex"
     let valor = "";
 
     if ($(autonomo).prop("checked"))
@@ -65,9 +75,30 @@ function FiltrarCampo(responseData)
 
 
     if ($(campo).val() !== "") {
-        responseData = responseData.filter(function (filtro, i) {
-            return filtro.tipO_CLIENTE === campo;
-        });
+
+        let busqueda = $(campo).val();
+        let expresion = new RegExp(`${busqueda}.*`, "i");
+
+        if ($(".selectindex").val() === "0") {
+            responseData = responseData.filter(
+                x => expresion.test(x.tipO_CLIENTE)
+                    || expresion.test(x.nombrE_COMPLETO)
+                    || expresion.test(x.fechA_CONTRATACION_TH)
+                    || expresion.test(x.emailprincipal)
+                    || expresion.test(x.movil)
+                    || expresion.test(x.emailprincipal)
+                    || expresion.test(x.identificacioN_FISCAL)
+                    || expresion.test(x.agente)
+
+            );
+        } else
+        {
+            let CampoSeleccionado = ReturnCampoBd($(".selectindex option:selected").text());
+            responseData = responseData.filter(x => expresion.test(eval("x." + CampoSeleccionado)));
+        }
+
+       
+        
     }
 
     if (valor != "")
@@ -81,9 +112,8 @@ function FiltrarCampo(responseData)
 
 }
 
-function Filtarorden(responseData, campo)
+function ReturnCampoBd(campo)
 {
-
     switch (campo) {
         case "Nombre":
             campo = "nombrE_COMPLETO";
@@ -107,6 +137,15 @@ function Filtarorden(responseData, campo)
             campo = "tipO_CLIENTE";
             break;
     }
+
+    return campo;
+
+}
+
+function Filtarorden(responseData, campo)
+{
+
+    campo = ReturnCampoBd(campo);
     
     let filter = "nombrE_COMPLETO";
     if (campo !== "Selección")
@@ -165,7 +204,7 @@ function CargarTablaIndex(data, msgdatanotfound)
             
             contenido += "<tr class='tr'>";
             contenido += "<td class='bigword'>" + (items.nombrE_COMPLETO == null ? MsgNodata : items.nombrE_COMPLETO) + "</td>";
-            contenido += "<td class='bigword'>" + (items.fechA_CONTRATACION_TH == null ? MsgNodata : items.fechA_CONTRATACION_TH) + "</td>";
+            contenido += "<td class='bigword'>" + (items.fechA_CONTRATACION_TH == null ? MsgNodata : new Date(items.fechA_CONTRATACION_TH).toLocaleDateString("es-ES")) + "</td>";
             contenido += "<td>" + (items.movil == null ? MsgNodata : items.movil) + "</td>";
             contenido += "<td class='bigword'>" + (items.emailprincipal == null ? MsgNodata : items.emailprincipal) + "</td>";
             contenido += "<td>" + (items.identificacioN_FISCAL == null ? MsgNodata : items.identificacioN_FISCAL) + "</td>";
@@ -179,11 +218,6 @@ function CargarTablaIndex(data, msgdatanotfound)
 
         IdiomaTabla("#datatableIndexClientes");
         BodyTable.append(contenido);
-
-        if ($(".selectindex").val() !== '0')
-            $("#datatableIndexClientes_filter").css("display", "block");
-        else
-            $("#datatableIndexClientes_filter").css("display", "none");
 
     }
     

@@ -132,6 +132,23 @@ thead {
    margin-bottom: 10px;
 }
 
+#bloqueBuscarIndex {
+    position: absolute;
+    right:40px;
+    top: -30px;
+}
+
+#BuscarIndex {
+    border: 1px var(--amarilointenso) solid;
+}
+
+#BtnBuscarIndex {
+    margin-left: 5px;
+}
+
+#datatableIndexClientes_filter{
+    display:none;
+}
 
 /*Cambiar opacidad en imagenes*/
 .columna:not(:last-child):hover {
