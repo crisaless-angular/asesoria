@@ -41,12 +41,13 @@ namespace Web.Data
         public virtual DbSet<Mandato> Mandatos { get; set; }
         public virtual DbSet<NotaArchivo> NotaArchivos { get; set; }
         public virtual DbSet<Paise> Paises { get; set; }
+        public virtual DbSet<PersonasContacto> PersonasContactos { get; set; }
         public virtual DbSet<PrioridadTicket> PrioridadTickets { get; set; }
         public virtual DbSet<TickectNota> TickectNotas { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TipoCliente> TipoClientes { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
@@ -215,6 +216,10 @@ namespace Web.Data
                     .HasMaxLength(50)
                     .HasColumnName("CODIGO_POSTAL");
 
+                entity.Property(e => e.CodigoPostalActividad)
+                    .HasMaxLength(50)
+                    .HasColumnName("CODIGO_POSTAL_ACTIVIDAD");
+
                 entity.Property(e => e.CodigoProveedor)
                     .HasMaxLength(100)
                     .HasColumnName("CODIGO_PROVEEDOR");
@@ -230,6 +235,10 @@ namespace Web.Data
                 entity.Property(e => e.Domicilio)
                     .HasMaxLength(500)
                     .HasColumnName("DOMICILIO");
+
+                entity.Property(e => e.DomicilioActividad)
+                    .HasMaxLength(500)
+                    .HasColumnName("DOMICILIO_ACTIVIDAD");
 
                 entity.Property(e => e.EnviooComunicaciones).HasColumnName("ENVIOO_COMUNICACIONES");
 
@@ -258,6 +267,8 @@ namespace Web.Data
                 entity.Property(e => e.IdIdentificacionFiscal).HasColumnName("ID_IDENTIFICACION_FISCAL");
 
                 entity.Property(e => e.IdPais).HasColumnName("ID_PAIS");
+
+                entity.Property(e => e.IdPaisActividad).HasColumnName("ID_PAIS_ACTIVIDAD");
 
                 entity.Property(e => e.IdTipoCliente).HasColumnName("ID_TIPO_CLIENTE");
 
@@ -297,9 +308,17 @@ namespace Web.Data
                     .HasMaxLength(50)
                     .HasColumnName("POBLACION");
 
+                entity.Property(e => e.PoblacionActividad)
+                    .HasMaxLength(50)
+                    .HasColumnName("POBLACION_ACTIVIDAD");
+
                 entity.Property(e => e.Provincia)
                     .HasMaxLength(50)
                     .HasColumnName("PROVINCIA");
+
+                entity.Property(e => e.ProvinciaActividad)
+                    .HasMaxLength(50)
+                    .HasColumnName("PROVINCIA_ACTIVIDAD");
 
                 entity.Property(e => e.Telefono)
                     .HasMaxLength(50)
@@ -334,6 +353,11 @@ namespace Web.Data
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.IdTipoCliente)
                     .HasConstraintName("FK_Cliente_TipoCliente");
+
+                entity.HasOne(d => d.PersonaContactoNavigation)
+                    .WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.PersonaContacto)
+                    .HasConstraintName("FK_Cliente_PersonasContacto");
             });
 
             modelBuilder.Entity<ClienteCuenta>(entity =>
@@ -559,6 +583,19 @@ namespace Web.Data
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(200)
                     .HasColumnName("DESCRIPCION");
+            });
+
+            modelBuilder.Entity<PersonasContacto>(entity =>
+            {
+                entity.HasKey(e => e.IdPersonaContacto);
+
+                entity.ToTable("PersonasContacto");
+
+                entity.Property(e => e.Email).HasMaxLength(300);
+
+                entity.Property(e => e.Nombre).HasMaxLength(300);
+
+                entity.Property(e => e.Telefono).HasMaxLength(50);
             });
 
             modelBuilder.Entity<PrioridadTicket>(entity =>

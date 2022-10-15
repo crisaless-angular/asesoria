@@ -1015,3 +1015,12 @@ hr.sep-3::after {
     }
 
 /*Checkbox list*/
+
+#btnTipoCliente {
+    margin-top: 30px;
+    margin-left: -15px;
+}
+
+#btnTipoCliente > input {
+    cursor:pointer;
+}

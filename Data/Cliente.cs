@@ -51,6 +51,11 @@ namespace Web.Data
         public int? Iae { get; set; }
         public int? Cnae { get; set; }
         public string CuotaMensual { get; set; }
+        public string DomicilioActividad { get; set; }
+        public string CodigoPostalActividad { get; set; }
+        public string PoblacionActividad { get; set; }
+        public string ProvinciaActividad { get; set; }
+        public int? IdPaisActividad { get; set; }
 
         public virtual Agente AgenteNavigation { get; set; }
         public virtual Actividad IdActividadNavigation { get; set; }
@@ -58,6 +63,7 @@ namespace Web.Data
         public virtual TipoIdentificacionFiscal IdIdentificacionFiscalNavigation { get; set; }
         public virtual Paise IdPaisNavigation { get; set; }
         public virtual TipoCliente IdTipoClienteNavigation { get; set; }
+        public virtual PersonasContacto PersonaContactoNavigation { get; set; }
         public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; }
         public virtual ICollection<ClienteDireccione> ClienteDirecciones { get; set; }
         public virtual ICollection<ClienteMail> ClienteMails { get; set; }

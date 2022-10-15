@@ -46,6 +46,24 @@ $(document).ready(function () {
     $("#BtnBuscarIndex").on('click', function () {
         Filtrar();
     });
+
+    $("#NuevoTipoCliente").hide();
+
+    $("#btnTipoClienteInput").on('click', function () {
+
+        if ($("#TipoCliente").hasClass("mostrar"))
+        {
+            $("#TipoCliente").removeClass("mostrar");
+            $("#TipoCliente").hide();
+            $("#NuevoTipoCliente").show();
+        } else
+        {
+            $("#TipoCliente").addClass("mostrar");
+            $("#NuevoTipoCliente").hide();
+            $("#TipoCliente").show();
+        }
+        
+    });
     
 });
 

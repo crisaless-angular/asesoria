@@ -48,16 +48,24 @@
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     
                 <div class="row">
-                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                    <div class="form-group col-lg-2 col-md-2 col-xs-12">
                         <label asp-for="CODIGO_CLIENTE" class="control-label labels obligatorio"></label>
                         <input asp-for="CODIGO_CLIENTE" class="form-control inputs" tabindex="1" />
                         <span asp-validation-for="CODIGO_CLIENTE" class="text-danger"></span>
                     </div>
-                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                    <div id="NuevoTipoCliente" class="form-group col-lg-4 col-md-4 col-xs-10">
+                        <label asp-for="NUEVO_TIPO_CLIENTE" class="control-label labels"></label>
+                        <input asp-for="NUEVO_TIPO_CLIENTE" class="form-control inputs" tabindex="2"/>
+                        <span asp-validation-for="NUEVO_TIPO_CLIENTE" class="text-danger"></span>
+                    </div>
+                    <div id="TipoCliente" class="form-group col-lg-4 col-md-4 col-xs-10 mostrar">
                         <label asp-for="TIPO_CLIENTE" class="control-label labels"></label>
                         <select class="inputs selects" asp-for="TIPO_CLIENTE" asp-items="@(new SelectList(TipoClienteList, "IdTipoCliente", "TipoCliente1"))" tabindex="2"></select>
                         <span asp-validation-for="TIPO_CLIENTE" class="text-danger"></span>
                     </div>
+                    <div id="btnTipoCliente" class="form-group col-lg-1 col-md-1 col-xs-2">
+                        <input type="button" id="btnTipoClienteInput" value="+" />
+                     </div>
                     <div class="form-group col-lg-4 col-md-4 col-xs-12">
                         <label asp-for="AGENTE" class="control-label labels"></label>
                         <select class="inputs selects" asp-for="AGENTE" asp-items="@(new SelectList(AgenteList, "IdAgente", "Agente1"))" tabindex="3"></select>
@@ -131,6 +139,44 @@
                         <label asp-for="PAIS" class="control-label labels"></label>
                         <select class="inputs selects" asp-for="PAIS" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="13"></select>
                         <span asp-validation-for="PAIS" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group mt-5">
+                    <label asp-for="DOMICILIO_ACTIVIDAD" class="control-label labels"></label>
+                    <input asp-for="DOMICILIO_ACTIVIDAD" class="form-control inputs" tabindex="9"/>
+                    <span asp-validation-for="DOMICILIO_ACTIVIDAD" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="CODIGO_POSTAL_ACTIVIDAD" class="control-label labels"></label>
+                    <input id="CodigoPostal" asp-for="CODIGO_POSTAL_ACTIVIDAD" class="form-control inputs" tabindex="10" maxlength="5"/>
+                    <span asp-validation-for="CODIGO_POSTAL_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="POBLACION_ACTIVIDAD" class="control-label labels"></label>
+                        <input id="poblacion" asp-for="POBLACION_ACTIVIDAD" class="form-control inputs" tabindex="11"/>
+                        <span asp-validation-for="POBLACION_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="PROVINCIA_ACTIVIDAD" class="control-label labels"></label>
+                    <input id="provincia" asp-for="PROVINCIA_ACTIVIDAD" class="form-control inputs" tabindex="12"/>
+                    <span asp-validation-for="PROVINCIA_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="PAIS_ACTIVIDAD" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="PAIS_ACTIVIDAD" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="13"></select>
+                        <span asp-validation-for="PAIS_ACTIVIDAD" class="text-danger"></span>
                     </div>
 
                 </div>
