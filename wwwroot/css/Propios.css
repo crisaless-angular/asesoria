@@ -1063,7 +1063,19 @@ hr.sep-3::after {
     text-align: center;
 }
 
-.BtnSeleccionarPersona{
+.BtnSeleccionarPersona {
     width: 90px;
+    padding: 0px;
 }
+
+.BtnEliminarPersona {
+    width: 50px;
+    padding: 0px;
+}
+
+.tdPersona {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
 

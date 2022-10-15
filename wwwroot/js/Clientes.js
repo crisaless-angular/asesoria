@@ -113,7 +113,7 @@ $(document).ready(function () {
     $("#btnPersonaContacto").on('click', function () {
         cargarTablepersonas(JSON.parse(localStorage.getItem("PersonaContacto")));
     });
-    
+
 });
 
 function cargarTablepersonas(JsonData)
@@ -126,7 +126,8 @@ function cargarTablepersonas(JsonData)
         contenido += "<td class='bigword'>" + items.NombrePersona + "</td>";
         contenido += "<td class='bigword'>" + items.TelefonoPersona + "</td>";
         contenido += "<td>" + items.EmailPersona + "</td>";
-        contenido += "<td class='col-md-2'><button onclick='seleccionPersona(" + `"${items.NombrePersona}"`  + ")' class='boton_primario BtnSeleccionarPersona'><span>Seleccionar</span></button></td>";
+        contenido += "<td class='col-md-1 tdPersona'><button onclick='seleccionPersona(" + `"${items.NombrePersona}"` + ")' class='boton_primario BtnSeleccionarPersona'><span>Seleccionar</span></button></td>";
+        contenido += "<td class='col-md-1 tdPersona'><button onclick='quitarPersonaContacto(" + `"${items.TelefonoPersona}"` + ")' class='boton_primario BtnEliminarPersona'><span>X</span></button></td>";
         contenido += "</tr>";
 
     });
@@ -138,6 +139,21 @@ function seleccionPersona(nombre)
 {
     $("#InputPersonaContacto").val(nombre);
     $("#btnCerrarModalPersona").click();
+}
+
+function quitarPersonaContacto(telefono)
+{
+    let jsonPersona = JSON.parse(localStorage.getItem("PersonaContacto"));
+
+    jsonPersona.forEach(function (currentValue, index, arr) {
+        if (jsonPersona[index].TelefonoPersona == telefono) {
+            jsonPersona.splice(index, index);
+        }
+    })
+
+    localStorage.setItem("PersonaContacto", JSON.stringify(jsonPersona));
+    cargarTablepersonas(JSON.parse(localStorage.getItem("PersonaContacto")));
+
 }
 
 
@@ -355,7 +371,7 @@ function enviarDatos() {
 $("#save-new-cliente").on('click', function () {
     correcto("Aún sin funcionalidad");
     //$("#form-new-client").submit();
-
+    localStorage.removeItem("PersonaContacto");
     $.post("mensajeInstantaneo?mensaje=guardar", function (data) {
 
     });
