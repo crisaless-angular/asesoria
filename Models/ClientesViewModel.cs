@@ -139,5 +139,15 @@ namespace Web.Models
 
         [Display(Name = "Fecha de actividad")]
         public DateTime FECHA_ALTA_ACTIVIDAD { get; set; }
+
+        [Display(Name = "IAE")]
+        public string IAE { get; set; }
+
+        [Display(Name = "CNAE")]
+        public string CNAE { get; set; }
+
+        [Display(Name = "Cuota mensual")]
+        public string CUOTA_MENSUAL { get; set; }
+
     }
 }

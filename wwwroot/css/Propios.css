@@ -23,6 +23,10 @@ body {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .page {
     background: var(--blanco) !important;
     height: auto;
@@ -633,6 +637,7 @@ hr.sep-3::after {
     #volver_arriba:active {
         background-color: var(--azul);
     }
+
 
 .arrow-up {
     width: 0;
