@@ -150,6 +150,10 @@ thead {
     display:none;
 }
 
+.sorting{
+    pointer-events:none;
+}
+
 /*Cambiar opacidad en imagenes*/
 .columna:not(:last-child):hover {
     opacity: 1;
