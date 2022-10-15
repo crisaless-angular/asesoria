@@ -1024,3 +1024,46 @@ hr.sep-3::after {
 #btnTipoCliente > input {
     cursor:pointer;
 }
+
+#DivPersonaContacto, #DivVerPersonaContacto {
+    margin-top: 30px;
+    margin-left: -15px;
+}
+
+#DivVerPersonaContacto {
+    margin-left: -55px;
+}
+
+#DivPersonaContacto > input, #DivVerPersonaContacto > input {
+    cursor: pointer;
+}
+
+.añadirPersona{
+    margin-bottom: 15px;
+}
+
+.añadirPersona > input:not(:last-child) {
+    width: 200px;
+}
+
+#theadTablepersonas > tr > th {
+    width: 200px;
+    text-align:center;
+}
+
+#MesajeError{
+    color:red;
+}
+
+#anadirPersona {
+    cursor: pointer;
+}
+
+#bodyTable > tr > td {
+    text-align: center;
+}
+
+.BtnSeleccionarPersona{
+    width: 90px;
+}
+

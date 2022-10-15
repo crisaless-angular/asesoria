@@ -64,8 +64,81 @@ $(document).ready(function () {
         }
         
     });
+
+    $("#anadirPersona").on('click', function () {
+
+        if ($("#nombrePersona").val() !== "" &&
+            $("#telefonoPersona").val() !== "" &&
+            $("#emailPersona").val() !== ""
+        ) {
+            let persona = [];
+
+            persona.push({
+                "NombrePersona": $("#nombrePersona").val(),
+                "TelefonoPersona": $("#telefonoPersona").val(),
+                "EmailPersona": $("#emailPersona").val()
+            });
+
+            if (localStorage.getItem("PersonaContacto") !== null) {
+                let jsonPersona = JSON.parse(localStorage.getItem("PersonaContacto"));
+                jsonPersona.push({
+                    "NombrePersona": $("#nombrePersona").val(),
+                    "TelefonoPersona": $("#telefonoPersona").val(),
+                    "EmailPersona": $("#emailPersona").val()
+                });
+
+                localStorage.setItem("PersonaContacto", JSON.stringify(jsonPersona));
+
+            }
+            else
+            {
+                localStorage.setItem("PersonaContacto", JSON.stringify(persona));
+            }
+
+            cargarTablepersonas(JSON.parse(localStorage.getItem("PersonaContacto")));
+
+            $("#MesajeError>p").remove();
+            $("#nombrePersona").val("");
+            $("#telefonoPersona").val("");
+            $("#emailPersona").val("");
+                
+        }
+        else {
+            $("#MesajeError>p").remove();
+            $("#MesajeError").append("<p>Todos los campos son obligatorios</p>");
+        }
+
+    });
+
+    $("#btnPersonaContacto").on('click', function () {
+        cargarTablepersonas(JSON.parse(localStorage.getItem("PersonaContacto")));
+    });
     
 });
+
+function cargarTablepersonas(JsonData)
+{
+    $("#bodyTable").empty();
+    let contenido = "";
+    $(JsonData).each(function (index, items) {
+        
+        contenido += "<tr class='tr'>";
+        contenido += "<td class='bigword'>" + items.NombrePersona + "</td>";
+        contenido += "<td class='bigword'>" + items.TelefonoPersona + "</td>";
+        contenido += "<td>" + items.EmailPersona + "</td>";
+        contenido += "<td class='col-md-2'><button onclick='seleccionPersona(" + `"${items.NombrePersona}"`  + ")' class='boton_primario BtnSeleccionarPersona'><span>Seleccionar</span></button></td>";
+        contenido += "</tr>";
+
+    });
+
+    $("#bodyTable").append(contenido);
+}
+
+function seleccionPersona(nombre)
+{
+    $("#InputPersonaContacto").val(nombre);
+    $("#btnCerrarModalPersona").click();
+}
 
 
 async function Filtrar()
@@ -229,7 +302,7 @@ function CargarTablaIndex(data, msgdatanotfound)
             contenido += "<td>" + (items.agente == null ? MsgNodata : items.agente) + "</td>";
             contenido += "<td>" + (items.tipO_CLIENTE == null ? MsgNodata : items.tipO_CLIENTE) + "</td>";
 
-            contenido += "<td class='col-md-2'><button onclick='Detalle(" + items.codigO_CONTABILIDAD + ")' class='boton_primario'><span>Detalle</span></button></td>";
+            contenido += "<td class='col-md-2'><button onclick='Detalle(" + items.codigO_CLIENTE + ")' class='boton_primario'><span>Detalle</span></button></td>";
             contenido += "</tr>";
 
         });
@@ -243,7 +316,7 @@ function CargarTablaIndex(data, msgdatanotfound)
 
 function Detalle(element)
 {
-    window.location = "/Clientes/Detalle?codigoContabilidad=" + element;
+    window.location = "/Clientes/Detalle?CodigoCliente=" + element;
     /*correcto("Aún sin funcionalidad");*/
 }
 

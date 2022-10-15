@@ -70,6 +70,7 @@ namespace Web.Views.Clientes
                         IDENTIFICACION_FISCAL = clientes.IdentificacionFiscal,
                         AGENTE = Agentes.Agente1,
                         TIPO_CLIENTE = Tipocliente.TipoCliente1,
+                        CODIGO_CLIENTE = clientes.CodigoCliente,
                     }
 
                             ).ToList().OrderBy(x => x.NOMBRE_COMPLETO).ToList();
