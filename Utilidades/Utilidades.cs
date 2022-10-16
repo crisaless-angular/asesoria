@@ -1,4 +1,6 @@
-﻿namespace Web.Utilidades
+﻿using IbanNet;
+
+namespace Web.Utilidades
 {
     public class Utilidades
     {
@@ -11,5 +13,17 @@
         {
             return (importe / decimal.Parse(iva, System.Globalization.CultureInfo.InvariantCulture));
         }
+        
+        public static bool ValidateIban(string iban)
+        {
+            string Iban = iban.Replace(" ", "");
+
+            IbanValidator validator = new IbanValidator();
+            ValidationResult validationResult = validator.Validate(Iban);
+
+            return validationResult.IsValid;
+            
+        }
+
     }
 }

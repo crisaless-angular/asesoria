@@ -1,0 +1,99 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid w-75 p-3 page">
+
+    <br />
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    <div class="row m-2 p-5">
+
+        <div class="row">
+            <p>
+                Si ha olvidado su contraseña, introduzca su dirección de e-mail en el recuadro y pinche en recuperar. <b>ES MUY IMPORTANTE QUE LO HAGA UNA SOLA VEZ PARA EVITAR RESETEOS CONSTANTES DE SU CONTRASEÑA</b>, 
+                inmmediatamente le enviaremos una contraseña nueva.
+                Si su cuenta de correo es gratuita (Hotmail, Yahoo, Wanadoo, etc...) seguramente lo reciba en el apartado de CORREO NO DESEADO. 
+                En muchos casos estas compañias bloquean nuestros correos tratandolos como spam.
+            </p>
+
+            <p>En caso de no recibir el nuevo password en su mail pasados 15 mins pongase en contacto con nosotros desde el apartado de Contactar.</p>
+
+        </div>
+        
+        <div class="row" id="formRecuperarContraseña">
+
+            <div class="inputgroup">
+                <input type="email" class="input" id="EmailRecuperar" name="Email" placeholder="mail@mail.es" autocomplete="off" required>
+                <input class="buttonsubmit" value="Recuperar" id="BtnEmailRecuperar" type="submit">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    
+    <script>
+        
+        $("#BtnEmailRecuperar").on("click", function() {
+            
+            let email = $("#EmailRecuperar").val();
+
+            if (email == "") {
+                incorrecto("Debe proporcionar un mail");
+                return;
+            }
+                
+
+            if(!ValidateEmail(email)){
+                incorrecto("Debe proporcionar un mail valido");
+                return;
+            }
+            
+            let url = "/RecuperarCuenta/RecuperarContraseña";
+            let data = {
+                Email: email
+            };
+
+            $.ajax({
+              method: "POST",
+              url: url,
+              async: true,
+              data: data
+            }).done(function(data) {
+
+                let cuerpo = `<p>Para cambiar la contraseña pinche en el siguiente enlace <a href='${window.location.href}/CambiarPassword?token=${data}'> Cambiar contraseña</a></p>`;
+                let dataEmail = `{"email" : "${email}", "asunto" : "Cambio de contraseña", "cuerpo" : "${cuerpo}"}`;
+                
+                if(data !== "")
+                {
+                    $.ajax({
+                      method: "POST",
+                      url: "https://wppruebas.crisaless.es/wp-json/Users/EnvioMail",
+                      async: false,
+                      data: dataEmail
+                    }).done(function() {
+                        
+                    }).fail(function(data) {
+                        console.error(data);
+                    });
+                }
+                
+            });
+
+            correcto("Correo enviado correctamente!");
+            $("#EmailRecuperar").val('');
+
+        });
+        
+    </script>
+
+}
+
+
+

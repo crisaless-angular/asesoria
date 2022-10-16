@@ -32,7 +32,8 @@ namespace BA002.Web.Views
             _userManager = userManager;
             this._ConfigRoot = (IConfigurationRoot)configRoot;
             this._toastNotification = toastNotification;
-            this._unitofwork = unitofwork; }
+            this._unitofwork = unitofwork;
+        }
 
         public IActionResult Index(string mensaje = null)
         {

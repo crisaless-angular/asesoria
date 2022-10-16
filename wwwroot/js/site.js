@@ -58,20 +58,6 @@ function getnumIBAN(letra) {
     return ls_letras.search(letra) + 10;
 }
 
-
-function actualizarFactura() {
-
-    let tabla = $('.datatable').DataTable();
-    let data = tabla.row($('.btn-actualizarFactura').parent().data()).data();
-    let Nfactura = data[0];
-
-    window.location.href = "/Facturas/VerEditar?NFactura=" + Nfactura;
-
-}
-
-
-
-
 function verFactura(Nfactura) {
 
     let iframe = "";
@@ -135,20 +121,7 @@ function GenerarFacturaEditada(IdFactura, iva, formapago, Pagada) {
 
 //correcto('Cliente asociado correctamente a la factura.');
 
-
-function ObtenerNumeroFactura() {
-    let tabla = $('.datatable').DataTable();
-    let data = tabla.row($('.btn-ObtenerIdCliente').parent().data()).data();
-    return data[0];
-}
-
 $(document).ready(function () {
-
-    $("[name='CrearFactura']").on('click', function () {
-        if ($('.idcliente').val() === null) {
-            alert('Debe seleccionar un cliente');
-        }
-    });
 
     $('.datatable tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected'))
@@ -178,15 +151,33 @@ $(document).ready(function () {
 
     });
 
-    //Logos
-    $.get("../../Public/GetLogotipo/", function (data) {
-        document.getElementById("logotipo").src = `${window.location.origin}/images/${data}`;
-    });
-
 });
 
 function IdiomaTabla(clase) {
     
+    $(clase).DataTable({
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados"
+        },
+        "responsive": true,
+        "searching": true,
+        "paging": false
+    });
+}
+
+function IdiomaTablaGeneric(clase) {
+
     $(clase).DataTable({
         language: {
             "decimal": "",
@@ -209,6 +200,7 @@ function IdiomaTabla(clase) {
             }
         },
         responsive: true,
+        "searching": true
     });
 }
 
@@ -224,7 +216,17 @@ function correcto(text) {
         icon: 'success',
         title: text,
         showConfirmButton: false,
-        timer: 1500
+        timer: 2000
+    })
+}
+
+function incorrecto(text) {
+    Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: text,
+        showConfirmButton: false,
+        timer: 2000
     })
 }
 
@@ -236,7 +238,37 @@ function UpperCase(valor) {
     return valor.toUpperCase();
 }
 
+function LowerCase(valor) {
+    return valor.toLowerCase();
+}
 
+function ValidateEmail(email) {
+
+    let regexEmail = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+    let result = regexEmail.test(email);
+    return result;
+}
+
+function MostrarLoader() {
+    $(".loader").removeClass("hide")
+}
+
+function NoMostrarLoader() {
+    $(".loader").addClass("hide");
+}
+
+/*SignalR*/
+var connectionSignalr = new signalR.HubConnectionBuilder().withUrl("/notificaciones").build();
+connectionSignalr.start().then(function () {
+    /*console.log("connected");*/
+}).catch(function (err) {
+    return console.error(err.toString());
+});
+
+connectionSignalr.on("RecibirMensaje", function (message) {
+    console.log(message);
+});
+/*SignalR*/
 
 
 

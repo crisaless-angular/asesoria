@@ -12,10 +12,9 @@ namespace Web.Controllers
         {
             this._unitofwork = unitofwork;
         }
-        public string GetLogotipo()
+        public string GetLogo()
         {
-            return "";
-            //return _unitofwork.EmpresaRepository.GetEntity(variables.IdEmpresa).Logotipo;
+            return _unitofwork.EmpresaRepository.GetEntity(variables.IdEmpresa).Logo;
         }
     }
 }

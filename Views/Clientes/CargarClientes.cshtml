@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Cargar lientes</h4>
+<hr />
+
+<div class="container-fluid w-75 p-3">
+    
+    
+    <div class="container">
+        <input class="form-control-file" type="file" id="inputExcelClientes" />
+        <input type="button" value="enviar" id="enviarexcel" onclick="enviarDatos();" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .csv"/>
+    </div>
+    
+    
+</div>
+
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

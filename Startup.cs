@@ -15,6 +15,10 @@ using Web.Business.Interfaces;
 using Web.Business.Genericrepository;
 using Web.Business.Services;
 using Web.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Web.Utilidades;
 
 namespace BA002.Web
 {
@@ -31,10 +35,14 @@ namespace BA002.Web
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IMail, Mail>();
+            services.AddScoped<ILeerExcel, LeerExcel>();
+            services.AddScoped<IAuditoria, AuditoriaLog>();
 
             services.AddDbContext<AsesoriaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<BA002IdentityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<BA002IdentityContext>().AddDefaultTokenProviders();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
               .AddRazorPagesOptions(options =>
               {
@@ -55,6 +63,7 @@ namespace BA002.Web
                 PositionClass = ToastPositions.TopRight
             });
 
+            services.AddSignalR();
 
         }
 
@@ -90,6 +99,7 @@ namespace BA002.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<NotificacionesHub>("/notificaciones");
             });
 
             Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa");

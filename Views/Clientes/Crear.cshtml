@@ -1,0 +1,409 @@
+﻿@model Web.Models.ClientesViewModel
+@using Web.Data;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Paise> PaisesList = ViewData["PAISES"] as List<Paise>;
+    List<TipoIdentificacionFiscal> TipoIdentificacionFiscal = ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] as List<TipoIdentificacionFiscal>;
+    List<TipoCliente> TipoClienteList = ViewData["TIPO_CLIENTE"] as List<TipoCliente>;
+    List<Agente> AgenteList = ViewData["AGENTE"] as List<Agente>;
+    List<FormasPago> FormaPagoList = ViewData["FORMA_PAGO"] as List<FormasPago>;
+    List<Actividad> ActividadList = ViewData["ACTIVIDAD"] as List<Actividad>;
+
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<div class="container-fluid w-75 p-3">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="Crear" asp-controller="Clientes" method="post" id="form-new-client">
+
+        <div class="row mb-5">
+            <a class="fancy" href="#" id="save-new-cliente">
+              <span class="top-key"></span>
+              <span class="text">Guardar y continuar</span>
+              <span class="bottom-key-1"></span>
+              <span class="bottom-key-2"></span>
+            </a>
+        </div> 
+
+        <div class="loader hide">
+        <span>Cargando...</span>
+        </div> 
+
+        <nav>
+        <div class="nav nav-tabs nav-fill tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active labels tab" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">General</a>
+            <a class="nav-item nav-link labels tab" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Otros datos</a>
+            @*<a class="nav-item nav-link labels tab" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Conceptos</a>*@
+        </div>
+        </nav>
+
+        <div class="tab-content py-3 px-3 px-sm-0 p-4" id="nav-tabContent">
+
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    
+                <div class="row">
+                    <div class="form-group col-lg-2 col-md-2 col-xs-12">
+                        <label asp-for="CODIGO_CLIENTE" class="control-label labels obligatorio"></label>
+                        <input asp-for="CODIGO_CLIENTE" class="form-control inputs" tabindex="1" />
+                        <span asp-validation-for="CODIGO_CLIENTE" class="text-danger"></span>
+                    </div>
+                    <div id="NuevoTipoCliente" class="form-group col-lg-4 col-md-4 col-xs-10">
+                        <label asp-for="NUEVO_TIPO_CLIENTE" class="control-label labels"></label>
+                        <input asp-for="NUEVO_TIPO_CLIENTE" class="form-control inputs" tabindex="2"/>
+                        <span asp-validation-for="NUEVO_TIPO_CLIENTE" class="text-danger"></span>
+                    </div>
+                    <div id="TipoCliente" class="form-group col-lg-4 col-md-4 col-xs-10 mostrar">
+                        <label asp-for="TIPO_CLIENTE" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="TIPO_CLIENTE" asp-items="@(new SelectList(TipoClienteList, "IdTipoCliente", "TipoCliente1"))" tabindex="2"></select>
+                        <span asp-validation-for="TIPO_CLIENTE" class="text-danger"></span>
+                    </div>
+                    <div id="btnTipoCliente" class="form-group col-lg-1 col-md-1 col-xs-2">
+                        <input type="button" id="btnTipoClienteInput" value="+" />
+                     </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="AGENTE" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="AGENTE" asp-items="@(new SelectList(AgenteList, "IdAgente", "Agente1"))" tabindex="3"></select>
+                        <span asp-validation-for="AGENTE" class="text-danger"></span>
+                    </div>
+                </div>
+                    
+                <div class="form-group">
+                    <label asp-for="NOMBRE_FISCAL" class="control-label labels"></label>
+                    <input asp-for="NOMBRE_FISCAL" class="form-control inputs" tabindex="4"/>
+                    <span asp-validation-for="NOMBRE_FISCAL" class="text-danger"></span>
+                </div>
+
+                    <div class="form-group mb-5">
+                    <label asp-for="NOMBRE_COMERCIAL" class="control-label labels"></label>
+                    <input asp-for="NOMBRE_COMERCIAL" class="form-control inputs" tabindex="5"/>
+                    <span asp-validation-for="NOMBRE_COMERCIAL" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="NOMBRE_COMPLETO" class="control-label labels"></label>
+                        <input asp-for="NOMBRE_COMPLETO" class="form-control inputs" tabindex="6" />
+                        <span asp-validation-for="NOMBRE_COMPLETO" class="text-danger"></span>
+                    </div>
+                   <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="APELLIDO_UNO" class="control-label labels"></label>
+                        <input asp-for="APELLIDO_UNO" class="form-control inputs" tabindex="7" />
+                        <span asp-validation-for="APELLIDO_UNO" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="APELLIDO_DOS" class="control-label labels"></label>
+                        <input asp-for="APELLIDO_DOS" class="form-control inputs" tabindex="8" />
+                        <span asp-validation-for="APELLIDO_DOS" class="text-danger"></span>
+                    </div>
+                 </div>
+
+                <hr class="sep-3" />
+
+                <div class="form-group mt-5">
+                    <label asp-for="DOMICILIO" class="control-label labels"></label>
+                    <input asp-for="DOMICILIO" class="form-control inputs" tabindex="9"/>
+                    <span asp-validation-for="DOMICILIO" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="CODIGO_POSTAL" class="control-label labels"></label>
+                    <input id="CodigoPostal" asp-for="CODIGO_POSTAL" class="form-control inputs" tabindex="10" maxlength="5"/>
+                    <span asp-validation-for="CODIGO_POSTAL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="POBLACION" class="control-label labels"></label>
+                        <input id="poblacion" asp-for="POBLACION" class="form-control inputs" tabindex="11"/>
+                        <span asp-validation-for="POBLACION" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="PROVINCIA" class="control-label labels"></label>
+                    <input id="provincia" asp-for="PROVINCIA" class="form-control inputs" tabindex="12"/>
+                    <span asp-validation-for="PROVINCIA" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="PAIS" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="PAIS" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="13"></select>
+                        <span asp-validation-for="PAIS" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group mt-5">
+                    <label asp-for="DOMICILIO_ACTIVIDAD" class="control-label labels"></label>
+                    <input asp-for="DOMICILIO_ACTIVIDAD" class="form-control inputs" tabindex="9"/>
+                    <span asp-validation-for="DOMICILIO_ACTIVIDAD" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="CODIGO_POSTAL_ACTIVIDAD" class="control-label labels"></label>
+                    <input id="CodigoPostal" asp-for="CODIGO_POSTAL_ACTIVIDAD" class="form-control inputs" tabindex="10" maxlength="5"/>
+                    <span asp-validation-for="CODIGO_POSTAL_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="POBLACION_ACTIVIDAD" class="control-label labels"></label>
+                        <input id="poblacion" asp-for="POBLACION_ACTIVIDAD" class="form-control inputs" tabindex="11"/>
+                        <span asp-validation-for="POBLACION_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="PROVINCIA_ACTIVIDAD" class="control-label labels"></label>
+                    <input id="provincia" asp-for="PROVINCIA_ACTIVIDAD" class="form-control inputs" tabindex="12"/>
+                    <span asp-validation-for="PROVINCIA_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="PAIS_ACTIVIDAD" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="PAIS_ACTIVIDAD" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="13"></select>
+                        <span asp-validation-for="PAIS_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr class="sep-3" />
+
+                <div class="row mt-5 mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="TELEFONO" class="control-label labels"></label>
+                        <input asp-for="TELEFONO" class="form-control inputs" tabindex="14"/>
+                        <span asp-validation-for="TELEFONO" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="MOVIL" class="control-label labels"></label>
+                        <input asp-for="MOVIL" class="form-control inputs" tabindex="15"/>
+                        <span asp-validation-for="MOVIL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="EMAILPRINCIPAL" class="control-label labels obligatorio"></label>
+                        <input id="email_principal" asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="16"/>
+                        <span asp-validation-for="EMAILPRINCIPAL" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr class="sep-3" />
+
+                <div class="row mt-5 mb-5">
+
+                    <div class="form-group col-lg-8 col-md-8 col-xs-12">
+                        <label asp-for="IBAN" class="control-label labels"></label>
+                        <input id="iban" asp-for="IBAN" class="form-control inputs" tabindex="17" placeholder="ES3214650100911841004150"/>
+                        <span asp-validation-for="IBAN" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-xs-6">
+                        <label asp-for="BIC" class="control-label labels"></label>
+                        <input asp-for="BIC" class="form-control inputs" tabindex="18"/>
+                        <span asp-validation-for="BIC" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="BANCO" class="control-label labels"></label>
+                        <input id="banco" asp-for="BANCO" class="form-control inputs" tabindex="19"/>
+                        <span asp-validation-for="BANCO" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            @*///////////////////// Otros datos ///////////////////*@
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                
+                <div class="row">
+                        
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="FECHA_CONTRATACION_TH" class="control-label labels obligatorio"></label>
+                        <input asp-for="FECHA_CONTRATACION_TH" class="form-control inputs" tabindex="20"/>
+                        <span asp-validation-for="FECHA_CONTRATACION_TH" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="FECHA_ALTA_ACTIVIDAD" class="control-label labels"></label>
+                        <input asp-for="FECHA_ALTA_ACTIVIDAD" class="form-control inputs" tabindex="21"/>
+                        <span asp-validation-for="FECHA_ALTA_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="FECHA_ALTA" class="control-label labels obligatorio"></label>
+                        <input asp-for="FECHA_ALTA" class="form-control inputs" tabindex="22"/>
+                        <span asp-validation-for="FECHA_ALTA" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                        
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="TIPO_IDENTIFICACION_FISCAL" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="TIPO_IDENTIFICACION_FISCAL" asp-items="@(new SelectList(TipoIdentificacionFiscal, "IdTipoIdentificacionFiscal", "Descripcion"))" tabindex="23"></select>
+                        <span asp-validation-for="TIPO_IDENTIFICACION_FISCAL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="IDENTIFICACION_FISCAL" class="control-label labels obligatorio"></label>
+                        <input id="identificacion_fiscal" asp-for="IDENTIFICACION_FISCAL" class="form-control inputs" tabindex="24"/>
+                        <span asp-validation-for="IDENTIFICACION_FISCAL" class="text-danger"></span>
+                    </div>
+                        
+                </div>
+
+                <hr class="sep-3" />
+
+                 <div class="row">
+                    <div class="form-group col-lg-4 col-md-4 col-xs-10">
+                        <label asp-for="PERSONA_CONTACTO" class="control-label labels"></label>
+                        <input id="InputPersonaContacto" asp-for="PERSONA_CONTACTO" class="form-control inputs" tabindex="25"/>
+                        <span asp-validation-for="PERSONA_CONTACTO" class="text-danger"></span>
+                    </div>
+                    <div id="DivPersonaContacto" class="form-group col-lg-1 col-md-1 col-xs-2">
+                        <input type="button" id="btnPersonaContacto" value="+" data-toggle="modal" data-target="#modal-publica"/>
+                     </div>
+                    @*<div class="form-group col-lg-4 col-md-4 col-xs-10">
+                        <label asp-for="ACTIVIDAD" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="ACTIVIDAD" asp-items="@(new SelectList(ActividadList, "IdActividad", "Descripcion"))" tabindex="26"></select>
+                        <span asp-validation-for="ACTIVIDAD" class="text-danger"></span>
+                    </div>*@
+
+                    <div class="form-group col-lg-4 col-md-4 col-xs-10">
+                        <label asp-for="ACTIVIDAD" class="control-label labels"></label>
+                        <select class="inputs selects selectFilter" asp-for="ACTIVIDAD" asp-items="@(new SelectList(ActividadList, "IdActividad", "Descripcion"))" tabindex="26"></select>
+                        <span asp-validation-for="ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                 </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="IAE" class="control-label labels"></label>
+                        <input disabled asp-for="IAE" class="form-control inputs" tabindex="27" />
+                        <span asp-validation-for="IAE" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="CNAE" class="control-label labels"></label>
+                        <input disabled asp-for="CNAE" class="form-control inputs" tabindex="28" />
+                        <span asp-validation-for="CNAE" class="text-danger"></span>
+                    </div>
+                 </div>
+
+                 <div class="row">
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="CUOTA_MENSUAL" class="control-label labels"></label>
+                        <input asp-for="CUOTA_MENSUAL" class="form-control inputs" tabindex="29" />
+                        <span asp-validation-for="CUOTA_MENSUAL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="FORMA_PAGO" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="FORMA_PAGO" asp-items="@(new SelectList(FormaPagoList, "IdFomaPago", "Descripcion", 5))" tabindex="30"></select>
+                        <span asp-validation-for="FORMA_PAGO" class="text-danger"></span>
+                    </div>
+                 </div>
+
+                 <hr class="sep-3" />
+
+                <div class="row mt-5">
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="OBSERVACIONES" class="control-label labels"></label>
+                        <textarea asp-for="OBSERVACIONES" class="form-control inputs" TextMode="MultiLine" tabindex="31" rows="10"></textarea>
+                        <span asp-validation-for="OBSERVACIONES" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                @*Modal Publica*@
+                <div class="modal fade modal-publica" id="modal-publica" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Personas de contacto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div id="modal-body" class="modal-body">
+                          <div id="MesajeError"></div>
+                           <div class="añadirPersona">
+                               <input type="text" id="nombrePersona" placeholder="Nombre"/>
+                               <input type="text" id="telefonoPersona" placeholder="Teléfono"/>
+                               <input type="email" id="emailPersona" placeholder="Email"/>
+                               <input type="button" value="Añadir" id="anadirPersona" />
+                           </div>
+                           <div class="tablePersonas">
+                               <table>
+                                   <thead id="theadTablepersonas">
+                                       <tr>
+                                           <th scope="col">Nombre</th>
+                                           <th scope="col">Teléfono</th>
+                                           <th scope="col">Email</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody id="bodyTable">
+                                   </tbody>
+                               </table>
+                           </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button id="btnCerrarModalPersona" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                @*Modal Publica*@ 
+                     
+             </div>
+             
+            
+            
+
+        </div>
+
+
+
+    </form>
+
+    <div class="btn-arriba">
+        <button id="volver_arriba">
+            <div class="arrow-up"></div>
+        </button>
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function() {
+            $('.selectFilter').select2();
+        });
+    </script>
+   
+}
+
+         
+         

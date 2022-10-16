@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Business.Interfaces;
 using Web.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Business.Genericrepository
 {

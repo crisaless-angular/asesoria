@@ -3,90 +3,71 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facturación</title>
+    <title>Asesoría</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
-    <link rel="stylesheet" href="~/css/bootstrap/bootstrap-toggle.css" />
-    <link rel="stylesheet" href="~/lib/datepicker/css/bootstrap-datepicker.min.css" />
-    <link rel="stylesheet" href="~/css/mvc-grid/mvc-grid.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="~/css/StylesDatepicker.css" rel="stylesheet" />
-    <link href="~/css/Site.css" rel="stylesheet" />
-    <link href="~/css/Propios.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href=" https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="~/css/Site.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/mvc-grid/mvc-grid.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/Propios.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/StylesDatepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
 </head>
 <body>
     <header> 
+        
         <nav class="navbar bg-dark navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img id="logotipo" src="" alt="Logotipo"></a>
+            <div id="divlogo" class="container">
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-
-                    <partial name="_LoginPartial" />
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
 
                     @{
                         var user = this.User;
 
-                        @if (user.Identity.IsAuthenticated)
-                        {
-                <ul class="navbar-nav flex-grow-1">
+                        <ul class="navbar-nav">
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Facturas
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="nav-link" asp-area="" asp-controller="Facturas" asp-action="Index">Todas Facturas</a>
-                            <a class="nav-link" asp-area="" asp-controller="Facturas" asp-action="Crear" id="NavCrearfactura">Crear Factura</a>
-                        </div>
-                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Presupuestos
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="nav-link" asp-area="" asp-controller="Presupuesto" asp-action="Index">Todos los presupuestos</a>
-                            <a class="nav-link" asp-area="" asp-controller="Presupuesto" asp-action="Crear" id="NavCrearfactura">Crear presupuesto</a>
-                        </div>
-                    </li>
+                                @if (user.Identity.IsAuthenticated)
+                                {
+                            
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Clientes
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Todos los Clientes</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Crear" id="NavCrearfactura">Crear Cliente</a>
+                                        </div>
+                                    </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Clientes
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Todos los Clientes</a>
-                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="CrearCliente" id="NavCrearfactura">Crear Cliente</a>
-                        </div>
-                    </li>
+                                        @if (this.User.IsInRole("Admin"))
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                            </li>
+                                        }
 
-                    @if (this.User.IsInRole("Admin"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
-                        </li>
-                    }
+                                }
 
-                </ul>
-                        }
+                        </ul>
 
                     }
+
                 </div>
+                <partial name="_LoginPartial" />
             </div>
         </nav>
+        
     </header>
 
     <div class="container-fluid">
@@ -103,30 +84,39 @@
         </div>
     </footer>
 
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/font-awesome/js/all.js"></script>
-    <script src="~/js/bootstrap-toggle.js" asp-append-version="true"></script>
-    <script src="~/lib/datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/lib/datepicker/locales/bootstrap-datepicker.es.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/mvc-grid/mvc-grid.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="~/js/Seewalert/SeewtAlert.js"></script>
-    <script src="~/js/Datepicker.js"></script>
-   
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap.min.js"></script>
+    <script src="~/js/signalr/signalr.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/Clientes.js"></script>
+    <script src="~/js/Home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        window.onload = function () {
+            Getlogo(); 
+        };
+    </script>
+
     @RenderSection("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")
+
 </body>
 </html>
+

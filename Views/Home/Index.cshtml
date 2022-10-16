@@ -1,68 +1,26 @@
 ﻿@{
     ViewData["Title"] = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid w-75 p-3 portada">
 
     <div class="row title">
-        <h2>Facturas</h2>
-    </div>
-    <div class="row facturas">
-        <div class="col-lg-3 col todasfacturas">
-            <h3>Todas las <span>facturas</span></h3>
-        </div>
-        <div class="col-lg-3 col crearfactura">
-            <h3>Crear <span>factura</span></h3>
-        </div>
-        <div class="col-lg-3 col">
-            
-        </div>
-    </div>
-
-    <div class="row title">
-        <h2>Presupuestos</h2>
-    </div>
-    <div class="row presupuestos">
-        <div class="col-lg-3 col todospresupuestos">
-            <h3>Todos los <span>presupuestos</span></h3>
-        </div>
-        <div class="col-lg-3 col crearpresupuesto">
-            <h3>Crear <span>presupuesto</span></h3>
-        </div>
-        <div class="col-lg-3 col">
-            
-        </div>
-    </div>
-
-    <div class="row title">
         <h2>Clientes</h2>
     </div>
     <div class="row clientes">
-        <div class="col-lg-3 col todosclientes">
+        <div class="col columna todosclientes">
             <h3>Todos los <span>clientes</span></h3>
         </div>
-        <div class="col-lg-3 col crearcliente">
+        <div class="col columna crearcliente">
             <h3>Crear <span>cliente</span></h3>
         </div>
-        <div class="col-lg-3 col">
+        <div class="col columna">
             
         </div>
     </div>
-    
+
 </div>
 
-    @*<div class="text-center mt-4">
-        <img id="Logo" src="" style="vertical-align: text-bottom; width: 30%" />
-    </div>*@
 
-<script>
 
-    //window.onload = function () {
-        
-    //    $.get("Home/GetLogo/", function (data) {
-    //        document.getElementById("Logo").src=`../../images/${data}`;
-    //    });
-        
-    //};
-    
-</script>

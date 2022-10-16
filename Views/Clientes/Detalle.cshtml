@@ -1,0 +1,140 @@
+﻿@model Web.Models.ClientesViewModel
+@using Web.Data;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Paise> PaisesList = ViewData["PAISES"] as List<Paise>;
+    List<TipoIdentificacionFiscal> TipoIdentificacionFiscal = ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] as List<TipoIdentificacionFiscal>;
+    List<TipoCliente> TipoClienteList = ViewData["TIPO_CLIENTE"] as List<TipoCliente>;
+    List<Agente> AgenteList = ViewData["AGENTE"] as List<Agente>;
+    List<FormasPago> FormaPagoList = ViewData["FORMA_PAGO"] as List<FormasPago>;
+    List<Actividad> ActividadList = ViewData["ACTIVIDAD"] as List<Actividad>;
+
+}
+
+<div class="container-fluid w-80 p-3 page">
+
+    <br />
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+    <br />
+
+    <div class="caja-detalle row m-1">
+        <div class="cajas-detalle col">
+            <img class="src-general" />
+            <h3>General</h3>
+            <button id="detalle-general" class="card-button" data-toggle="modal" data-target="#modal-detalle-general">Más info...</button>
+        </div>
+        <div class="cajas-detalle col">
+            <img class="src-otros" />
+            <h3>Otros datos</h3>
+            <button id="detalle-otros" class="card-button" data-toggle="modal" data-target="#modal-detalle-otros">Más info...</button>
+        </div>
+        <div class="cajas-detalle col">
+            <img class="src-conceptos" />
+            <h3>Conceptos</h3>
+            <button id="detalle-conceptos" class="card-button" data-toggle="modal" data-target="#modal-detalle-conceptos">Más info...</button>
+        </div>
+        <div class="cajas-detalle col">
+            <img class="src-documentos" />
+            <h3>Documentos</h3>
+            <button id="detalle-documentos" class="card-button" data-toggle="modal" data-target="#modal-detalle-documentos">Más info...</button>
+        </div>
+    </div>
+
+    <div class="btn-arriba">
+        <button id="volver_arriba">
+            <div class="arrow-up"></div>
+        </button>
+    </div>
+
+</div>
+
+@*Modal General*@
+<div class="modal fade modal-detalle" id="modal-detalle-general" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Datos Generales</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Aqui general
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary btn-guardar">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+@*Modal General*@ 
+
+@*Modal otros*@
+<div class="modal fade modal-detalle" id="modal-detalle-otros" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Otros datos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Aqui otros
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary btn-guardar">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+@*Modal otros*@ 
+
+@*Modal conceptos*@
+<div class="modal fade modal-detalle" id="modal-detalle-conceptos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Conceptos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Aqui conceptos
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary btn-guardar">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+@*Modal conceptos*@ 
+
+@*Modal documentos*@
+<div class="modal fade modal-detalle" id="modal-detalle-documentos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Documentos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Aqui documentos
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary btn-guardar">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+@*Modal documentos*@ 
+         

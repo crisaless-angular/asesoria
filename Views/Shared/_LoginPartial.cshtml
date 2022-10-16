@@ -10,7 +10,7 @@
               @User.Identity.Name
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Cambiar contraseña</a>
+              @*<a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Cambiar contraseña</a>*@
                <form class="form-inline col-sm-3" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                     <button type="submit" id="BtnSalir" class="nav-link btn btn-link salir">Salir</button>
                </form>

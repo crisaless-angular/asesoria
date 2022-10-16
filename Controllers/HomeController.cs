@@ -9,6 +9,8 @@ using BA002.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Web.Business.Interfaces;
 using Web.Business;
+using Web.Utilidades;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BA002.Web.Controllers
 {
@@ -35,12 +37,7 @@ namespace BA002.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public string GetLogo()
-        {
-            return ""; //_unitofwork.EmpresaRepository.GetEntity(variables.IdEmpresa).Logo;
-        }
-
-        public IActionResult Portada()
+        public async Task<IActionResult> Portada()
         {
             return View();
         }
