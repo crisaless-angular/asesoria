@@ -34,6 +34,11 @@ $(".selectindex").on('change', function () {
 
 $(document).ready(function () {
 
+    localStorage.removeItem("PersonaContacto");
+
+    $("#select2-ACTIVIDAD-container").addClass("form-control");
+    $("#select2-ACTIVIDAD-container").addClass("inputs"); 
+
     let CampoBuscar = "<p id='bloqueBuscarIndex'><label> Buscar: <input type='text' id='BuscarIndex'/></label><button id='BtnBuscarIndex' class='boton_primario'><span>Buscar</span></button></p>";
     $("#table-index").prepend(CampoBuscar);
 
@@ -370,11 +375,14 @@ function enviarDatos() {
 
 $("#save-new-cliente").on('click', function () {
     correcto("Aún sin funcionalidad");
-    //$("#form-new-client").submit();
-    localStorage.removeItem("PersonaContacto");
-    $.post("mensajeInstantaneo?mensaje=guardar", function (data) {
 
-    });
+    localStorage.removeItem("PersonaContacto");
+    $("#form-new-client").submit();
+    
+    //SignalIr
+    //$.post("mensajeInstantaneo?mensaje=guardar", function (data) {
+
+    //});
 
     //Ejemplo llamada a Gdrive
     //$.post("GDriveModule", function () {

@@ -1078,4 +1078,7 @@ hr.sep-3::after {
     padding-left: 0px;
 }
 
+.select2-container--default .select2-selection--single{
+    border: none !important;
+}
 
