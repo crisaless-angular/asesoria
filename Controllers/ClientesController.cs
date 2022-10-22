@@ -249,7 +249,7 @@ namespace Web.Views.Clientes
             ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
             ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
             ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
-            //ViewData["Title"] = $"Detalle del cliente: {(cliente.NombreCompleto == null ? cliente.NombreCompleto : cliente.NombreComercial)}";
+            ViewData["Title"] = $"Detalle del cliente: {(cliente.NombreCompleto == null ? cliente.NombreComercial : cliente.NombreCompleto)}";
 
             return View(Cast_ViewCliente_Cliente(cliente));
         }
@@ -300,6 +300,7 @@ namespace Web.Views.Clientes
 
             ClientesViewModel cliente = new ClientesViewModel()
             {
+                
                 CODIGO_CLIENTE = model.CodigoCliente,
                 TIPO_IDENTIFICACION_FISCAL = model.IdIdentificacionFiscal == null ? ReturnNoData() : model.IdIdentificacionFiscal.ToString(),
                 NOMBRE_COMERCIAL = model.NombreComercial,
@@ -313,19 +314,25 @@ namespace Web.Views.Clientes
                 OBSERVACIONES = model.Observaciones,
                 FECHA_ALTA = model.FechaAlta.Value,
                 MODIFICADO = model.Modificado.Value,
-                DIRECCION_WEB = model.DireccionWeb,
                 MENSAJE_EMERGENTE = model.MensajeEmergente,
-                CODIGO_PROVEEDOR = model.CodigoProveedor,
-                NO_FACTURAS = model.NoFacturas.Value,
-                ACEPTA_FACTURA_ELECTRONICA = model.AceptaFacturaElectronica.Value,
-                CESION_DATOS = model.CesionDatos.Value,
-                ENVIOO_COMUNICACIONES = model.EnviooComunicaciones.Value,
                 IDENTIFICACION_FISCAL = model.IdentificacionFiscal,
                 NOMBRE_COMPLETO = model.NombreCompleto,
                 APELLIDO_UNO = model.ApellidoUno,
                 APELLIDO_DOS = model.ApellidoDos,
                 FECHA_CONTRATACION_TH = model.FechaContratacionTh.Value,
-                FECHA_ALTA_ACTIVIDAD = model.FechaAltaActividad.Value
+                FECHA_ALTA_ACTIVIDAD = model.FechaAltaActividad.Value,
+                
+                //NombreCompleto = model.NOMBRE_COMPLETO,
+                //ApellidoUno = model.APELLIDO_UNO,
+                //ApellidoDos = model.APELLIDO_DOS,
+                //Iae = model.IAE,
+                //Cnae = model.CNAE,
+                //CuotaMensual = model.CUOTA_MENSUAL,
+                //DomicilioActividad = model.DOMICILIO_ACTIVIDAD,
+                //CodigoPostalActividad = model.CODIGO_POSTAL_ACTIVIDAD,
+                //PoblacionActividad = model.POBLACION_ACTIVIDAD,
+                //ProvinciaActividad = model.PROVINCIA_ACTIVIDAD,
+                //IdPaisActividad = int.Parse(model.PAIS_ACTIVIDAD),
 
             };
 
