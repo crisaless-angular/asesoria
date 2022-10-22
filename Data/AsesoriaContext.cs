@@ -47,7 +47,8 @@ namespace Web.Data
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TipoCliente> TipoClientes { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
-        
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
@@ -210,7 +211,9 @@ namespace Web.Data
 
                 entity.Property(e => e.CesionDatos).HasColumnName("CESION_DATOS");
 
-                entity.Property(e => e.Cnae).HasColumnName("CNAE");
+                entity.Property(e => e.Cnae)
+                    .HasMaxLength(500)
+                    .HasColumnName("CNAE");
 
                 entity.Property(e => e.CodigoPostal)
                     .HasMaxLength(50)
@@ -258,7 +261,9 @@ namespace Web.Data
                     .HasColumnType("datetime")
                     .HasColumnName("FECHA_CONTRATACION_TH");
 
-                entity.Property(e => e.Iae).HasColumnName("IAE");
+                entity.Property(e => e.Iae)
+                    .HasMaxLength(500)
+                    .HasColumnName("IAE");
 
                 entity.Property(e => e.IdActividad).HasColumnName("ID_ACTIVIDAD");
 

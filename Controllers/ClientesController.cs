@@ -259,6 +259,7 @@ namespace Web.Views.Clientes
             Cliente cliente = new Cliente()
             {
                 IdIdentificacionFiscal = int.Parse(model.TIPO_IDENTIFICACION_FISCAL),
+                NombreCompleto = model.NOMBRE_COMPLETO,
                 NombreComercial = model.NOMBRE_COMERCIAL,
                 Domicilio = model.DOMICILIO,
                 CodigoPostal = model.CODIGO_POSTAL,
@@ -270,15 +271,24 @@ namespace Web.Views.Clientes
                 Observaciones = model.OBSERVACIONES,
                 FechaAlta = model.FECHA_ALTA,
                 Modificado = model.FECHA_ALTA,
-                DireccionWeb = model.DIRECCION_WEB,
-                MensajeEmergente = model.MENSAJE_EMERGENTE,
-                CesionDatos = model.CESION_DATOS,
                 IdentificacionFiscal = model.IDENTIFICACION_FISCAL,
                 IdFormaPago = model.FORMA_PAGO,
                 IdTipoCliente = int.Parse(model.TIPO_CLIENTE),
                 IdActividad = int.Parse(model.ACTIVIDAD),
                 Iva = model.IVA,
-                Agente = int.Parse(model.AGENTE)
+                Agente = int.Parse(model.AGENTE),
+                ApellidoUno = model.APELLIDO_UNO,
+                ApellidoDos = model.APELLIDO_DOS,
+                FechaContratacionTh = model.FECHA_CONTRATACION_TH,
+                FechaAltaActividad = model.FECHA_ALTA_ACTIVIDAD,
+                Iae = model.IAE,
+                Cnae = model.CNAE,
+                CuotaMensual = model.CUOTA_MENSUAL,
+                DomicilioActividad = model.DOMICILIO_ACTIVIDAD,
+                CodigoPostalActividad = model.CODIGO_POSTAL_ACTIVIDAD,
+                PoblacionActividad = model.POBLACION_ACTIVIDAD,
+                ProvinciaActividad = model.PROVINCIA_ACTIVIDAD,
+                IdPaisActividad = int.Parse(model.PAIS_ACTIVIDAD),
             };
 
             return cliente;

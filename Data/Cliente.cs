@@ -48,14 +48,14 @@ namespace Web.Data
         public string ApellidoDos { get; set; }
         public DateTime? FechaContratacionTh { get; set; }
         public DateTime? FechaAltaActividad { get; set; }
-        public int? Iae { get; set; }
-        public int? Cnae { get; set; }
         public string CuotaMensual { get; set; }
         public string DomicilioActividad { get; set; }
         public string CodigoPostalActividad { get; set; }
         public string PoblacionActividad { get; set; }
         public string ProvinciaActividad { get; set; }
         public int? IdPaisActividad { get; set; }
+        public string Iae { get; set; }
+        public string Cnae { get; set; }
 
         public virtual Agente AgenteNavigation { get; set; }
         public virtual Actividad IdActividadNavigation { get; set; }
