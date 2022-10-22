@@ -36,9 +36,6 @@ $(document).ready(function () {
 
     localStorage.removeItem("PersonaContacto");
 
-    $("#select2-ACTIVIDAD-container").addClass("form-control");
-    $("#select2-ACTIVIDAD-container").addClass("inputs"); 
-
     let CampoBuscar = "<p id='bloqueBuscarIndex'><label> Buscar: <input type='text' id='BuscarIndex'/></label><button id='BtnBuscarIndex' class='boton_primario'><span>Buscar</span></button></p>";
     $("#table-index").prepend(CampoBuscar);
 
@@ -131,7 +128,7 @@ function cargarTablepersonas(JsonData)
         contenido += "<td class='bigword'>" + items.NombrePersona + "</td>";
         contenido += "<td class='bigword'>" + items.TelefonoPersona + "</td>";
         contenido += "<td>" + items.EmailPersona + "</td>";
-        contenido += "<td class='col-md-1 tdPersona'><button onclick='seleccionPersona(" + `"${items.NombrePersona}"` + ")' class='boton_primario BtnSeleccionarPersona'><span>Seleccionar</span></button></td>";
+        contenido += "<td class='col-md-1 tdPersona'><button type='button' onclick='seleccionPersona(" + `"${items.NombrePersona}"` + ")' class='boton_primario BtnSeleccionarPersona'><span>Seleccionar</span></button></td>";
         contenido += "<td class='col-md-1 tdPersona'><button onclick='quitarPersonaContacto(" + `"${items.TelefonoPersona}"` + ")' class='boton_primario BtnEliminarPersona'><span>X</span></button></td>";
         contenido += "</tr>";
 
@@ -374,11 +371,13 @@ function enviarDatos() {
 }
 
 $("#save-new-cliente").on('click', function () {
-    correcto("Aún sin funcionalidad");
+    
 
     localStorage.removeItem("PersonaContacto");
     $("#form-new-client").submit();
     
+    //correcto("Aún sin funcionalidad");
+
     //SignalIr
     //$.post("mensajeInstantaneo?mensaje=guardar", function (data) {
 
@@ -437,6 +436,14 @@ $('#iban').keyup(function () {
 $('#banco').keyup(function () {
     this.value = UpperCase(this.value);
 });
+
+$('.selectFilter').on('select2:select', function (e) {
+    let input_iae = $("#input_iae");
+    let input_cnae = $("#input_cnae");
+    let value_select_actividad = e.params.data;
+    input_iae.val(value_select_actividad.text.split(" - ")[0]);
+    input_cnae.val(value_select_actividad.text.split(" - ")[1]);
+  });
 
 /*detalle*/
 

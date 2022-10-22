@@ -9,7 +9,6 @@ namespace Web.Models
     {
         public int CODIGO_CLIENTE { get; set; }
 
-        [Required(ErrorMessage = "El Código contabilidad es obligatorio")]
         [Display(Name = "Código contabilidad")]
         public string CODIGO_CONTABILIDAD { get; set; }
 
@@ -156,10 +155,10 @@ namespace Web.Models
         public string APELLIDO_DOS { get; set; }
 
         [Display(Name = "Fecha de contratación TH")]
-        public DateTime FECHA_CONTRATACION_TH { get; set; }
+        public DateTime FECHA_CONTRATACION_TH { get; set; } = DateTime.Now;
 
         [Display(Name = "Fecha de actividad")]
-        public DateTime FECHA_ALTA_ACTIVIDAD { get; set; }
+        public DateTime FECHA_ALTA_ACTIVIDAD { get; set; } = DateTime.Now;
 
         [Display(Name = "IAE")]
         public string IAE { get; set; }

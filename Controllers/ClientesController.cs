@@ -95,60 +95,104 @@ namespace Web.Views.Clientes
         [HttpPost]
         public IActionResult Crear(ClientesViewModel model)
         {
-            ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
-            ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
-            ViewData["TIPO_CLIENTE"] = _UnitOfWork.TipoClienteRepository.GetAll();
-            ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
-            ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
-            ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
-
-            bool Save = false;
-
-            if (model.IBAN != null && !Utilidades.Utilidades.ValidateIban(model.IBAN))
-            {
-                ModelState.AddModelError("", "Campo IBAN no es valido");
-                ModelState.AddModelError("IBAN", "El IBAN no es valido");
-            }
 
             try
             {
 
+                ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
+                ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
+                ViewData["TIPO_CLIENTE"] = _UnitOfWork.TipoClienteRepository.GetAll();
+                ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
+                ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
+                ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
+
+                bool Save = false;
+
+                if (model.IBAN != null && !Utilidades.Utilidades.ValidateIban(model.IBAN))
+                {
+                    ModelState.AddModelError("", "Campo IBAN no es valido");
+                    ModelState.AddModelError("IBAN", "El IBAN no es valido");
+                }
+
+                string[] camposVacios = ValidarCamposCrearCliente(model);
+                if (camposVacios.Length > 0)
+                {
+                    for (int i = 0; i < camposVacios.Length; i++)
+                    {
+                        ModelState.AddModelError(camposVacios[i], $"El campo {camposVacios[i]} es obligatorio");
+                        ModelState.AddModelError("", $"El campo {camposVacios[i]} es obligatorio");
+                    }
+                }
+
+                try
+                {
+
+                    if (!ModelState.IsValid)
+                        return View(model);
+
+                    Cliente modelInsertado = Cast_Cliente_ViewCliente(model);
+                    _UnitOfWork.ClienteRepository.Add(modelInsertado);
+                    _UnitOfWork.Save();
+                    model.CODIGO_CLIENTE = modelInsertado.CodigoCliente;
+                    Save = true;
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message.ToString());
+                }
+
                 if (!ModelState.IsValid)
                     return View(model);
 
-                _UnitOfWork.ClienteRepository.Add(Cast_Cliente_ViewCliente(model));
-                _UnitOfWork.Save();
-                model.CODIGO_CLIENTE = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == model.CODIGO_CLIENTE).FirstOrDefault().CodigoCliente;
-                Save = true;
+                if (model.EMAILPRINCIPAL != null && Save)
+                {
+                    Email ClienteMail = new Email()
+                    {
+                        Email1 = model.EMAILPRINCIPAL,
+                        Activo = true
+                    };
+                    
+                    _UnitOfWork.EmailRepository.Add(ClienteMail);
+                    _UnitOfWork.Save();
+
+                    ClienteMail clienteEmail = new ClienteMail();
+                    clienteEmail.IdCliente = model.CODIGO_CLIENTE;
+                    clienteEmail.IdMail = ClienteMail.IdEmailCliente;
+
+                    _UnitOfWork.ClienteEmailRepository.Add(clienteEmail);
+                    _UnitOfWork.Save();
+
+                }
+
+                if (model.IBAN != null && Save)
+                {
+                    Cuenta Cuenta = new Cuenta()
+                    {
+                        Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
+                        Iban = model.IBAN.Replace(" ", ""),
+                        Banco = model.BANCO,
+                        Activa = true
+                    };
+
+                    _UnitOfWork.CuentaRepository.Add(Cuenta);
+                    _UnitOfWork.Save();
+
+                    ClienteCuenta clienteCuenta = new ClienteCuenta();
+                    clienteCuenta.IdCuenta = Cuenta.IdCuenta;
+                    clienteCuenta.IdCliente = model.CODIGO_CLIENTE;
+
+                    _UnitOfWork.ClienteCuentaRepository.Add(clienteCuenta);
+                    _UnitOfWork.Save();
+
+                }
+
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                ModelState.AddModelError("", e.Message.ToString());
+                return RedirectToAction("Index", "Clientes");
             }
-
-            if (!ModelState.IsValid)
-                return View(model);
-
-            if (model.EMAILPRINCIPAL != null && Save)
-            {
-                Email NewMail = Cast_ClienteMail_ViewCliente(model);
-                _UnitOfWork.EmailRepository.Add(NewMail);
-                _UnitOfWork.Save();
-
-                ClienteMail clienteEmail = new ClienteMail();
-                clienteEmail.IdCliente = model.CODIGO_CLIENTE;
-                clienteEmail.IdMail = NewMail.IdEmailCliente;
-
-                _UnitOfWork.ClienteEmailRepository.Add(clienteEmail);
-                _UnitOfWork.Save();
-
-            }
-
-            //if(model.IBAN != null && Save)
-            //{
-            //    _UnitOfWork.CuentaRepository.Add(Cast_ClienteCuenta_ViewCliente(model));
-            //    _UnitOfWork.Save();
-            //}
+            
+            
 
             return RedirectToAction("Index", "Clientes");
 
@@ -228,11 +272,7 @@ namespace Web.Views.Clientes
                 Modificado = model.FECHA_ALTA,
                 DireccionWeb = model.DIRECCION_WEB,
                 MensajeEmergente = model.MENSAJE_EMERGENTE,
-                CodigoProveedor = model.CODIGO_PROVEEDOR,
-                NoFacturas = model.NO_FACTURAS,
-                AceptaFacturaElectronica = model.ACEPTA_FACTURA_ELECTRONICA,
                 CesionDatos = model.CESION_DATOS,
-                EnviooComunicaciones = model.ENVIOO_COMUNICACIONES,
                 IdentificacionFiscal = model.IDENTIFICACION_FISCAL,
                 IdFormaPago = model.FORMA_PAGO,
                 IdTipoCliente = int.Parse(model.TIPO_CLIENTE),
@@ -244,33 +284,7 @@ namespace Web.Views.Clientes
             return cliente;
 
         }
-
-        public Email Cast_ClienteMail_ViewCliente(ClientesViewModel model)
-        {
-            Email ClienteMail = new Email()
-            {
-                IdEmailCliente = model.CODIGO_CLIENTE,
-                Email1 = model.EMAILPRINCIPAL,
-                Activo = true
-            };
-
-            return ClienteMail;
-        }
-
-        //public Cuenta Cast_ClienteCuenta_ViewCliente(ClientesViewModel model)
-        //{
-
-        //    Cuenta Cuenta = new Cuenta()
-        //    {
-        //        Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
-        //        Iban = model.IBAN.Replace(" ", ""),
-        //        Banco = model.BANCO,
-        //        Activa = true
-        //    };
-
-        //    return Cuenta;
-        //}
-
+        
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
 
@@ -333,6 +347,23 @@ namespace Web.Views.Clientes
                 Gdrive.ListararchivosGdrive();
             }
 
+        }
+
+        private string[] ValidarCamposCrearCliente(ClientesViewModel model)
+        {
+            string[] camposError = { };
+
+            if (model.EMAILPRINCIPAL == "" || model.EMAILPRINCIPAL == null)
+            {
+                camposError = camposError.Append("EMAILPRINCIPAL").ToArray();
+            }
+
+            if (model.IDENTIFICACION_FISCAL == "" || model.IDENTIFICACION_FISCAL == null)
+            {
+                camposError = camposError.Append("IDENTIFICACION_FISCAL").ToArray();
+            }
+
+            return camposError;
         }
 
     }
