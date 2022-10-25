@@ -171,6 +171,7 @@ namespace Web.Views.Clientes
                         Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
                         Iban = model.IBAN.Replace(" ", ""),
                         Banco = model.BANCO,
+                        Bic = model.BIC,
                         Activa = true
                     };
 
@@ -237,6 +238,9 @@ namespace Web.Views.Clientes
             {
                 cliente = Findcliente.FirstOrDefault();
 
+                cliente.ClienteMails = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdCliente == cliente.CodigoCliente).ToList();
+                cliente.ClienteCuenta = _UnitOfWork.ClienteCuentaRepository.GetAll().Where(x => x.IdCliente == cliente.CodigoCliente).ToList();
+                
                 string Usuario = _userManager.GetUserName(User);
                 _Auditoria.GuardarAuditoria(new AuditoriaModel() { Accion = $"Accesso a detalle cliente: {cliente.CodigoCliente}", Fecha = DateTime.Now, Usuario = Usuario });
             }
@@ -252,6 +256,12 @@ namespace Web.Views.Clientes
             ViewData["Title"] = $"Detalle del cliente: {(cliente.NombreCompleto == null ? cliente.NombreComercial : cliente.NombreCompleto)}";
 
             return View(Cast_ViewCliente_Cliente(cliente));
+        }
+
+        [HttpPost]
+        public IActionResult Detalle(ClientesViewModel model)
+        {
+            return View();
         }
 
         public Cliente Cast_Cliente_ViewCliente(ClientesViewModel model)
@@ -300,7 +310,7 @@ namespace Web.Views.Clientes
 
             ClientesViewModel cliente = new ClientesViewModel()
             {
-                
+
                 CODIGO_CLIENTE = model.CodigoCliente,
                 TIPO_IDENTIFICACION_FISCAL = model.IdIdentificacionFiscal == null ? ReturnNoData() : model.IdIdentificacionFiscal.ToString(),
                 NOMBRE_COMERCIAL = model.NombreComercial,
@@ -329,7 +339,10 @@ namespace Web.Views.Clientes
                 POBLACION_ACTIVIDAD = model.PoblacionActividad,
                 PROVINCIA_ACTIVIDAD = model.ProvinciaActividad,
                 PAIS_ACTIVIDAD = model.IdPaisActividad == null ? "34" : model.IdPaisActividad.Value.ToString(),
-
+                EMAILPRINCIPAL = _UnitOfWork.EmailRepository.GetAll().Where(x => x.IdEmailCliente == model.ClienteMails.FirstOrDefault().IdMail && x.Activo == true).FirstOrDefault().Email1,
+                IBAN = _UnitOfWork.CuentaRepository.GetAll().Where(x => x.IdCuenta == model.ClienteCuenta.FirstOrDefault().IdCuenta && x.Activa == true).FirstOrDefault().Iban,
+                BANCO = _UnitOfWork.CuentaRepository.GetAll().Where(x => x.IdCuenta == model.ClienteCuenta.FirstOrDefault().IdCuenta && x.Activa == true).FirstOrDefault().Banco,
+                BIC = _UnitOfWork.CuentaRepository.GetAll().Where(x => x.IdCuenta == model.ClienteCuenta.FirstOrDefault().IdCuenta && x.Activa == true).FirstOrDefault().Bic,
             };
 
             return cliente;

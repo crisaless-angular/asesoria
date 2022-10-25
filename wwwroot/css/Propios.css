@@ -613,7 +613,7 @@ hr.sep-3::after {
 /*Boton guardar*/
 
 /* Volver arriba */
-#volver_arriba {
+.volver_arriba {
     width: 60px;
     height: 60px;
     bottom: 40px;
@@ -1080,6 +1080,10 @@ hr.sep-3::after {
 
 .select2-container--default .select2-selection--single{
     border: none !important;
+}
+
+.modal-lg {
+    max-width: 1200px;
 }
 
 

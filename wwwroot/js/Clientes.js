@@ -391,11 +391,16 @@ $("#save-new-cliente").on('click', function () {
     
 });
 
+$("#update-new-cliente").on('click', function () {
+    $("#form-update-client").submit();
+});
+
+/* Making the button scroll to the top of the page. */
 $('#volver_arriba').click(function () {
         $('body, html').animate({
             scrollTop: '0px'
         }, 300);
-    });
+});
 
 $(window).scroll(function () {
     if ($(this).scrollTop() > 0) {

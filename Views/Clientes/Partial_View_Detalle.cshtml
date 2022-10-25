@@ -1,222 +1,237 @@
 ﻿@model Web.Models.ClientesViewModel
+@using Web.Data;
 
-<div>
-    <h4>Cliente</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NOMBRE_COMPLETO)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NOMBRE_COMPLETO)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NOMBRE_COMERCIAL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NOMBRE_COMERCIAL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DOMICILIO)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DOMICILIO)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CODIGO_POSTAL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CODIGO_POSTAL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.POBLACION)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.POBLACION)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PROVINCIA)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PROVINCIA)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TELEFONO)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TELEFONO)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MOVIL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MOVIL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OBSERVACIONES)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OBSERVACIONES)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FECHA_ALTA)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FECHA_ALTA)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MODIFICADO)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MODIFICADO)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DIRECCION_WEB)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DIRECCION_WEB)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MENSAJE_EMERGENTE)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MENSAJE_EMERGENTE)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CODIGO_PROVEEDOR)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CODIGO_PROVEEDOR)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IDENTIFICACION_FISCAL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IDENTIFICACION_FISCAL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IVA)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IVA)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.APELLIDO_UNO)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.APELLIDO_UNO)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.APELLIDO_DOS)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.APELLIDO_DOS)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FECHA_CONTRATACION_TH)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FECHA_CONTRATACION_TH)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FECHA_ALTA_ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FECHA_ALTA_ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CUOTA_MENSUAL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CUOTA_MENSUAL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DOMICILIO_ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DOMICILIO_ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CODIGO_POSTAL_ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CODIGO_POSTAL_ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.POBLACION_ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.POBLACION_ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PROVINCIA_ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PROVINCIA_ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PAIS_ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PAIS_ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IAE)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IAE)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CNAE)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CNAE)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AGENTE)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AGENTE)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FORMA_PAGO)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FORMA_PAGO)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IDENTIFICACION_FISCAL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IDENTIFICACION_FISCAL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PAIS_ACTIVIDAD)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PAIS_ACTIVIDAD)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TIPO_CLIENTE)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TIPO_CLIENTE)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PERSONA_CONTACTO)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PERSONA_CONTACTO)
-        </dd>
-    </dl>
+@{
+    List<Paise> PaisesList = ViewData["PAISES"] as List<Paise>;
+    List<TipoIdentificacionFiscal> TipoIdentificacionFiscal = ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] as List<TipoIdentificacionFiscal>;
+    List<TipoCliente> TipoClienteList = ViewData["TIPO_CLIENTE"] as List<TipoCliente>;
+    List<Agente> AgenteList = ViewData["AGENTE"] as List<Agente>;
+    List<FormasPago> FormaPagoList = ViewData["FORMA_PAGO"] as List<FormasPago>;
+    List<Actividad> ActividadList = ViewData["ACTIVIDAD"] as List<Actividad>;
+
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<div class="container-fluid p-3">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-controller="Clientes" asp-action="Detalle" method="post" id="form-update-client">
+
+        <div class="row mb-5">
+            <a class="fancy" href="#" id="update-new-cliente">
+              <span class="top-key"></span>
+              <span class="text">Guardar y continuar</span>
+              <span class="bottom-key-1"></span>
+              <span class="bottom-key-2"></span>
+            </a>
+        </div> 
+
+        <div class="loader hide">
+        <span>Cargando...</span>
+        </div> 
+
+        <nav>
+            <div class="nav nav-tabs nav-fill tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active labels tab" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">General</a>
+            </div>
+        </nav>
+
+        <div class="tab-content py-3 px-3 px-sm-0 p-4" id="nav-tabContent">
+
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    
+                <div class="row">
+                   
+                    <div id="NuevoTipoCliente" class="form-group col-lg-4 col-md-4 col-xs-10">
+                        <label asp-for="NUEVO_TIPO_CLIENTE" class="control-label labels"></label>
+                        <input asp-for="NUEVO_TIPO_CLIENTE" class="form-control inputs" tabindex="2"/>
+                        <span asp-validation-for="NUEVO_TIPO_CLIENTE" class="text-danger"></span>
+                    </div>
+                    <div id="TipoCliente" class="form-group col-lg-4 col-md-4 col-xs-10 mostrar">
+                        <label asp-for="TIPO_CLIENTE" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="TIPO_CLIENTE" asp-items="@(new SelectList(TipoClienteList, "IdTipoCliente", "TipoCliente1"))" tabindex="2"></select>
+                        <span asp-validation-for="TIPO_CLIENTE" class="text-danger"></span>
+                    </div>
+                    <div id="btnTipoCliente" class="form-group col-lg-1 col-md-1 col-xs-2">
+                        <input type="button" id="btnTipoClienteInput" value="+" />
+                     </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="AGENTE" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="AGENTE" asp-items="@(new SelectList(AgenteList, "IdAgente", "Agente1"))" tabindex="3"></select>
+                        <span asp-validation-for="AGENTE" class="text-danger"></span>
+                    </div>
+                </div>
+                 <div class="form-group mb-5">
+                    <label asp-for="NOMBRE_COMERCIAL" class="control-label labels"></label>
+                    <input asp-for="NOMBRE_COMERCIAL" class="form-control inputs" tabindex="5"/>
+                    <span asp-validation-for="NOMBRE_COMERCIAL" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="NOMBRE_COMPLETO" class="control-label labels"></label>
+                        <input asp-for="NOMBRE_COMPLETO" class="form-control inputs" tabindex="6" />
+                        <span asp-validation-for="NOMBRE_COMPLETO" class="text-danger"></span>
+                    </div>
+                   <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="APELLIDO_UNO" class="control-label labels"></label>
+                        <input asp-for="APELLIDO_UNO" class="form-control inputs" tabindex="7" />
+                        <span asp-validation-for="APELLIDO_UNO" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-xs-12">
+                        <label asp-for="APELLIDO_DOS" class="control-label labels"></label>
+                        <input asp-for="APELLIDO_DOS" class="form-control inputs" tabindex="8" />
+                        <span asp-validation-for="APELLIDO_DOS" class="text-danger"></span>
+                    </div>
+                 </div>
+
+                <hr class="sep-3" />
+
+                <div class="form-group mt-5">
+                    <label asp-for="DOMICILIO" class="control-label labels"></label>
+                    <input asp-for="DOMICILIO" class="form-control inputs" tabindex="9"/>
+                    <span asp-validation-for="DOMICILIO" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="CODIGO_POSTAL" class="control-label labels"></label>
+                    <input id="CodigoPostal" asp-for="CODIGO_POSTAL" class="form-control inputs" tabindex="10" maxlength="5"/>
+                    <span asp-validation-for="CODIGO_POSTAL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="POBLACION" class="control-label labels"></label>
+                        <input id="poblacion" asp-for="POBLACION" class="form-control inputs" tabindex="11"/>
+                        <span asp-validation-for="POBLACION" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="PROVINCIA" class="control-label labels"></label>
+                    <input id="provincia" asp-for="PROVINCIA" class="form-control inputs" tabindex="12"/>
+                    <span asp-validation-for="PROVINCIA" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="PAIS" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="PAIS" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="13"></select>
+                        <span asp-validation-for="PAIS" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group mt-5">
+                    <label asp-for="DOMICILIO_ACTIVIDAD" class="control-label labels"></label>
+                    <input asp-for="DOMICILIO_ACTIVIDAD" class="form-control inputs" tabindex="14"/>
+                    <span asp-validation-for="DOMICILIO_ACTIVIDAD" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="CODIGO_POSTAL_ACTIVIDAD" class="control-label labels"></label>
+                    <input id="CodigoPostal" asp-for="CODIGO_POSTAL_ACTIVIDAD" class="form-control inputs" tabindex="15" maxlength="5"/>
+                    <span asp-validation-for="CODIGO_POSTAL_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="POBLACION_ACTIVIDAD" class="control-label labels"></label>
+                        <input id="poblacion" asp-for="POBLACION_ACTIVIDAD" class="form-control inputs" tabindex="16"/>
+                        <span asp-validation-for="POBLACION_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                    <label asp-for="PROVINCIA_ACTIVIDAD" class="control-label labels"></label>
+                    <input id="provincia" asp-for="PROVINCIA_ACTIVIDAD" class="form-control inputs" tabindex="17"/>
+                    <span asp-validation-for="PROVINCIA_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="PAIS_ACTIVIDAD" class="control-label labels"></label>
+                        <select class="inputs selects" asp-for="PAIS_ACTIVIDAD" asp-items="@(new SelectList(PaisesList, "IdPais", "Descripcion", 74))" tabindex="18"></select>
+                        <span asp-validation-for="PAIS_ACTIVIDAD" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr class="sep-3" />
+
+                <div class="row mt-5 mb-5">
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="TELEFONO" class="control-label labels"></label>
+                        <input asp-for="TELEFONO" class="form-control inputs" tabindex="19"/>
+                        <span asp-validation-for="TELEFONO" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                        <label asp-for="MOVIL" class="control-label labels"></label>
+                        <input asp-for="MOVIL" class="form-control inputs" tabindex="20"/>
+                        <span asp-validation-for="MOVIL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="EMAILPRINCIPAL" class="control-label labels obligatorio"></label>
+                        <input id="email_principal" asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="21"/>
+                        <span asp-validation-for="EMAILPRINCIPAL" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr class="sep-3" />
+
+                <div class="row mt-5 mb-5">
+
+                    <div class="form-group col-lg-8 col-md-8 col-xs-12">
+                        <label asp-for="IBAN" class="control-label labels"></label>
+                        <input id="iban" asp-for="IBAN" class="form-control inputs" tabindex="22" placeholder="ES3214650100911841004150"/>
+                        <span asp-validation-for="IBAN" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4 col-md-4 col-xs-6">
+                        <label asp-for="BIC" class="control-label labels"></label>
+                        <input asp-for="BIC" class="form-control inputs" tabindex="23"/>
+                        <span asp-validation-for="BIC" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <label asp-for="BANCO" class="control-label labels"></label>
+                        <input id="banco" asp-for="BANCO" class="form-control inputs" tabindex="24"/>
+                        <span asp-validation-for="BANCO" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+            
+        </div>
+
+
+
+    </form>
+
+    <div class="btn-arriba">
+        <button class="volver_arriba" id="volver_arriba_detalle_general">
+            <div class="arrow-up"></div>
+        </button>
+    </div>
+
 </div>
-<div>
-   @* <a asp-action="Edit" asp-route-id="@Model.CodigoCliente">Edit</a> |
-    <a asp-action="Index">Back to List</a>*@
-</div>
+
+
+
+         
+         
