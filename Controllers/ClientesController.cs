@@ -259,23 +259,84 @@ namespace Web.Views.Clientes
         }
 
         [HttpPost]
-        public IActionResult Detalle(ClientesViewModel model)
+        public IActionResult Detalle(ClientesViewModel model, bool general = false)
         {
-            return View();
-        }
+            try
+            {
+                Cliente cliente = _UnitOfWork.ClienteRepository.GetEntity(model.CODIGO_CLIENTE);
+                
+                ViewData["PAISES"] = _UnitOfWork.PaisesRepository.GetAll();
+                ViewData["TIPO_IDENTIFICACION_FISCAL_ITEMS"] = _UnitOfWork.TipoIdentificacionFiscalRepository.GetAll();
+                ViewData["TIPO_CLIENTE"] = _UnitOfWork.TipoClienteRepository.GetAll();
+                ViewData["AGENTE"] = _UnitOfWork.AgenteRepository.GetAll();
+                ViewData["FORMA_PAGO"] = _UnitOfWork.FormasPagoRepository.GetAll();
+                ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
+                ViewData["Title"] = $"Detalle del cliente: {(model.NOMBRE_COMPLETO == null ? model.NOMBRE_COMERCIAL : model.NOMBRE_COMPLETO)}";
+                
+                bool Save = false;
+                
+                if (model.IBAN != null && !Utilidades.Utilidades.ValidateIban(model.IBAN))
+                {
+                    ModelState.AddModelError("", "Campo IBAN no es valido");
+                    ModelState.AddModelError("IBAN", "El IBAN no es valido");
+                }
 
+                string[] camposVacios = ValidarCamposCrearCliente(model, general);
+                if (camposVacios.Length > 0)
+                {
+                    for (int i = 0; i < camposVacios.Length; i++)
+                    {
+                        ModelState.AddModelError(camposVacios[i], $"El campo {camposVacios[i]} es obligatorio");
+                        ModelState.AddModelError("", $"El campo {camposVacios[i]} es obligatorio");
+                        
+                    }
+                }
+
+                try
+                {
+                    
+                    if (!ModelState.IsValid)
+                        return View(model);
+
+                    Cliente modelInsertado = Cast_Cliente_ViewCliente_update(model, cliente);
+                    _UnitOfWork.ClienteRepository.Update(modelInsertado);
+                    _UnitOfWork.Save();
+                    model.CODIGO_CLIENTE = modelInsertado.CodigoCliente;
+                    Save = true;
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message.ToString());
+                }
+
+                if (!ModelState.IsValid)
+                    return View(model);
+                
+            }
+            catch (Exception e)
+            {
+                return View(model);
+            }
+
+
+            model.MostrarMensajeEmergente = true;
+            model.MENSAJE_EMERGENTE = "Datos actualizados correctamente!";
+            
+            return View(model);
+        }
+        
         public Cliente Cast_Cliente_ViewCliente(ClientesViewModel model)
         {
             Cliente cliente = new Cliente()
             {
-                IdIdentificacionFiscal = int.Parse(model.TIPO_IDENTIFICACION_FISCAL),
+                IdIdentificacionFiscal = model.TIPO_IDENTIFICACION_FISCAL == null ? 1 : int.Parse(model.TIPO_IDENTIFICACION_FISCAL),
                 NombreCompleto = model.NOMBRE_COMPLETO,
                 NombreComercial = model.NOMBRE_COMERCIAL,
                 Domicilio = model.DOMICILIO,
                 CodigoPostal = model.CODIGO_POSTAL,
                 Poblacion = model.POBLACION,
                 Provincia = model.PROVINCIA,
-                IdPais = int.Parse(model.PAIS),
+                IdPais = model.PAIS == null ? 74 : int.Parse(model.PAIS),
                 Telefono = model.TELEFONO,
                 Movil = model.MOVIL,
                 Observaciones = model.OBSERVACIONES,
@@ -283,10 +344,10 @@ namespace Web.Views.Clientes
                 Modificado = model.FECHA_ALTA,
                 IdentificacionFiscal = model.IDENTIFICACION_FISCAL,
                 IdFormaPago = model.FORMA_PAGO,
-                IdTipoCliente = int.Parse(model.TIPO_CLIENTE),
-                IdActividad = int.Parse(model.ACTIVIDAD),
+                IdTipoCliente = model.TIPO_CLIENTE == null ? 1 : int.Parse(model.TIPO_CLIENTE),
+                IdActividad = model.ACTIVIDAD == null ? 1 : int.Parse(model.ACTIVIDAD),
                 Iva = model.IVA,
-                Agente = int.Parse(model.AGENTE),
+                Agente = model.AGENTE == null ? 1 : int.Parse(model.AGENTE),
                 ApellidoUno = model.APELLIDO_UNO,
                 ApellidoDos = model.APELLIDO_DOS,
                 FechaContratacionTh = model.FECHA_CONTRATACION_TH,
@@ -298,13 +359,51 @@ namespace Web.Views.Clientes
                 CodigoPostalActividad = model.CODIGO_POSTAL_ACTIVIDAD,
                 PoblacionActividad = model.POBLACION_ACTIVIDAD,
                 ProvinciaActividad = model.PROVINCIA_ACTIVIDAD,
-                IdPaisActividad = int.Parse(model.PAIS_ACTIVIDAD),
+                IdPaisActividad = model.PAIS_ACTIVIDAD == null ? 74 : int.Parse(model.PAIS_ACTIVIDAD),
             };
 
             return cliente;
 
         }
-        
+
+        public Cliente Cast_Cliente_ViewCliente_update(ClientesViewModel model, Cliente cliente)
+        {
+            cliente.IdIdentificacionFiscal = model.TIPO_IDENTIFICACION_FISCAL == null ? 1 : int.Parse(model.TIPO_IDENTIFICACION_FISCAL);
+            cliente.NombreCompleto = model.NOMBRE_COMPLETO;
+            cliente.NombreComercial = model.NOMBRE_COMERCIAL;
+            cliente.Domicilio = model.DOMICILIO;
+            cliente.CodigoPostal = model.CODIGO_POSTAL;
+            cliente.Poblacion = model.POBLACION;
+            cliente.Provincia = model.PROVINCIA;
+            cliente.IdPais = model.PAIS == null ? 74 : int.Parse(model.PAIS);
+            cliente.Telefono = model.TELEFONO;
+            cliente.Movil = model.MOVIL;
+            cliente.Observaciones = model.OBSERVACIONES;
+            cliente.FechaAlta = model.FECHA_ALTA;
+            cliente.Modificado = model.FECHA_ALTA;
+            cliente.IdentificacionFiscal = model.IDENTIFICACION_FISCAL;
+            cliente.IdFormaPago = model.FORMA_PAGO;
+            cliente.IdTipoCliente = model.TIPO_CLIENTE == null ? 1 : int.Parse(model.TIPO_CLIENTE);
+            cliente.IdActividad = model.ACTIVIDAD == null ? 1 : int.Parse(model.ACTIVIDAD);
+            cliente.Iva = model.IVA;
+            cliente.Agente = model.AGENTE == null ? 1 : int.Parse(model.AGENTE);
+            cliente.ApellidoUno = model.APELLIDO_UNO;
+            cliente.ApellidoDos = model.APELLIDO_DOS;
+            cliente.FechaContratacionTh = model.FECHA_CONTRATACION_TH;
+            cliente.FechaAltaActividad = model.FECHA_ALTA_ACTIVIDAD;
+            cliente.Iae = model.IAE;
+            cliente.Cnae = model.CNAE;
+            cliente.CuotaMensual = model.CUOTA_MENSUAL;
+            cliente.DomicilioActividad = model.DOMICILIO_ACTIVIDAD;
+            cliente.CodigoPostalActividad = model.CODIGO_POSTAL_ACTIVIDAD;
+            cliente.PoblacionActividad = model.POBLACION_ACTIVIDAD;
+            cliente.ProvinciaActividad = model.PROVINCIA_ACTIVIDAD;
+            cliente.IdPaisActividad = model.PAIS_ACTIVIDAD == null ? 74 : int.Parse(model.PAIS_ACTIVIDAD);
+            
+            return cliente;
+
+        }
+
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
 
@@ -375,7 +474,7 @@ namespace Web.Views.Clientes
 
         }
 
-        private string[] ValidarCamposCrearCliente(ClientesViewModel model)
+        private string[] ValidarCamposCrearCliente(ClientesViewModel model, bool update = false)
         {
             string[] camposError = { };
 
@@ -384,7 +483,7 @@ namespace Web.Views.Clientes
                 camposError = camposError.Append("EMAILPRINCIPAL").ToArray();
             }
 
-            if (model.IDENTIFICACION_FISCAL == "" || model.IDENTIFICACION_FISCAL == null)
+            if (model.IDENTIFICACION_FISCAL == "" || model.IDENTIFICACION_FISCAL == null && !update)
             {
                 camposError = camposError.Append("IDENTIFICACION_FISCAL").ToArray();
             }

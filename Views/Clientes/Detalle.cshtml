@@ -146,8 +146,14 @@
                 scrollTop: '0px'
             }, 300);
         });
-
     </script>
-   
+
+@{
+    if(Model.MostrarMensajeEmergente){
+        <script>correcto("@Model.MENSAJE_EMERGENTE");</script>
+    }
+}
+
+      
 }
          

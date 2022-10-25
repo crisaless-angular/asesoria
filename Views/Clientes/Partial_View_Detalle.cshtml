@@ -19,7 +19,7 @@
 <div class="container-fluid p-3">
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <form asp-controller="Clientes" asp-action="Detalle" method="post" id="form-update-client">
+    <form asp-controller="Clientes" asp-action="Detalle"  asp-route-general="true" method="post" id="form-update-client">
 
         <div class="row mb-5">
             <a class="fancy" href="#" id="update-new-cliente">
@@ -219,6 +219,20 @@
             
         </div>
 
+        <input hidden asp-for="CODIGO_CLIENTE" class="form-control inputs" tabindex="2"/>
+        <input hidden type=date asp-for="FECHA_CONTRATACION_TH" class="form-control inputs" tabindex="25"/>
+        <input hidden type=date asp-for="FECHA_ALTA_ACTIVIDAD" class="form-control inputs" tabindex="26"/>
+        <input hidden type=date asp-for="FECHA_ALTA" class="form-control inputs" tabindex="27"/>
+        <select hidden class="inputs selects" asp-for="TIPO_IDENTIFICACION_FISCAL" asp-items="@(new SelectList(TipoIdentificacionFiscal, "IdTipoIdentificacionFiscal", "Descripcion"))" tabindex="28"></select>
+        <input hidden id="identificacion_fiscal" asp-for="IDENTIFICACION_FISCAL" class="form-control inputs" tabindex="29"/>
+        <input hidden id="InputPersonaContacto" asp-for="PERSONA_CONTACTO" class="form-control inputs" tabindex="30"/>
+        <select hidden id="actividad_filter" class="inputs selects selectFilter" asp-for="ACTIVIDAD" asp-items="@(new SelectList(ActividadList, "IdActividad", "Descripcion"))" tabindex="31"></select>
+        <input hidden id="input_iae" disabled asp-for="IAE" class="form-control inputs" tabindex="32" />                       
+        <input hidden id="input_cnae" disabled asp-for="CNAE" class="form-control inputs" tabindex="33" />                     
+        <input hidden asp-for="CUOTA_MENSUAL" class="form-control inputs" tabindex="34" />                      
+        <select hidden class="inputs selects" asp-for="FORMA_PAGO" asp-items="@(new SelectList(FormaPagoList, "IdFomaPago", "Descripcion", 5))" tabindex="35"></select>                  
+        <textarea hidden asp-for="OBSERVACIONES" class="form-control inputs" TextMode="MultiLine" tabindex="36" rows="10"></textarea>
+
 
 
     </form>
@@ -231,6 +245,8 @@
 
 </div>
 
+
+                      
 
 
          

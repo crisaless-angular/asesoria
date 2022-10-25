@@ -15,7 +15,7 @@ namespace Web.Models
         [Display(Name = "Tipo identificación fiscal")]
         public string TIPO_IDENTIFICACION_FISCAL { get; set; }
 
-        [Required(ErrorMessage = "La Identificación fiscal es obligatoria")]
+        //[Required(ErrorMessage = "La Identificación fiscal es obligatoria")]
         [Display(Name = "Identificación fiscal")]
         public string IDENTIFICACION_FISCAL { get; set; }
 
@@ -168,6 +168,8 @@ namespace Web.Models
 
         [Display(Name = "Cuota mensual")]
         public string CUOTA_MENSUAL { get; set; }
+
+        public bool MostrarMensajeEmergente { get; set; } = false;
 
     }
 }
