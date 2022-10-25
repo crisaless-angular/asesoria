@@ -1,0 +1,222 @@
+﻿@model Web.Models.ClientesViewModel
+
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NOMBRE_COMPLETO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NOMBRE_COMPLETO)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NOMBRE_COMERCIAL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NOMBRE_COMERCIAL)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DOMICILIO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DOMICILIO)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CODIGO_POSTAL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CODIGO_POSTAL)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.POBLACION)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.POBLACION)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PROVINCIA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PROVINCIA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TELEFONO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TELEFONO)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MOVIL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MOVIL)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OBSERVACIONES)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OBSERVACIONES)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FECHA_ALTA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FECHA_ALTA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MODIFICADO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MODIFICADO)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DIRECCION_WEB)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DIRECCION_WEB)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MENSAJE_EMERGENTE)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MENSAJE_EMERGENTE)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CODIGO_PROVEEDOR)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CODIGO_PROVEEDOR)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IDENTIFICACION_FISCAL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IDENTIFICACION_FISCAL)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IVA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IVA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.APELLIDO_UNO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.APELLIDO_UNO)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.APELLIDO_DOS)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.APELLIDO_DOS)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FECHA_CONTRATACION_TH)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FECHA_CONTRATACION_TH)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FECHA_ALTA_ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FECHA_ALTA_ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CUOTA_MENSUAL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CUOTA_MENSUAL)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DOMICILIO_ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DOMICILIO_ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CODIGO_POSTAL_ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CODIGO_POSTAL_ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.POBLACION_ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.POBLACION_ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PROVINCIA_ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PROVINCIA_ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PAIS_ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PAIS_ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IAE)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IAE)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CNAE)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CNAE)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AGENTE)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AGENTE)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FORMA_PAGO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FORMA_PAGO)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IDENTIFICACION_FISCAL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IDENTIFICACION_FISCAL)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PAIS_ACTIVIDAD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PAIS_ACTIVIDAD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TIPO_CLIENTE)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TIPO_CLIENTE)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PERSONA_CONTACTO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PERSONA_CONTACTO)
+        </dd>
+    </dl>
+</div>
+<div>
+   @* <a asp-action="Edit" asp-route-id="@Model.CodigoCliente">Edit</a> |
+    <a asp-action="Index">Back to List</a>*@
+</div>

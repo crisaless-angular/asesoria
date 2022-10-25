@@ -321,18 +321,14 @@ namespace Web.Views.Clientes
                 APELLIDO_DOS = model.ApellidoDos,
                 FECHA_CONTRATACION_TH = model.FechaContratacionTh.Value,
                 FECHA_ALTA_ACTIVIDAD = model.FechaAltaActividad.Value,
-                
-                //NombreCompleto = model.NOMBRE_COMPLETO,
-                //ApellidoUno = model.APELLIDO_UNO,
-                //ApellidoDos = model.APELLIDO_DOS,
-                //Iae = model.IAE,
-                //Cnae = model.CNAE,
-                //CuotaMensual = model.CUOTA_MENSUAL,
-                //DomicilioActividad = model.DOMICILIO_ACTIVIDAD,
-                //CodigoPostalActividad = model.CODIGO_POSTAL_ACTIVIDAD,
-                //PoblacionActividad = model.POBLACION_ACTIVIDAD,
-                //ProvinciaActividad = model.PROVINCIA_ACTIVIDAD,
-                //IdPaisActividad = int.Parse(model.PAIS_ACTIVIDAD),
+                IAE = model.Iae,
+                CNAE = model.Cnae,
+                CUOTA_MENSUAL = model.CuotaMensual,
+                DOMICILIO_ACTIVIDAD = model.DomicilioActividad,
+                CODIGO_POSTAL_ACTIVIDAD = model.CodigoPostalActividad,
+                POBLACION_ACTIVIDAD = model.PoblacionActividad,
+                PROVINCIA_ACTIVIDAD = model.ProvinciaActividad,
+                PAIS_ACTIVIDAD = model.IdPaisActividad == null ? "34" : model.IdPaisActividad.Value.ToString(),
 
             };
 
