@@ -177,7 +177,7 @@ namespace Web.Views.Clientes
 
                     _UnitOfWork.CuentaRepository.Add(Cuenta);
                     _UnitOfWork.Save();
-
+                    
                     ClienteCuenta clienteCuenta = new ClienteCuenta();
                     clienteCuenta.IdCuenta = Cuenta.IdCuenta;
                     clienteCuenta.IdCliente = model.CODIGO_CLIENTE;
@@ -281,7 +281,7 @@ namespace Web.Views.Clientes
                     ModelState.AddModelError("IBAN", "El IBAN no es valido");
                 }
 
-                string[] camposVacios = ValidarCamposCrearCliente(model, general);
+                string[] camposVacios = ValidarCamposCrearCliente(model);
                 if (camposVacios.Length > 0)
                 {
                     for (int i = 0; i < camposVacios.Length; i++)
@@ -303,6 +303,68 @@ namespace Web.Views.Clientes
                     _UnitOfWork.Save();
                     model.CODIGO_CLIENTE = modelInsertado.CodigoCliente;
                     Save = true;
+
+                    if (model.EMAILPRINCIPAL != null && Save)
+                    {
+                        var clienteEmail = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdCliente == model.CODIGO_CLIENTE).ToList();
+
+                        foreach (var cuentaCliente in clienteEmail)
+                        {
+                             
+                        }
+
+                        Email ClienteMail = new Email()
+                        {
+                            Email1 = model.EMAILPRINCIPAL,
+                            Activo = true
+                        };
+
+                        //_UnitOfWork.EmailRepository.Add(ClienteMail);
+                        //_UnitOfWork.Save();
+
+                        //ClienteMail clienteEmail = new ClienteMail();
+                        //clienteEmail.IdCliente = model.CODIGO_CLIENTE;
+                        //clienteEmail.IdMail = ClienteMail.IdEmailCliente;
+
+                        //_UnitOfWork.ClienteEmailRepository.Add(clienteEmail);
+                        //_UnitOfWork.Save();
+
+                    }
+
+                    if (model.IBAN != null && Save)
+                    {
+                        Cuenta Cuenta = new Cuenta()
+                        {
+                            Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
+                            Iban = model.IBAN.Replace(" ", ""),
+                            Banco = model.BANCO,
+                            Bic = model.BIC,
+                            Activa = true
+                        };
+
+                        _UnitOfWork.CuentaRepository.Add(Cuenta);
+                        _UnitOfWork.Save();
+
+                        ClienteCuenta clienteCuenta = new ClienteCuenta();
+                        clienteCuenta.IdCuenta = Cuenta.IdCuenta;
+                        clienteCuenta.IdCliente = model.CODIGO_CLIENTE;
+
+                        _UnitOfWork.ClienteCuentaRepository.Add(clienteCuenta);
+                        _UnitOfWork.Save();
+
+                        List<ClienteCuenta> ListCuentas = _UnitOfWork.ClienteCuentaRepository.GetAll().Where(x => x.IdCliente == model.CODIGO_CLIENTE && x.IdCuenta != Cuenta.IdCuenta).ToList();
+
+                        for (int i = 0; i < ListCuentas.Count(); i++)
+                        {
+                            Cuenta cuenta = _UnitOfWork.CuentaRepository.GetEntity(ListCuentas[i].IdCuenta);
+                            cuenta.Activa = false;
+                            _UnitOfWork.CuentaRepository.Update(cuenta);
+                            _UnitOfWork.Save();
+                        }
+                        
+
+                    }
+
                 }
                 catch (Exception e)
                 {
@@ -406,7 +468,18 @@ namespace Web.Views.Clientes
 
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
+            Cuenta Cuenta = new Cuenta();
+            
+            for (int i = 0; i < model.ClienteCuenta.Count(); i++)
+            {
+                Cuenta FindCuenta = _UnitOfWork.CuentaRepository.GetEntity(model.ClienteCuenta.ElementAt(i).IdCuenta);
 
+                if (FindCuenta.Activa == true)
+                {
+                    Cuenta = FindCuenta;
+                }
+            }
+                
             ClientesViewModel cliente = new ClientesViewModel()
             {
 
@@ -439,11 +512,11 @@ namespace Web.Views.Clientes
                 PROVINCIA_ACTIVIDAD = model.ProvinciaActividad,
                 PAIS_ACTIVIDAD = model.IdPaisActividad == null ? "34" : model.IdPaisActividad.Value.ToString(),
                 EMAILPRINCIPAL = _UnitOfWork.EmailRepository.GetAll().Where(x => x.IdEmailCliente == model.ClienteMails.FirstOrDefault().IdMail && x.Activo == true).FirstOrDefault().Email1,
-                IBAN = _UnitOfWork.CuentaRepository.GetAll().Where(x => x.IdCuenta == model.ClienteCuenta.FirstOrDefault().IdCuenta && x.Activa == true).FirstOrDefault().Iban,
-                BANCO = _UnitOfWork.CuentaRepository.GetAll().Where(x => x.IdCuenta == model.ClienteCuenta.FirstOrDefault().IdCuenta && x.Activa == true).FirstOrDefault().Banco,
-                BIC = _UnitOfWork.CuentaRepository.GetAll().Where(x => x.IdCuenta == model.ClienteCuenta.FirstOrDefault().IdCuenta && x.Activa == true).FirstOrDefault().Bic,
+                IBAN = Cuenta.Iban,
+                BANCO = Cuenta.Banco,
+                BIC = Cuenta.Bic,
             };
-
+            
             return cliente;
         }
 
@@ -474,7 +547,7 @@ namespace Web.Views.Clientes
 
         }
 
-        private string[] ValidarCamposCrearCliente(ClientesViewModel model, bool update = false)
+        private string[] ValidarCamposCrearCliente(ClientesViewModel model)
         {
             string[] camposError = { };
 
@@ -483,7 +556,7 @@ namespace Web.Views.Clientes
                 camposError = camposError.Append("EMAILPRINCIPAL").ToArray();
             }
 
-            if (model.IDENTIFICACION_FISCAL == "" || model.IDENTIFICACION_FISCAL == null && !update)
+            if (model.IDENTIFICACION_FISCAL == "" || model.IDENTIFICACION_FISCAL == null)
             {
                 camposError = camposError.Append("IDENTIFICACION_FISCAL").ToArray();
             }

@@ -170,6 +170,7 @@ namespace Web.Models
         public string CUOTA_MENSUAL { get; set; }
 
         public bool MostrarMensajeEmergente { get; set; } = false;
+        public List<string> Emails { get; set; }
 
     }
 }

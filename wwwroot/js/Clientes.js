@@ -391,10 +391,6 @@ $("#save-new-cliente").on('click', function () {
     
 });
 
-$("#update-new-cliente").on('click', function () {
-    $("#form-update-client").submit();
-});
-
 /* Making the button scroll to the top of the page. */
 $('#volver_arriba').click(function () {
         $('body, html').animate({
@@ -451,7 +447,9 @@ $('.selectFilter').on('select2:select', function (e) {
   });
 
 /*detalle*/
-
+$("#update-new-cliente").on('click', function () {
+    $("#form-update-client").submit();
+});
 /*detalle*/
 
 
