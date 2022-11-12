@@ -450,6 +450,16 @@ $('.selectFilter').on('select2:select', function (e) {
 $("#update-new-cliente").on('click', function () {
     $("#form-update-client").submit();
 });
+
+$("#btnEmialsDetalle").on('click', function () {
+
+    if($("#tableEmails").hasClass("hide"))
+        $("#tableEmails").removeClass("hide");
+    else
+        $("#tableEmails").addClass("hide");
+        
+});
+
 /*detalle*/
 
 

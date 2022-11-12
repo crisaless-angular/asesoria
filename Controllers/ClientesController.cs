@@ -428,6 +428,34 @@ namespace Web.Views.Clientes
 
         }
 
+        private Cuenta ReturnCuenta(Cliente model)
+        {
+            for (int i = 0; i < model.ClienteCuenta.Count(); i++)
+            {
+                Cuenta FindCuenta = _UnitOfWork.CuentaRepository.GetEntity(model.ClienteCuenta.ElementAt(i).IdCuenta);
+
+                if (FindCuenta.Activa == true)
+                {
+                    return FindCuenta;
+                }
+            }
+            return null;
+        }
+
+        private Email ReturEmail(Cliente model)
+        {
+            for (int i = 0; i < model.ClienteMails.Count(); i++)
+            {
+                Email FindEmail = _UnitOfWork.EmailRepository.GetEntity(model.ClienteMails.ElementAt(i).IdMail);
+
+                if (FindEmail.Activo == true)
+                {
+                    return FindEmail;
+                }
+            }
+            return null;
+        }
+
         public Cliente Cast_Cliente_ViewCliente_update(ClientesViewModel model, Cliente cliente)
         {
             cliente.IdIdentificacionFiscal = model.TIPO_IDENTIFICACION_FISCAL == null ? 1 : int.Parse(model.TIPO_IDENTIFICACION_FISCAL);
@@ -468,18 +496,7 @@ namespace Web.Views.Clientes
 
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
-            Cuenta Cuenta = new Cuenta();
             
-            for (int i = 0; i < model.ClienteCuenta.Count(); i++)
-            {
-                Cuenta FindCuenta = _UnitOfWork.CuentaRepository.GetEntity(model.ClienteCuenta.ElementAt(i).IdCuenta);
-
-                if (FindCuenta.Activa == true)
-                {
-                    Cuenta = FindCuenta;
-                }
-            }
-                
             ClientesViewModel cliente = new ClientesViewModel()
             {
 
@@ -511,10 +528,10 @@ namespace Web.Views.Clientes
                 POBLACION_ACTIVIDAD = model.PoblacionActividad,
                 PROVINCIA_ACTIVIDAD = model.ProvinciaActividad,
                 PAIS_ACTIVIDAD = model.IdPaisActividad == null ? "34" : model.IdPaisActividad.Value.ToString(),
-                EMAILPRINCIPAL = _UnitOfWork.EmailRepository.GetAll().Where(x => x.IdEmailCliente == model.ClienteMails.FirstOrDefault().IdMail && x.Activo == true).FirstOrDefault().Email1,
-                IBAN = Cuenta.Iban,
-                BANCO = Cuenta.Banco,
-                BIC = Cuenta.Bic,
+                EMAILPRINCIPAL = ReturEmail(model).Email1,
+                IBAN = ReturnCuenta(model).Iban,
+                BANCO = ReturnCuenta(model).Banco,
+                BIC = ReturnCuenta(model).Bic,
             };
             
             return cliente;
