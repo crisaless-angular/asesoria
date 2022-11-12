@@ -1090,4 +1090,20 @@ hr.sep-3::after {
     margin-top: 30px;;
 }
 
+#dataTableEmail{
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+#theadTablepersonasDetalle{
+    text-align: center;
+}
+
+.tdEmailCliente
+{
+    border-bottom: 1px solid;
+    padding: 0.3em;
+    text-align: center;
+}
+
 

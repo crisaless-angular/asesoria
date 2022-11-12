@@ -40,7 +40,7 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <form asp-controller="Clientes" asp-action="Detalle"  asp-route-general="true" method="post" id="form-update-client">
 
-        <input type="hidden" asp-for="CODIGO_CLIENTE"/>
+        <input id="codCliente" type="hidden" asp-for="CODIGO_CLIENTE"/>
 
         <div class="row mb-5">
             <a class="fancy" href="#" id="update-new-cliente">
@@ -219,10 +219,12 @@
                     </div>
 
                     <div id="tableEmails" class="hide row" mb-5>
-                        <table class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <table id="dataTableEmail" class="form-group col-lg-8 col-md-8 col-xs-12">
                             <thead id="theadTablepersonasDetalle">
                                 <tr>
                                     <th scope="col">Email</th>
+                                    <th scope="col">Activo</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody id="bodyTableDetalleEmails">

@@ -12,6 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Web.Business.Interfaces;
 using Web.Data;
@@ -579,6 +583,57 @@ namespace Web.Views.Clientes
             }
 
             return camposError;
+        }
+
+        [HttpGet]
+        public List<Email> ReturnEmailsCliente(int codCliente)
+        {
+            //string userId = String.Empty;
+
+            //if(HttpContext.User.Identity.IsAuthenticated)
+            //{
+            //    userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //}
+
+            //return userId;
+
+            return (from clientesEmail in this._UnitOfWork.ClienteEmailRepository.GetAll()
+                    join email in this._UnitOfWork.EmailRepository.GetAll()
+                    on clientesEmail.IdMail equals email.IdEmailCliente
+                    where clientesEmail.IdCliente == codCliente
+
+                    select new Email()
+                    {
+                        IdEmailCliente = email.IdEmailCliente,
+                        Email1 = email.Email1,
+                        Activo = email.Activo,
+                    }
+                ).OrderByDescending(x => x.Activo).ToList();
+            
+        }
+
+        [HttpPost]
+        public string CambiarEmailCliente(int idEmailCliente)
+        {
+            int IdCliente = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdMail == idEmailCliente).FirstOrDefault().IdCliente;
+            
+            List<ClienteMail> ListClienteEMails = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdCliente == IdCliente).ToList();
+
+            foreach (ClienteMail item in ListClienteEMails)
+            {
+                Email emailCambio = _UnitOfWork.EmailRepository.GetAll().Where(x => x.IdEmailCliente == item.IdMail).FirstOrDefault();
+                emailCambio.Activo = false;
+                _UnitOfWork.EmailRepository.Update(emailCambio);
+                _UnitOfWork.Save();
+            }
+
+            Email email = _UnitOfWork.EmailRepository.GetEntity(idEmailCliente);
+            email.Activo = true;
+
+            _UnitOfWork.EmailRepository.Update(email);
+            _UnitOfWork.Save();
+
+            return email.Email1;
         }
 
     }

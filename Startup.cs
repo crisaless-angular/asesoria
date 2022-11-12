@@ -64,6 +64,7 @@ namespace BA002.Web
             });
 
             services.AddSignalR();
+            
 
         }
 

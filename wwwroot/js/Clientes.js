@@ -289,7 +289,6 @@ function ExtraerDatosClientes()
 
 function CargarTablaIndex(data, msgdatanotfound)
 {
-    console.log(data);
     if (data != null)
     {
         let tableId = document.getElementById("datatableIndexClientes_wrapper");
@@ -451,14 +450,66 @@ $("#update-new-cliente").on('click', function () {
     $("#form-update-client").submit();
 });
 
-$("#btnEmialsDetalle").on('click', function () {
-
-    if($("#tableEmails").hasClass("hide"))
-        $("#tableEmails").removeClass("hide");
-    else
-        $("#tableEmails").addClass("hide");
-        
+$("#btnEmialsDetalle").on('click', function (evt) {
+    evt.preventDefault();
+    try
+    {
+        if($("#tableEmails").hasClass("hide"))
+            PintarBodyTableEmail();
+        else
+            $("#tableEmails").addClass("hide");
+    }
+    catch (e) {
+        console.log(e);
+    }
+    
 });
+
+function CambiarEmailCliente(idEmailCliente)
+{
+    $.post("CambiarEmailCliente?idEmailCliente=" + idEmailCliente, function (data) {
+        PintarBodyTableEmail();
+        $("#email_principal").val(data);
+    });
+    
+}
+
+function PintarBodyTableEmail()
+{
+    $.ajax({
+        method: "GET",
+        url: "ReturnEmailsCliente?codCliente=" + $("#codCliente").val(),
+    }).done(function (data) {
+
+        if (data.length > 0) {
+
+            BodyTable = $("#bodyTableDetalleEmails");
+            BodyTable.empty();
+            let contenido = "";
+            let MsgNodata = "No hay datos";
+            
+            $(data).each(function (index, items) {
+                
+                contenido += "<tr class='trEmailCliente'>";
+                contenido += "<td class='tdEmailCliente'>" + (items.email1 == null ? MsgNodata : items.email1) + "</td>";
+                contenido += "<td class='tdEmailCliente'>" + (items.activo == null ? MsgNodata : (items.activo == true ? "Si" : "No")) + "</td>";
+                
+                if(items.activo != true)
+                    contenido += "<td class='col-md-2'> <input type='button' value='usar' onclick='CambiarEmailCliente(" + items.idEmailCliente + ")' class='boton_primario' /></td>";
+                
+                    contenido += "</tr>";
+
+            });
+            BodyTable.append(contenido);
+            $("#tableEmails").removeClass("hide");
+
+        }
+
+    }).fail(function (data) {
+        console.error(data);
+    });
+}
+
 
 /*detalle*/
 
