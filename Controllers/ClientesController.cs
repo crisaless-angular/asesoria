@@ -616,16 +616,8 @@ namespace Web.Views.Clientes
         public string CambiarEmailCliente(int idEmailCliente)
         {
             int IdCliente = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdMail == idEmailCliente).FirstOrDefault().IdCliente;
-            
-            List<ClienteMail> ListClienteEMails = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdCliente == IdCliente).ToList();
 
-            foreach (ClienteMail item in ListClienteEMails)
-            {
-                Email emailCambio = _UnitOfWork.EmailRepository.GetAll().Where(x => x.IdEmailCliente == item.IdMail).FirstOrDefault();
-                emailCambio.Activo = false;
-                _UnitOfWork.EmailRepository.Update(emailCambio);
-                _UnitOfWork.Save();
-            }
+            inhabilitarEmails(IdCliente);
 
             Email email = _UnitOfWork.EmailRepository.GetEntity(idEmailCliente);
             email.Activo = true;
@@ -635,6 +627,126 @@ namespace Web.Views.Clientes
 
             return email.Email1;
         }
+
+        [HttpGet]
+        public List<Cuenta> ReturnCuentasCliente(int codCliente)
+        {
+            return (from clientesCuentas in this._UnitOfWork.ClienteCuentaRepository.GetAll()
+                    join Cuenta in this._UnitOfWork.CuentaRepository.GetAll()
+                    on clientesCuentas.IdCuenta equals Cuenta.IdCuenta
+                    where clientesCuentas.IdCliente == codCliente
+
+                    select new Cuenta()
+                    {
+                        IdCuenta = Cuenta.IdCuenta,
+                        Iban = Cuenta.Iban,
+                        Bic = Cuenta.Bic,
+                        Banco = Cuenta.Banco,
+                        Activa = Cuenta.Activa
+                    }
+                ).OrderByDescending(x => x.Activa).ToList();
+
+        }
+
+        [HttpPost]
+        public string[] CambiarCuentaCliente(int idCuentaCliente)
+        {
+            int IdCliente = _UnitOfWork.ClienteCuentaRepository.GetAll().Where(x => x.IdCuenta == idCuentaCliente).FirstOrDefault().IdCliente;
+
+            inhabilitarCuentas(IdCliente);
+
+            Cuenta cuenta = _UnitOfWork.CuentaRepository.GetEntity(idCuentaCliente);
+            cuenta.Activa = true;
+
+            _UnitOfWork.CuentaRepository.Update(cuenta);
+            _UnitOfWork.Save();
+
+            string[] nuevosdatos = { cuenta.Iban, cuenta.Banco, cuenta.Bic };
+            return nuevosdatos;
+        }
+
+        [HttpPost]
+        public void AddCuentaCliente(int idCodigoCliente, string iban, string banco, string bic)
+        {
+            Cliente Cliente = _UnitOfWork.ClienteRepository.GetEntity(idCodigoCliente);
+
+            inhabilitarCuentas(Cliente.CodigoCliente);
+            
+            Cuenta cuenta = new Cuenta()
+            {
+                Iban = iban,
+                Banco = banco,
+                Bic = bic,
+                Activa = true
+            };
+
+            _UnitOfWork.CuentaRepository.Add(cuenta);
+            _UnitOfWork.Save();
+
+            ClienteCuenta clienteCuenta = new ClienteCuenta()
+            {
+                IdCliente = idCodigoCliente,
+                IdCuenta = cuenta.IdCuenta
+            };
+
+            _UnitOfWork.ClienteCuentaRepository.Add(clienteCuenta);
+            _UnitOfWork.Save();
+            
+        }
+
+        [HttpPost]
+        public void AddEmailCliente(int idCodigoCliente, string email)
+        {
+            Cliente Cliente = _UnitOfWork.ClienteRepository.GetEntity(idCodigoCliente);
+
+            inhabilitarEmails(Cliente.CodigoCliente);
+
+            Email emailCliente = new Email()
+            {
+                Email1 = email,
+                Activo = true
+            };
+
+            _UnitOfWork.EmailRepository.Add(emailCliente);
+            _UnitOfWork.Save();
+
+            ClienteMail clienteEmail = new ClienteMail()
+            {
+                IdCliente = idCodigoCliente,
+                IdMail = emailCliente.IdEmailCliente
+            };
+
+            _UnitOfWork.ClienteEmailRepository.Add(clienteEmail);
+            _UnitOfWork.Save();
+            
+        }
+
+        private void inhabilitarCuentas(int IdCliente)
+        {
+            List<ClienteCuenta> ListClienteCuentas = _UnitOfWork.ClienteCuentaRepository.GetAll().Where(x => x.IdCliente == IdCliente).ToList();
+
+            foreach (ClienteCuenta item in ListClienteCuentas)
+            {
+                Cuenta cuentaCambio = _UnitOfWork.CuentaRepository.GetAll().Where(x => x.IdCuenta == item.IdCuenta).FirstOrDefault();
+                cuentaCambio.Activa = false;
+                _UnitOfWork.CuentaRepository.Update(cuentaCambio);
+                _UnitOfWork.Save();
+            }
+        }
+
+        private void inhabilitarEmails(int IdCliente)
+        {
+            List<ClienteMail> ListClienteEMails = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdCliente == IdCliente).ToList();
+
+            foreach (ClienteMail item in ListClienteEMails)
+            {
+                Email emailCambio = _UnitOfWork.EmailRepository.GetAll().Where(x => x.IdEmailCliente == item.IdMail).FirstOrDefault();
+                emailCambio.Activo = false;
+                _UnitOfWork.EmailRepository.Update(emailCambio);
+                _UnitOfWork.Save();
+            }
+        }
+        
 
     }
 

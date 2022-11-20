@@ -510,6 +510,111 @@ function PintarBodyTableEmail()
     });
 }
 
+$("#btnCuentasDetalle").on('click', function (evt) {
+    
+    evt.preventDefault();
+    try
+    {
+        if($("#tableCuentas").hasClass("hide"))
+            PintarBodyTableCuentas();
+        else
+            $("#tableCuentas").addClass("hide");
+    }
+    catch (e) {
+        console.log(e);
+    }
+    
+});
+
+function CambiarCuentaCliente(idCuentaCliente)
+{
+    $.post("CambiarCuentaCliente?idCuentaCliente=" + idCuentaCliente, function (data) {
+        PintarBodyTableCuentas();
+        $("#iban").val(data[0]);
+        $("#bic").val(data[2]);
+        $("#banco").val(data[1]);
+    });
+    
+}
+
+function PintarBodyTableCuentas()
+{
+    $.ajax({
+        method: "GET",
+        url: "ReturnCuentasCliente?codCliente=" + $("#codCliente").val(),
+    }).done(function (data) {
+
+        if (data.length > 0) {
+
+            let BodyTable = $("#bodyTableDetalleCuentas");
+            BodyTable.empty();
+            let contenido = "";
+            let MsgNodata = "No hay datos";
+            
+            $(data).each(function (index, items) {
+                
+                contenido += "<tr class='trEmailCliente'>";
+                contenido += "<td class='tdEmailCliente'>" + (items.iban == null ? MsgNodata : items.iban) + "</td>";
+                contenido += "<td class='tdEmailCliente'>" + (items.bic == null ? MsgNodata : items.bic) + "</td>";
+                contenido += "<td class='tdEmailCliente'>" + (items.banco == null ? MsgNodata : items.banco) + "</td>";
+                contenido += "<td class='tdEmailCliente'>" + (items.activa == null ? MsgNodata : (items.activa == true ? "Si" : "No")) + "</td>";
+                
+                if(items.activa != true)
+                    contenido += "<td class='col-md-2'> <input type='button' value='usar' onclick='CambiarCuentaCliente(" + items.idCuenta + ")' class='boton_primario' /></td>";
+                
+                    contenido += "</tr>";
+
+            });
+            BodyTable.append(contenido);
+            $("#tableCuentas").removeClass("hide");
+
+        }
+
+    }).fail(function (data) {
+        console.error(data);
+    });
+}
+
+function AddCuentaCliente(idCodigoCliente, iban, banco, bic)
+{
+    $.post("AddCuentaCliente?idCodigoCliente=" + idCodigoCliente + "&iban=" + iban + "&banco=" + banco + "&bic=" + bic, function (data) {
+        PintarBodyTableCuentas();
+    });
+    
+}
+
+$("#btnAnadirCuentaDetalle").on('click', function (evt) {
+    evt.preventDefault();
+    try
+    {
+        AddCuentaCliente($("#codCliente").val(), $("#iban").val(), $("#banco").val(), $("#bic").val());
+    }
+    catch (e) {
+        console.log(e);
+    }
+    
+});
+
+function AddEmailCliente(idCodigoCliente, email)
+{
+    $.post("AddEmailCliente?idCodigoCliente=" + idCodigoCliente + "&email=" + email, function (data) {
+        PintarBodyTableEmail();
+    });
+    
+}
+
+$("#btnAnadirEmailDetalle").on('click', function (evt) {
+    evt.preventDefault();
+    try
+    {
+        AddEmailCliente($("#codCliente").val(), $("#email_principal").val());
+    }
+    catch (e) {
+        console.log(e);
+    }
+    
+});
+
 
 /*detalle*/
 

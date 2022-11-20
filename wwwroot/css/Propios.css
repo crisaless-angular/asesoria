@@ -1087,7 +1087,7 @@ hr.sep-3::after {
 }
 
 #btnEmialsDetalle{
-    margin-top: 30px;;
+    margin-top: 30px;
 }
 
 #dataTableEmail{
@@ -1106,4 +1106,13 @@ hr.sep-3::after {
     text-align: center;
 }
 
+#btnCuentasDetalle{
+    margin-top: 30px;
+    margin-right: 10px;
+}
+
+#dataTableCuenta{
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
 

@@ -207,13 +207,14 @@
                             <span asp-validation-for="MOVIL" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group col-lg-11 col-md-11 col-xs-11">
+                        <div class="form-group col-lg-8 col-md-8 col-xs-8">
                             <label asp-for="EMAILPRINCIPAL" class="control-label labels obligatorio"></label>
                             <input id="email_principal" asp-for="EMAILPRINCIPAL" class="form-control inputs" tabindex="21"/>
                             <span asp-validation-for="EMAILPRINCIPAL" class="text-danger"></span>
                         </div>
-                        <div id="DivEmailsDetalle" class="form-group col-lg-1 col-md-1 col-xs-2">
-                            <input type="button" id="btnEmialsDetalle" value="+"/>
+                        <div id="DivEmailsDetalle" class="form-group col-lg-3 col-md-3 col-xs-12">
+                            <input type="button" id="btnEmialsDetalle" value="Ver más emails"/>
+                            <input type="button" id="btnAnadirEmailDetalle" value="+"/>
                          </div>
 
                     </div>
@@ -244,17 +245,38 @@
 
                         <div class="form-group col-lg-4 col-md-4 col-xs-6">
                             <label asp-for="BIC" class="control-label labels"></label>
-                            <input asp-for="BIC" class="form-control inputs" tabindex="23"/>
+                            <input asp-for="BIC" id="bic" class="form-control inputs" tabindex="23"/>
                             <span asp-validation-for="BIC" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group col-lg-12 col-md-12 col-xs-12">
+                        <div class="form-group col-lg-8 col-md-8 col-xs-12">
                             <label asp-for="BANCO" class="control-label labels"></label>
                             <input id="banco" asp-for="BANCO" class="form-control inputs" tabindex="24"/>
                             <span asp-validation-for="BANCO" class="text-danger"></span>
                         </div>
 
+                        <div class="col-lg-3 col-md-3 col-xs-12">
+                            <input type="button" id="btnCuentasDetalle" value="Ver más cuentas"/>
+                            <input type="button" id="btnAnadirCuentaDetalle" value="+"/>
+                        </div>
+
                     </div>
+
+                    <div id="tableCuentas" class="hide row" mb-5>
+                            <table id="dataTableCuenta" class="form-group col-lg-8 col-md-8 col-xs-12">
+                                <thead id="theadTablepersonasDetalle">
+                                    <tr>
+                                        <th scope="col">Iban</th>
+                                        <th scope="col">Bic</th>
+                                        <th scope="col">Banco</th>
+                                        <th scope="col">Activo</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bodyTableDetalleCuentas">
+                                </tbody>
+                            </table>
+                         </div>
 
                 </div>
 
