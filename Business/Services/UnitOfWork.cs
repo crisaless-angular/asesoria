@@ -25,10 +25,23 @@ namespace Web.Business.Services
         public IGenericRepository<Configuracione> _Configuracion;
         public IGenericRepository<Email> _Email;
         public IGenericRepository<ClienteCuenta> _ClienteCuenta;
+        public IGenericRepository<PersonasContacto> _PersonaContacto;
 
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
+        }
+
+        public IGenericRepository<PersonasContacto> PersonaContactoRepository
+        {
+            get
+            {
+                if (this._PersonaContacto == null)
+                    this._PersonaContacto = new GenericRepository<PersonasContacto>(_context);
+
+                return _PersonaContacto;
+            }
+
         }
 
         public IGenericRepository<ClienteCuenta> ClienteCuentaRepository

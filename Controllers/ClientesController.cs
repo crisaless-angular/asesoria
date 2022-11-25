@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -308,66 +309,66 @@ namespace Web.Views.Clientes
                     model.CODIGO_CLIENTE = modelInsertado.CodigoCliente;
                     Save = true;
 
-                    if (model.EMAILPRINCIPAL != null && Save)
-                    {
-                        var clienteEmail = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdCliente == model.CODIGO_CLIENTE).ToList();
+                    //if (model.EMAILPRINCIPAL != null && Save)
+                    //{
+                    //    var clienteEmail = _UnitOfWork.ClienteEmailRepository.GetAll().Where(x => x.IdCliente == model.CODIGO_CLIENTE).ToList();
 
-                        foreach (var cuentaCliente in clienteEmail)
-                        {
+                    //    foreach (var cuentaCliente in clienteEmail)
+                    //    {
                              
-                        }
+                    //    }
 
-                        Email ClienteMail = new Email()
-                        {
-                            Email1 = model.EMAILPRINCIPAL,
-                            Activo = true
-                        };
+                    //    Email ClienteMail = new Email()
+                    //    {
+                    //        Email1 = model.EMAILPRINCIPAL,
+                    //        Activo = true
+                    //    };
 
-                        //_UnitOfWork.EmailRepository.Add(ClienteMail);
-                        //_UnitOfWork.Save();
+                    //    //_UnitOfWork.EmailRepository.Add(ClienteMail);
+                    //    //_UnitOfWork.Save();
 
-                        //ClienteMail clienteEmail = new ClienteMail();
-                        //clienteEmail.IdCliente = model.CODIGO_CLIENTE;
-                        //clienteEmail.IdMail = ClienteMail.IdEmailCliente;
+                    //    //ClienteMail clienteEmail = new ClienteMail();
+                    //    //clienteEmail.IdCliente = model.CODIGO_CLIENTE;
+                    //    //clienteEmail.IdMail = ClienteMail.IdEmailCliente;
 
-                        //_UnitOfWork.ClienteEmailRepository.Add(clienteEmail);
-                        //_UnitOfWork.Save();
+                    //    //_UnitOfWork.ClienteEmailRepository.Add(clienteEmail);
+                    //    //_UnitOfWork.Save();
 
-                    }
+                    //}
 
-                    if (model.IBAN != null && Save)
-                    {
-                        Cuenta Cuenta = new Cuenta()
-                        {
-                            Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
-                            Iban = model.IBAN.Replace(" ", ""),
-                            Banco = model.BANCO,
-                            Bic = model.BIC,
-                            Activa = true
-                        };
+                    //if (model.IBAN != null && Save)
+                    //{
+                    //    Cuenta Cuenta = new Cuenta()
+                    //    {
+                    //        Ccc = model.IBAN.Replace(" ", "").Remove(0, 4),
+                    //        Iban = model.IBAN.Replace(" ", ""),
+                    //        Banco = model.BANCO,
+                    //        Bic = model.BIC,
+                    //        Activa = true
+                    //    };
 
-                        _UnitOfWork.CuentaRepository.Add(Cuenta);
-                        _UnitOfWork.Save();
+                    //    _UnitOfWork.CuentaRepository.Add(Cuenta);
+                    //    _UnitOfWork.Save();
 
-                        ClienteCuenta clienteCuenta = new ClienteCuenta();
-                        clienteCuenta.IdCuenta = Cuenta.IdCuenta;
-                        clienteCuenta.IdCliente = model.CODIGO_CLIENTE;
+                    //    ClienteCuenta clienteCuenta = new ClienteCuenta();
+                    //    clienteCuenta.IdCuenta = Cuenta.IdCuenta;
+                    //    clienteCuenta.IdCliente = model.CODIGO_CLIENTE;
 
-                        _UnitOfWork.ClienteCuentaRepository.Add(clienteCuenta);
-                        _UnitOfWork.Save();
+                    //    _UnitOfWork.ClienteCuentaRepository.Add(clienteCuenta);
+                    //    _UnitOfWork.Save();
 
-                        List<ClienteCuenta> ListCuentas = _UnitOfWork.ClienteCuentaRepository.GetAll().Where(x => x.IdCliente == model.CODIGO_CLIENTE && x.IdCuenta != Cuenta.IdCuenta).ToList();
+                    //    List<ClienteCuenta> ListCuentas = _UnitOfWork.ClienteCuentaRepository.GetAll().Where(x => x.IdCliente == model.CODIGO_CLIENTE && x.IdCuenta != Cuenta.IdCuenta).ToList();
 
-                        for (int i = 0; i < ListCuentas.Count(); i++)
-                        {
-                            Cuenta cuenta = _UnitOfWork.CuentaRepository.GetEntity(ListCuentas[i].IdCuenta);
-                            cuenta.Activa = false;
-                            _UnitOfWork.CuentaRepository.Update(cuenta);
-                            _UnitOfWork.Save();
-                        }
+                    //    for (int i = 0; i < ListCuentas.Count(); i++)
+                    //    {
+                    //        Cuenta cuenta = _UnitOfWork.CuentaRepository.GetEntity(ListCuentas[i].IdCuenta);
+                    //        cuenta.Activa = false;
+                    //        _UnitOfWork.CuentaRepository.Update(cuenta);
+                    //        _UnitOfWork.Save();
+                    //    }
                         
 
-                    }
+                    //}
 
                 }
                 catch (Exception e)
@@ -500,7 +501,15 @@ namespace Web.Views.Clientes
 
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
-            
+            PersonasContacto personaContacto = _UnitOfWork.PersonaContactoRepository.GetEntity(model.PersonaContacto.Value);
+            var objetoPerson = new
+            {
+                idPersona = personaContacto.IdPersonaContacto,
+                NombrePersona = personaContacto.Nombre,
+                TelefonoPersona = personaContacto.Telefono,
+                EmailPersona = personaContacto.Email,
+            };
+
             ClientesViewModel cliente = new ClientesViewModel()
             {
 
@@ -536,7 +545,8 @@ namespace Web.Views.Clientes
                 IBAN = ReturnCuenta(model).Iban,
                 BANCO = ReturnCuenta(model).Banco,
                 BIC = ReturnCuenta(model).Bic,
-            };
+                PERSONA_CONTACTO = JsonConvert.SerializeObject(objetoPerson)
+        };
             
             return cliente;
         }
@@ -746,7 +756,38 @@ namespace Web.Views.Clientes
                 _UnitOfWork.Save();
             }
         }
-        
+
+        [HttpGet]
+        public List<PersonasContacto> ReturnPersonasCliente(int codCliente)
+        {
+            return (from Personas in this._UnitOfWork.PersonaContactoRepository.GetAll()
+                    join Cliente in this._UnitOfWork.ClienteRepository.GetAll()
+                    on Personas.IdPersonaContacto equals Cliente.PersonaContacto
+                    where Cliente.CodigoCliente == codCliente
+
+                    select new PersonasContacto()
+                    {
+                        IdPersonaContacto = Personas.IdPersonaContacto,
+                        Nombre = Personas.Nombre,
+                        Telefono = Personas.Telefono,
+                        Email = Personas.Email,
+                    }
+                ).OrderByDescending(x => x.IdPersonaContacto).ToList();
+
+        }
+
+        [HttpPost]
+        public void CambiarPersonaContacto(PersonasContacto objetopersona)
+        {
+            PersonasContacto persona = _UnitOfWork.PersonaContactoRepository.GetEntity(objetopersona.IdPersonaContacto);
+
+            if(persona != null)
+            {
+                _UnitOfWork.PersonaContactoRepository.Update(objetopersona);
+                _UnitOfWork.Save();
+            }
+
+        }
 
     }
 

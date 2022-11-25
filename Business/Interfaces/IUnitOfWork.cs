@@ -20,6 +20,8 @@ namespace Web.Business.Interfaces
         IGenericRepository<Configuracione> ConfiguracionRepository { get; }
         IGenericRepository<Email> EmailRepository { get; }
         IGenericRepository<ClienteCuenta> ClienteCuentaRepository { get; }
+        IGenericRepository<PersonasContacto> PersonaContactoRepository { get; }
+        
         void Save();
 
     }

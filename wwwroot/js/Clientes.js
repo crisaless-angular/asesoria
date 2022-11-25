@@ -120,6 +120,26 @@ $(document).ready(function () {
         cargarTablepersonasDetalle(JSON.parse(localStorage.getItem("PersonaContacto")));
     });
 
+    if(window.location.href.includes('Detalle'))
+    {
+        if($('#actividad_filter_detalle').val() !== null)
+        {
+            let input_iae = $("#input_iae_detalle");
+            let input_cnae = $("#input_cnae_detalle");
+            let value_select_actividad = $('#actividad_filter_detalle :selected')[0].text;
+            input_iae.val(value_select_actividad.split(" - ")[0]);
+            input_cnae.val(value_select_actividad.split(" - ")[1]);
+        }
+
+        if($("#InputPersonaContactoDetalle").val() !== "")
+        {
+            let jsonPersona = JSON.parse($("#InputPersonaContactoDetalle").val());
+            $("#InputPersonaContactoDetalle").val(jsonPersona.NombrePersona);
+            localStorage.setItem("PersonaContacto", JSON.stringify(jsonPersona));
+        }
+        
+    }
+
 });
 
 function cargarTablepersonas(JsonData)
@@ -447,7 +467,7 @@ $('.selectFilter').on('select2:select', function (e) {
     let value_select_actividad = e.params.data;
     input_iae.val(value_select_actividad.text.split(" - ")[0]);
     input_cnae.val(value_select_actividad.text.split(" - ")[1]);
-  });
+});
 
 /*detalle*/
 $("#update-new-cliente").on('click', function () {
@@ -632,89 +652,60 @@ $("#btnAnadirEmailDetalle").on('click', function (evt) {
     
 });
 
-$("#anadirPersonaDetalle").on('click', function () {
-
-    if ($("#nombrePersonaDetalle").val() !== "" &&
-        $("#telefonoPersonaDetalle").val() !== "" &&
-        $("#emailPersonaDetalle").val() !== ""
-    ) {
-        let persona = [];
-
-        persona.push({
-            "NombrePersona": $("#nombrePersonaDetalle").val(),
-            "TelefonoPersona": $("#telefonoPersonaDetalle").val(),
-            "EmailPersona": $("#emailPersonaDetalle").val()
-        });
-
-        if (localStorage.getItem("PersonaContacto") !== null) {
-            let jsonPersona = JSON.parse(localStorage.getItem("PersonaContacto"));
-            jsonPersona.push({
-                "NombrePersona": $("#nombrePersonaDetalle").val(),
-                "TelefonoPersona": $("#telefonoPersonaDetalle").val(),
-                "EmailPersona": $("#emailPersonaDetalle").val()
-            });
-
-            localStorage.setItem("PersonaContacto", JSON.stringify(jsonPersona));
-
-        }
-        else
-        {
-            localStorage.setItem("PersonaContacto", JSON.stringify(persona));
-        }
-
-        cargarTablepersonasDetalle(JSON.parse(localStorage.getItem("PersonaContacto")));
-
-        $("#MesajeErrorDetalle>p").remove();
-        $("#nombrePersonaDetalle").val("");
-        $("#telefonoPersonaDetalle").val("");
-        $("#emailPersonaDetalle").val("");
-            
-    }
-    else {
-        $("#MesajeErrorDetalle>p").remove();
-        $("#MesajeErrorDetalle").append("<p>Todos los campos son obligatorios</p>");
-    }
-
+$('#actividad_filter_detalle').on('select2:select', function (e) {
+    let input_iae = $("#input_iae_detalle");
+    let input_cnae = $("#input_cnae_detalle");
+    let value_select_actividad = e.params.data;
+    input_iae.val(value_select_actividad.text.split(" - ")[0]);
+    input_cnae.val(value_select_actividad.text.split(" - ")[1]);
 });
 
-function cargarTablepersonasDetalle(JsonData)
+$("#btnPersonasDetalle").on('click', function (evt) {
+    
+    evt.preventDefault();
+    try
+    {
+        if($("#tablePersonas").hasClass("hide"))
+            PintarBodyTablePersona();
+        else
+            $("#tablePersonas").addClass("hide");
+    }
+    catch (e) {
+        console.log(e);
+    }
+    
+});
+
+function PintarBodyTablePersona()
 {
-    $("#bodyTableDetalle").empty();
-    let contenido = "";
-    $(JsonData).each(function (index, items) {
-        
-        contenido += "<tr class='tr'>";
-        contenido += "<td class='bigword'>" + items.NombrePersona + "</td>";
-        contenido += "<td class='bigword'>" + items.TelefonoPersona + "</td>";
-        contenido += "<td>" + items.EmailPersona + "</td>";
-        contenido += "<td class='col-md-1 tdPersonaDetalle'><button type='button' onclick='seleccionPersonaDetalle(" + `"${items.NombrePersona}"` + ")' class='boton_primario BtnSeleccionarPersona'><span>Seleccionar</span></button></td>";
-        contenido += "<td class='col-md-1 tdPersonaDetalle'><button onclick='quitarPersonaContactoDetalle(" + `"${items.TelefonoPersona}"` + ")' class='boton_primario BtnEliminarPersona'><span>X</span></button></td>";
-        contenido += "</tr>";
+    $.ajax({
+        method: "GET",
+        url: "ReturnPersonasCliente?codCliente=" + $("#codCliente").val(),
+    }).done(function (data) {
 
-    });
+        if (data.length > 0) {
 
-    $("#bodyTableDetalle").append(contenido);
-}
+            let BodyTable = $("#bodyTableDetallePersonas");
+            BodyTable.empty();
+            let contenido = "";
+            let MsgNodata = "No hay datos";
+            
+            $(data).each(function (index, items) {
+                contenido += "<tr class='trEmailCliente'>";
+                contenido += "<td class='tdEmailCliente'>" + (items.nombre == null ? MsgNodata : items.nombre) + "</td>";
+                contenido += "<td class='tdEmailCliente'>" + (items.telefono == null ? MsgNodata : items.telefono) + "</td>";
+                contenido += "<td class='tdEmailCliente'>" + (items.email == null ? MsgNodata : items.email) + "</td>";
+                contenido += "</tr>";
 
-function seleccionPersonaDetalle(nombre)
-{
-    $("#InputPersonaContactoDetalle").val(nombre);
-    $("#btnCerrarModalPersonaDetalle").click();
-}
+            });
+            BodyTable.append(contenido);
+            $("#tablePersonas").removeClass("hide");
 
-function quitarPersonaContactoDetalle(telefono)
-{
-    let jsonPersona = JSON.parse(localStorage.getItem("PersonaContacto"));
-
-    jsonPersona.forEach(function (currentValue, index, arr) {
-        if (jsonPersona[index].TelefonoPersona == telefono) {
-            jsonPersona.splice(index, index);
         }
-    })
 
-    localStorage.setItem("PersonaContacto", JSON.stringify(jsonPersona));
-    cargarTablepersonasDetalle(JSON.parse(localStorage.getItem("PersonaContacto")));
-
+    }).fail(function (data) {
+        console.error(data);
+    });
 }
 
 /*detalle*/

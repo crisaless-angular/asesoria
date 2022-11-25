@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Web.Utilidades;
+using System.Text.Json.Serialization;
 
 namespace BA002.Web
 {
@@ -65,7 +66,6 @@ namespace BA002.Web
 
             services.AddSignalR();
             
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
