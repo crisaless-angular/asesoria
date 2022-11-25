@@ -137,7 +137,9 @@ $(document).ready(function () {
             $("#InputPersonaContactoDetalle").val(jsonPersona.NombrePersona);
             localStorage.setItem("PersonaContacto", JSON.stringify(jsonPersona));
         }
-        
+
+        PintarBodyTablePersona();
+
     }
 
 });
@@ -666,7 +668,10 @@ $("#btnPersonasDetalle").on('click', function (evt) {
     try
     {
         if($("#tablePersonas").hasClass("hide"))
+        {
             PintarBodyTablePersona();
+            $("#tablePersonas").removeClass("hide");
+        }
         else
             $("#tablePersonas").addClass("hide");
     }
@@ -691,6 +696,7 @@ function PintarBodyTablePersona()
             let MsgNodata = "No hay datos";
             
             $(data).each(function (index, items) {
+                localStorage.setItem("IdPersonaContacto", items.idPersonaContacto);
                 contenido += "<tr class='trEmailCliente'>";
                 contenido += "<td class='tdEmailCliente'>" + (items.nombre == null ? MsgNodata : items.nombre) + "</td>";
                 contenido += "<td class='tdEmailCliente'>" + (items.telefono == null ? MsgNodata : items.telefono) + "</td>";
@@ -699,7 +705,6 @@ function PintarBodyTablePersona()
 
             });
             BodyTable.append(contenido);
-            $("#tablePersonas").removeClass("hide");
 
         }
 
@@ -707,5 +712,41 @@ function PintarBodyTablePersona()
         console.error(data);
     });
 }
+
+function CambiarPersonaContacto(persona)
+{
+    $.post("CambiarPersonaContacto?objetopersona=" + persona, function (data) {
+        PintarBodyTablePersona();
+        $("#btnCerrarModalPersonaDetalle").click();
+    });
+}
+
+$("#anadirPersonaDetalle").on('click', function (evt) {
+    evt.preventDefault();
+    try
+    {
+        informacionBoton("¿Guardar los cambios?").then((result) => {
+            if (result.isConfirmed) 
+            {
+                let persona = new Object()
+                persona.IdPersonaContacto = localStorage.getItem("IdPersonaContacto");
+                persona.Nombre = $("#nombrePersonaDetalle").val();
+                persona.Telefono = $("#telefonoPersonaDetalle").val();
+                persona.Email = $("#emailPersonaDetalle").val();
+                persona.Clientes = null;
+
+                CambiarPersonaContacto(JSON.stringify(persona));
+                Swal.fire('Guardado!', '', 'success');
+            }
+        });
+        
+    }
+    catch (e) {
+        console.log(e);
+    }
+    
+});
+
+
 
 /*detalle*/

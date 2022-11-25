@@ -332,7 +332,7 @@
 
                         <div class="col-lg-3 col-md-3 col-xs-12">
                             <input type="button" id="btnPersonasDetalle" value="Ver datos completos"/>
-                            @*<input type="button" id="btnAnadirPersonaDetalle" value="+"/>*@
+                            <input type="button" id="btnAnadirPersonaDetalle" value="+" data-toggle="modal" data-target="#modal-publica-detalle"/>
                         </div>
 
                         @*<div class="form-group col-lg-4 col-md-4 col-xs-10">
@@ -419,19 +419,6 @@
                                    <input type="text" id="telefonoPersonaDetalle" placeholder="Teléfono"/>
                                    <input type="email" id="emailPersonaDetalle" placeholder="Email"/>
                                    <input type="button" value="Añadir" id="anadirPersonaDetalle" />
-                               </div>
-                               <div class="tablePersonasDetalle">
-                                   <table>
-                                       <thead id="theadTablepersonasDetalle">
-                                           <tr>
-                                               <th scope="col">Nombre</th>
-                                               <th scope="col">Teléfono</th>
-                                               <th scope="col">Email</th>
-                                           </tr>
-                                       </thead>
-                                       <tbody id="bodyTableDetalle">
-                                       </tbody>
-                                   </table>
                                </div>
                           </div>
                           <div class="modal-footer">

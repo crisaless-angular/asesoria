@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
+using Nancy.Json;
 using Newtonsoft.Json;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -777,13 +778,19 @@ namespace Web.Views.Clientes
         }
 
         [HttpPost]
-        public void CambiarPersonaContacto(PersonasContacto objetopersona)
+        public void CambiarPersonaContacto(string objetopersona)
         {
-            PersonasContacto persona = _UnitOfWork.PersonaContactoRepository.GetEntity(objetopersona.IdPersonaContacto);
+            var objecto = JsonConvert.DeserializeObject<PersonasContacto>(objetopersona);
+            PersonasContacto persona = _UnitOfWork.PersonaContactoRepository.GetEntity(objecto.IdPersonaContacto);
 
-            if(persona != null)
+            persona.Nombre = objecto.Nombre;
+            persona.Telefono = objecto.Telefono;
+            persona.Email = objecto.Email;
+            
+
+            if (persona != null)
             {
-                _UnitOfWork.PersonaContactoRepository.Update(objetopersona);
+                _UnitOfWork.PersonaContactoRepository.Update(persona);
                 _UnitOfWork.Save();
             }
 
