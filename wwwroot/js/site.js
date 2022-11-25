@@ -223,11 +223,29 @@ function correcto(text) {
 function incorrecto(text) {
     Swal.fire({
         position: 'center',
+        icon: 'error',
+        title: text,
+        showConfirmButton: false,
+        timer: 2000
+    })
+}
+
+function informacion(text) {
+    Swal.fire({
+        position: 'center',
         icon: 'info',
         title: text,
         showConfirmButton: false,
         timer: 2000
     })
+}
+
+function informacionBoton(text) {
+   return Swal.fire({
+        title: text,
+        showCancelButton: true,
+        confirmButtonText: 'Guardar'
+    });
 }
 
 function PuntoPorComa(valor) {

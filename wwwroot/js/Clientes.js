@@ -587,7 +587,13 @@ $("#btnAnadirCuentaDetalle").on('click', function (evt) {
     evt.preventDefault();
     try
     {
-        AddCuentaCliente($("#codCliente").val(), $("#iban").val(), $("#banco").val(), $("#bic").val());
+        informacionBoton("¿Guardar los cambios?").then((result) => {
+            if (result.isConfirmed) 
+            {
+                AddCuentaCliente($("#codCliente").val(), $("#iban").val(), $("#banco").val(), $("#bic").val());
+                Swal.fire('Guardado!', '', 'success');
+            }
+        });
     }
     catch (e) {
         console.log(e);
@@ -607,7 +613,14 @@ $("#btnAnadirEmailDetalle").on('click', function (evt) {
     evt.preventDefault();
     try
     {
-        AddEmailCliente($("#codCliente").val(), $("#email_principal").val());
+        informacionBoton("¿Guardar los cambios?").then((result) => {
+            if (result.isConfirmed) 
+            {
+                AddEmailCliente($("#codCliente").val(), $("#email_principal").val());
+                Swal.fire('Guardado!', '', 'success');
+            }
+        });
+        
     }
     catch (e) {
         console.log(e);
@@ -617,5 +630,3 @@ $("#btnAnadirEmailDetalle").on('click', function (evt) {
 
 
 /*detalle*/
-
-
