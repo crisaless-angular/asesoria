@@ -1116,3 +1116,7 @@ hr.sep-3::after {
     margin-bottom: 30px;
 }
 
+.select2-container--default .select2-selection--single .select2-selection__rendered
+{
+    min-width: 500px;
+}
