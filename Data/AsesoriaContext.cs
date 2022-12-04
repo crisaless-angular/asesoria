@@ -34,6 +34,7 @@ namespace Web.Data
         public virtual DbSet<ClienteMail> ClienteMails { get; set; }
         public virtual DbSet<Configuracione> Configuraciones { get; set; }
         public virtual DbSet<Cuenta> Cuentas { get; set; }
+        public virtual DbSet<Documento> Documentos { get; set; }
         public virtual DbSet<Email> Emails { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<EstadosTicket> EstadosTickets { get; set; }
@@ -46,8 +47,9 @@ namespace Web.Data
         public virtual DbSet<TickectNota> TickectNotas { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TipoCliente> TipoClientes { get; set; }
+        public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
-
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -476,6 +478,37 @@ namespace Web.Data
                     .HasConstraintName("FK_CLIENTE_CUENTAS_MANDATOS");
             });
 
+            modelBuilder.Entity<Documento>(entity =>
+            {
+                entity.HasKey(e => e.IdDocumento);
+
+                entity.Property(e => e.IdDocumento).HasColumnName("Id_Documento");
+
+                entity.Property(e => e.FechaSubida).HasColumnType("datetime");
+
+                entity.Property(e => e.IdCliente).HasColumnName("Id_Cliente");
+
+                entity.Property(e => e.IdTipoDocumento).HasColumnName("Id_Tipo_Documento");
+
+                entity.Property(e => e.NombreDocumento)
+                    .HasMaxLength(500)
+                    .HasColumnName("Nombre_documento");
+
+                entity.Property(e => e.UrlDocumento)
+                    .HasMaxLength(500)
+                    .HasColumnName("Url_documento");
+
+                entity.HasOne(d => d.IdClienteNavigation)
+                    .WithMany(p => p.Documentos)
+                    .HasForeignKey(d => d.IdCliente)
+                    .HasConstraintName("FK_Documentos_Cliente");
+
+                entity.HasOne(d => d.IdTipoDocumentoNavigation)
+                    .WithMany(p => p.Documentos)
+                    .HasForeignKey(d => d.IdTipoDocumento)
+                    .HasConstraintName("FK_Documentos_TipoDocumento");
+            });
+
             modelBuilder.Entity<Email>(entity =>
             {
                 entity.HasKey(e => e.IdEmailCliente)
@@ -732,6 +765,15 @@ namespace Web.Data
                 entity.Property(e => e.TipoCliente1)
                     .HasMaxLength(100)
                     .HasColumnName("TipoCliente");
+            });
+
+            modelBuilder.Entity<TipoDocumento>(entity =>
+            {
+                entity.HasKey(e => e.IdTipoDocumento);
+
+                entity.ToTable("TipoDocumento");
+
+                entity.Property(e => e.NombreTipoDocumento).HasMaxLength(500);
             });
 
             modelBuilder.Entity<TipoIdentificacionFiscal>(entity =>

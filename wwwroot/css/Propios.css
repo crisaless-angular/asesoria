@@ -132,6 +132,10 @@ thead {
     width: 100% !important;
 }
 
+#datatableDocumentosCliente {
+    width: 100% !important;
+}
+
 .selectindex{
    margin-bottom: 10px;
 }

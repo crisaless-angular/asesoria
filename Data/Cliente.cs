@@ -12,6 +12,7 @@ namespace Web.Data
             ClienteCuenta = new HashSet<ClienteCuenta>();
             ClienteDirecciones = new HashSet<ClienteDireccione>();
             ClienteMails = new HashSet<ClienteMail>();
+            Documentos = new HashSet<Documento>();
             Tickets = new HashSet<Ticket>();
         }
 
@@ -67,6 +68,7 @@ namespace Web.Data
         public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; }
         public virtual ICollection<ClienteDireccione> ClienteDirecciones { get; set; }
         public virtual ICollection<ClienteMail> ClienteMails { get; set; }
+        public virtual ICollection<Documento> Documentos { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

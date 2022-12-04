@@ -21,7 +21,9 @@ namespace Web.Business.Interfaces
         IGenericRepository<Email> EmailRepository { get; }
         IGenericRepository<ClienteCuenta> ClienteCuentaRepository { get; }
         IGenericRepository<PersonasContacto> PersonaContactoRepository { get; }
-        
+        IGenericRepository<Documento> DocumentoRepository { get; }
+        IGenericRepository<TipoDocumento> TipoDocumentoRepository { get; }
+
         void Save();
 
     }

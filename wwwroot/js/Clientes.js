@@ -761,5 +761,58 @@ $("#anadirPersonaDetalle").on('click', function (evt) {
 });
 
 
+async function CargarDocumentosCliente() {
+
+    let responseData = await ExtraerDocumentosClientes();
+    CargarTablaDocumentos(responseData, "No hay datos");
+    
+}
+
+function ExtraerDocumentosClientes()
+{ 
+   return $.post("ObtenerDocumentosCliente/", function (data) { });   
+}
+
+function CargarTablaDocumentos(data, msgdatanotfound)
+{
+    if (data != null)
+    {
+        let tableId = document.getElementById("datatableDocumentosCliente_wrapper");
+
+        if (tableId)
+            tableId.remove();
+
+        let table = '<table class="table nowrap col-sm-12 col-md-10 col-lg-10 col-xl-10" id="datatableDocumentosCliente">';
+        table += '<thead><tr class="tr"><th scope="col">Nombre documento</th><th scope="col">Url documento</th>';
+        table += '<th scope="col">Tipo documento</th><th scope="col">Fecha subida</th><th scope="col"></th></tr></thead>';
+        table += '<tbody id="DocumentosClientes"></tbody></table>';    
+
+        $("#table-documentos").append(table);
+             
+        BodyTable = $("#DocumentosClientes");
+        let contenido = "";
+        let MsgNodata = msgdatanotfound;
+        
+        $(data).each((index, items) => {
+            
+            contenido += "<tr class='tr'>";
+            contenido += "<td class='bigword'>" + (items.nombreDocumento == null ? MsgNodata : items.nombreDocumento) + "</td>";
+            contenido += "<td class='bigword'>" + (items.urlDocumento == null ? MsgNodata : items.urlDocumento) + "</td>";
+            contenido += "<td>" + (items.nombreTipoDocumento == null ? MsgNodata : items.nombreTipoDocumento) + "</td>";
+            contenido += "<td>" + (items.fechaSubida == null ? MsgNodata : new Date(items.fechaSubida).toLocaleDateString("es-ES")) + "</td>";
+
+            contenido += "<td class='col-md-2'><button onclick='Ver Documento(" + items.idClienteDocumento + ")' class='boton_primario'><span>Detalle</span></button></td>";
+            contenido += "</tr>";
+
+        });
+
+        IdiomaTabla("#datatableDocumentosCliente");
+        BodyTable.append(contenido);
+
+    }
+    
+}
+
+
 
 /*detalle*/

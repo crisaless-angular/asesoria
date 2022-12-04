@@ -823,6 +823,33 @@ namespace Web.Views.Clientes
 
         }
 
+        [HttpPost]
+        public List<DocumentosClientesViewModel> ObtenerDocumentosCliente()
+        {
+            return (from clientes in this._UnitOfWork.ClienteRepository.GetAll()
+                    join Documentos in this._UnitOfWork.DocumentoRepository.GetAll()
+                    on clientes.CodigoCliente equals Documentos.IdCliente
+                    join TiposDocumentos in this._UnitOfWork.TipoDocumentoRepository.GetAll()
+                    on Documentos.IdTipoDocumento equals TiposDocumentos.IdTipoDocumento
+                    where Documentos.Borrado == false
+                    
+                    select new DocumentosClientesViewModel()
+                    {
+                        IdDocumento = Documentos.IdDocumento,
+                        IdClienteDocumento = clientes.CodigoCliente,
+                        IdTipoDocumento = TiposDocumentos.IdTipoDocumento,
+                        NombreDocumento = Documentos.NombreDocumento,
+                        Borrado = Documentos.Borrado.Value,
+                        NombreTipoDocumento = TiposDocumentos.NombreTipoDocumento,
+                        UrlDocumento = Documentos.UrlDocumento,
+                        FechaSubida = Documentos.FechaSubida.Value,
+
+                    }).ToList().OrderBy(x => x.NombreDocumento).ToList();
+
+        }
+
+        
+
     }
 
 }
