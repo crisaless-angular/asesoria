@@ -22,6 +22,8 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <form asp-action="Crear" asp-controller="Clientes" method="post" id="form-new-client">
 
+        <input id="persona_contacto_crear" asp-for="PERSONA_CONTACTO_CREAR" hidden />
+        
         <div class="row mb-5">
             <a class="fancy" href="#" id="save-new-cliente">
               <span class="top-key"></span>

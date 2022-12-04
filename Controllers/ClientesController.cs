@@ -113,6 +113,7 @@ namespace Web.Views.Clientes
                 ViewData["ACTIVIDAD"] = _UnitOfWork.ActividadRepository.GetAll();
 
                 bool Save = false;
+                
 
                 if (model.IBAN != null && !Utilidades.Utilidades.ValidateIban(model.IBAN))
                 {
@@ -135,7 +136,27 @@ namespace Web.Views.Clientes
 
                     if (!ModelState.IsValid)
                         return View(model);
+                    
+                    if(model.PERSONA_CONTACTO_CREAR != null)
+                    {
+                        var objecto = JsonConvert.DeserializeObject<PersonasContacto>(model.PERSONA_CONTACTO_CREAR);
 
+                        if (objecto.Nombre != "")
+                        {
+                            PersonasContacto personasContacto = new PersonasContacto()
+                            {
+                                Nombre = objecto.Nombre,
+                                Telefono = objecto.Telefono,
+                                Email = objecto.Email
+                            };
+
+                            _UnitOfWork.PersonaContactoRepository.Add(personasContacto);
+                            _UnitOfWork.Save();
+
+                            model.PERSONA_CONTACTO = personasContacto.IdPersonaContacto.ToString();
+                        }
+                    }
+                    
                     Cliente modelInsertado = Cast_Cliente_ViewCliente(model);
                     _UnitOfWork.ClienteRepository.Add(modelInsertado);
                     _UnitOfWork.Save();
@@ -190,7 +211,7 @@ namespace Web.Views.Clientes
 
                     _UnitOfWork.ClienteCuentaRepository.Add(clienteCuenta);
                     _UnitOfWork.Save();
-
+                    
                 }
 
             }
@@ -502,15 +523,21 @@ namespace Web.Views.Clientes
 
         public ClientesViewModel Cast_ViewCliente_Cliente(Cliente model)
         {
-            PersonasContacto personaContacto = _UnitOfWork.PersonaContactoRepository.GetEntity(model.PersonaContacto.Value);
-            var objetoPerson = new
+            PersonasContacto personaContacto = null;
+            Object objetoPerson = new object();
+            
+            if (model.PersonaContacto != null)
             {
-                idPersona = personaContacto.IdPersonaContacto,
-                NombrePersona = personaContacto.Nombre,
-                TelefonoPersona = personaContacto.Telefono,
-                EmailPersona = personaContacto.Email,
-            };
-
+                personaContacto = _UnitOfWork.PersonaContactoRepository.GetEntity(model.PersonaContacto.Value);
+                objetoPerson = new
+                {
+                    idPersona = personaContacto.IdPersonaContacto,
+                    NombrePersona = personaContacto.Nombre,
+                    TelefonoPersona = personaContacto.Telefono,
+                    EmailPersona = personaContacto.Email,
+                };
+            }
+            
             ClientesViewModel cliente = new ClientesViewModel()
             {
 
@@ -542,11 +569,11 @@ namespace Web.Views.Clientes
                 POBLACION_ACTIVIDAD = model.PoblacionActividad,
                 PROVINCIA_ACTIVIDAD = model.ProvinciaActividad,
                 PAIS_ACTIVIDAD = model.IdPaisActividad == null ? "34" : model.IdPaisActividad.Value.ToString(),
-                EMAILPRINCIPAL = ReturEmail(model).Email1,
-                IBAN = ReturnCuenta(model).Iban,
-                BANCO = ReturnCuenta(model).Banco,
-                BIC = ReturnCuenta(model).Bic,
-                PERSONA_CONTACTO = JsonConvert.SerializeObject(objetoPerson)
+                EMAILPRINCIPAL = ReturEmail(model) == null ? null : ReturEmail(model).Email1,
+                IBAN = ReturnCuenta(model) == null ? null : ReturnCuenta(model).Iban,
+                BANCO = ReturnCuenta(model) == null ? null : ReturnCuenta(model).Banco,
+                BIC = ReturnCuenta(model) == null ? null : ReturnCuenta(model).Bic,
+                PERSONA_CONTACTO = objetoPerson.ToString() == "{}" ? null : JsonConvert.SerializeObject(objetoPerson)
         };
             
             return cliente;

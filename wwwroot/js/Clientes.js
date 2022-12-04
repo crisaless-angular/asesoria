@@ -334,8 +334,8 @@ function CargarTablaIndex(data, msgdatanotfound)
         let contenido = "";
         let MsgNodata = msgdatanotfound;
         
-        $(data).each(function (index, items) {
-            
+        $(data).each((index, items) => {
+
             contenido += "<tr class='tr'>";
             contenido += "<td class='bigword'>" + (items.nombrE_COMPLETO == null ? MsgNodata : items.nombrE_COMPLETO) + "</td>";
             contenido += "<td class='bigword'>" + (items.fechA_CONTRATACION_TH == null ? MsgNodata : new Date(items.fechA_CONTRATACION_TH).toLocaleDateString("es-ES")) + "</td>";
@@ -396,9 +396,22 @@ function enviarDatos() {
 }
 
 $("#save-new-cliente").on('click', function () {
+
+    if(localStorage.getItem("PersonaContacto") != null)
+    {
+        let persona = new Object()
+        persona.IdPersonaContacto = 0;
+        persona.Nombre = JSON.parse(localStorage.getItem("PersonaContacto"))[0].NombrePersona;
+        persona.Telefono = JSON.parse(localStorage.getItem("PersonaContacto"))[0].TelefonoPersona;
+        persona.Email = JSON.parse(localStorage.getItem("PersonaContacto"))[0].EmailPersona;
+        persona.Clientes = null;
+
+         $("#persona_contacto_crear").val(JSON.stringify(persona));
+    }
     
 
     localStorage.removeItem("PersonaContacto");
+    localStorage.removeItem("IdPersonaContacto");
     $("#form-new-client").submit();
     
     //correcto("Aún sin funcionalidad");

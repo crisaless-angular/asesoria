@@ -171,6 +171,7 @@ namespace Web.Models
 
         public bool MostrarMensajeEmergente { get; set; } = false;
         public List<string> Emails { get; set; }
+        public string PERSONA_CONTACTO_CREAR { get; set; }
 
     }
 }

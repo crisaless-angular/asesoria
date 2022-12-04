@@ -156,6 +156,7 @@ $(document).ready(function () {
 function IdiomaTabla(clase) {
     
     $(clase).DataTable({
+        //"dom": 'Bfrtip',
         language: {
             "decimal": "",
             "emptyTable": "No hay información",
@@ -172,14 +173,18 @@ function IdiomaTabla(clase) {
         },
         "responsive": true,
         "searching": true,
-        "paging": false
+        "paging": false,
+        // "buttons": [
+        //     'copy', 'csv', 'excel', 'pdf', 'print'
+        // ]
     });
 }
 
 function IdiomaTablaGeneric(clase) {
 
     $(clase).DataTable({
-        language: {
+        //"dom": 'Bfrtip',
+        "language": {
             "decimal": "",
             "emptyTable": "No hay información",
             "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
@@ -199,8 +204,11 @@ function IdiomaTablaGeneric(clase) {
                 "previous": "Anterior"
             }
         },
-        responsive: true,
-        "searching": true
+        "responsive": true,
+        "searching": true,
+        // "buttons": [
+        //     'copy', 'csv', 'excel', 'pdf', 'print'
+        // ]
     });
 }
 
