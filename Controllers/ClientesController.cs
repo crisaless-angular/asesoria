@@ -824,15 +824,15 @@ namespace Web.Views.Clientes
         }
 
         [HttpPost]
-        public List<DocumentosClientesViewModel> ObtenerDocumentosCliente()
+        public List<DocumentosClientesViewModel> ObtenerDocumentosCliente(int codCliente)
         {
             return (from clientes in this._UnitOfWork.ClienteRepository.GetAll()
                     join Documentos in this._UnitOfWork.DocumentoRepository.GetAll()
                     on clientes.CodigoCliente equals Documentos.IdCliente
                     join TiposDocumentos in this._UnitOfWork.TipoDocumentoRepository.GetAll()
                     on Documentos.IdTipoDocumento equals TiposDocumentos.IdTipoDocumento
-                    where Documentos.Borrado == false
-                    
+                    where Documentos.Borrado == false && clientes.CodigoCliente == codCliente
+
                     select new DocumentosClientesViewModel()
                     {
                         IdDocumento = Documentos.IdDocumento,

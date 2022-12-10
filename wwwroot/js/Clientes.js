@@ -142,6 +142,18 @@ $(document).ready(function () {
 
     }
 
+    //correcto("Aún sin funcionalidad");
+
+    //SignalIr
+    //$.post("mensajeInstantaneo?mensaje=guardar", function (data) {
+
+    //});
+
+    //Ejemplo llamada a Gdrive
+    // $.post("Clientes/GDriveModule", function () {
+
+    // });
+
 });
 
 function cargarTablepersonas(JsonData)
@@ -414,18 +426,6 @@ $("#save-new-cliente").on('click', function () {
     localStorage.removeItem("IdPersonaContacto");
     $("#form-new-client").submit();
     
-    //correcto("Aún sin funcionalidad");
-
-    //SignalIr
-    //$.post("mensajeInstantaneo?mensaje=guardar", function (data) {
-
-    //});
-
-    //Ejemplo llamada a Gdrive
-    //$.post("GDriveModule", function () {
-
-    //});
-
     
 });
 
@@ -761,21 +761,21 @@ $("#anadirPersonaDetalle").on('click', function (evt) {
 });
 
 
-async function CargarDocumentosCliente() {
+async function CargarDocumentosCliente(codCliente) {
 
-    let responseData = await ExtraerDocumentosClientes();
+    let responseData = await ExtraerDocumentosClientes(codCliente);
     CargarTablaDocumentos(responseData, "No hay datos");
     
 }
 
-function ExtraerDocumentosClientes()
+function ExtraerDocumentosClientes(codCliente)
 { 
-   return $.post("ObtenerDocumentosCliente/", function (data) { });   
+   return $.post("ObtenerDocumentosCliente?codCliente=" + codCliente, function (data) { });   
 }
 
 function CargarTablaDocumentos(data, msgdatanotfound)
 {
-    if (data != null)
+    if (data != null && data.length > 0)
     {
         let tableId = document.getElementById("datatableDocumentosCliente_wrapper");
 
@@ -801,18 +801,61 @@ function CargarTablaDocumentos(data, msgdatanotfound)
             contenido += "<td>" + (items.nombreTipoDocumento == null ? MsgNodata : items.nombreTipoDocumento) + "</td>";
             contenido += "<td>" + (items.fechaSubida == null ? MsgNodata : new Date(items.fechaSubida).toLocaleDateString("es-ES")) + "</td>";
 
-            contenido += "<td class='col-md-2'><button onclick='Ver Documento(" + items.idClienteDocumento + ")' class='boton_primario'><span>Detalle</span></button></td>";
+            contenido += `<td class='col-md-2'><input type='button' class='boton_primario' onclick='VerDocumento("${items.urlDocumento}");'  value='Detalle'/></td>`;
             contenido += "</tr>";
 
         });
 
         IdiomaTabla("#datatableDocumentosCliente");
         BodyTable.append(contenido);
+        $("#datatableDocumentosCliente_filter").empty();
+        $("#datatableDocumentosCliente_filter").append("<input type='text' class='col-sm-12 col-md-3 col-lg-3 col-xl-3 mr-2' id='busquedadocumentos' placeholder='Buscar...'><input class='col-sm-12 col-md-1 col-lg-1 col-xl-1' id='buscarButtondocumentos' type='button' value='Buscar' onclick='filtrarDocumentos("+JSON.stringify(data)+");'/>");
+        $("#datatableDocumentosCliente_filter").removeClass('dataTables_filter');
+        $("#datatableDocumentosCliente_filter").addClass('col-sm-12 col-md-12 col-lg-12 col-xl-12');
+
 
     }
+    else
+    {
+        $("#table-documentos").append("<p>No hay datos</p>");
+    }
+        
     
 }
 
+filtrarDocumentos = (data) => {
+    
+    let responseData = data;
 
+    if ($("#busquedadocumentos").val() !== "") {
+
+        let busqueda = $("#busquedadocumentos").val();
+        let expresion = new RegExp(`${busqueda}.*`, "i");
+
+        data = data.filter(
+            x => expresion.test(x.nombreDocumento)
+                || expresion.test(x.urlDocumento)
+                || expresion.test(x.nombreTipoDocumento)
+                || expresion.test(x.fechaSubida)
+        );
+
+        if(data.length === 0)
+            CargarTablaDocumentos(responseData, "No hay datos");
+        else
+            CargarTablaDocumentos(data, "No hay datos");
+
+    }
+    else
+        CargarDocumentosCliente($("#codCliente").val());
+
+    
+
+};
+
+function VerDocumento(urlArchivo)
+{
+    window.open(urlArchivo, '_blank');
+    return false;
+}
 
 /*detalle*/

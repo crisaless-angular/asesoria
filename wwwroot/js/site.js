@@ -172,8 +172,8 @@ function IdiomaTabla(clase) {
             "zeroRecords": "Sin resultados encontrados"
         },
         "responsive": true,
-        "searching": true,
         "paging": false,
+        "info": false,
         // "buttons": [
         //     'copy', 'csv', 'excel', 'pdf', 'print'
         // ]
@@ -205,7 +205,7 @@ function IdiomaTablaGeneric(clase) {
             }
         },
         "responsive": true,
-        "searching": true,
+        "paging": false,
         // "buttons": [
         //     'copy', 'csv', 'excel', 'pdf', 'print'
         // ]

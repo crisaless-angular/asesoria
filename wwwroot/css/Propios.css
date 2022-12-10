@@ -1129,3 +1129,11 @@ hr.sep-3::after {
     margin-top: 30px;
 }
 
+#datatableDocumentosCliente_filter{
+    text-align: end;
+    margin-bottom: 5px;
+}
+
+#buscarButtondocumentos{
+    cursor: pointer;
+}
