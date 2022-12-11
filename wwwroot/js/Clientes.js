@@ -801,7 +801,7 @@ function CargarTablaDocumentos(data, msgdatanotfound)
             contenido += "<td>" + (items.nombreTipoDocumento == null ? MsgNodata : items.nombreTipoDocumento) + "</td>";
             contenido += "<td>" + (items.fechaSubida == null ? MsgNodata : new Date(items.fechaSubida).toLocaleDateString("es-ES")) + "</td>";
 
-            contenido += `<td class='col-md-2'><input type='button' class='boton_primario' onclick='VerDocumento("${items.urlDocumento}");'  value='Detalle'/></td>`;
+            contenido += `<td class='col-md-2'><a href=''  class='boton_primario' id='descarga_doc' onclick='VerDocumento("${items.urlDocumento}");'>Ver documento</a></td>`;
             contenido += "</tr>";
 
         });
@@ -809,10 +809,10 @@ function CargarTablaDocumentos(data, msgdatanotfound)
         IdiomaTabla("#datatableDocumentosCliente");
         BodyTable.append(contenido);
         $("#datatableDocumentosCliente_filter").empty();
+        $("#datatableDocumentosCliente_filter").append("<input type='button' class='col-sm-12 col-md-2 col-lg-2 col-xl-2 ml-2' id='anadirDocumento' value='Añadir documento' onclick='AbrirModalAnadirDocumento();' />");
         $("#datatableDocumentosCliente_filter").append("<input type='text' class='col-sm-12 col-md-3 col-lg-3 col-xl-3 mr-2' id='busquedadocumentos' placeholder='Buscar...'><input class='col-sm-12 col-md-1 col-lg-1 col-xl-1' id='buscarButtondocumentos' type='button' value='Buscar' onclick='filtrarDocumentos("+JSON.stringify(data)+");'/>");
         $("#datatableDocumentosCliente_filter").removeClass('dataTables_filter');
         $("#datatableDocumentosCliente_filter").addClass('col-sm-12 col-md-12 col-lg-12 col-xl-12');
-
 
     }
     else
@@ -854,8 +854,7 @@ filtrarDocumentos = (data) => {
 
 function VerDocumento(urlArchivo)
 {
-    window.open(urlArchivo, '_blank');
-    return false;
+    $("#descarga_doc").attr({target: '_blank', href : urlArchivo});
 }
 
 /*detalle*/

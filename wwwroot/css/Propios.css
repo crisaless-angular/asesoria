@@ -1137,3 +1137,8 @@ hr.sep-3::after {
 #buscarButtondocumentos{
     cursor: pointer;
 }
+
+#anadirDocumento{
+    cursor: pointer;
+    float: left;
+}
