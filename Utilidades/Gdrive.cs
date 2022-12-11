@@ -55,37 +55,36 @@ namespace Web.Utilidades
             }
         }
 
-        public async static Task<bool> GuardarArchivo()
+        public async static Task<string> GuardarArchivo(string fileName, string contentType)
         {
-            var uploadString = "Test";
-            var fileName = "ploadFileString.txt";
+            string uploadString = fileName;
             string CarpetaPrincipal = variables.CarpetaPrincipalGdrive;
 
             // Upload file Metadata
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            Google.Apis.Drive.v3.Data.File fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
                 Name = fileName,
                 Parents = new List<string>() { CarpetaPrincipal }  // folder to upload the file to
             };
 
-            var fsSource = new MemoryStream(Encoding.UTF8.GetBytes(uploadString ?? ""));
+            MemoryStream fsSource = new MemoryStream(Encoding.UTF8.GetBytes(uploadString ?? ""));
 
             string uploadedFileId;
 
             // Create a new file, with metadata and stream.
-            var request = Coonnect().Result.Files.Create(fileMetadata, fsSource, "text/plain");
+            var request = Coonnect().Result.Files.Create(fileMetadata, fsSource, contentType);
             request.Fields = "*";
             var results = await request.UploadAsync(CancellationToken.None);
 
             if (results.Status == UploadStatus.Failed)
             {
                 Debug.Print($"Error uploading file: {results.Exception.Message}");
-                return false;
+                return "";
             }
-            // the file id of the new file we created
+            
             uploadedFileId = request.ResponseBody?.Id;
 
-            return true;
+            return uploadedFileId;
         }
 
         public static string CrearCarpeta(string NombreCarpeta)

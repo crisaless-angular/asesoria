@@ -848,7 +848,51 @@ namespace Web.Views.Clientes
 
         }
 
-        
+        [HttpPost]
+        public async Task<bool> cargar_documento(int codigoCliente, int tipoDoc)
+        {
+            string result = "";
+            bool response = false;
+            IFormFile file = Request.Form.Files[0];
+            
+            if (file.Length > 0)
+            {
+                string NombreArchivo = file.FileName;
+                string contentType = file.ContentType;
+
+                result = await Gdrive.GuardarArchivo(NombreArchivo, contentType);
+                
+                if(result != "")
+                {
+                    Documento documento = new Documento()
+                    {
+                        IdCliente = codigoCliente,
+                        IdTipoDocumento = tipoDoc,
+                        NombreDocumento = NombreArchivo,
+                        UrlDocumento = result,
+                        Borrado = false,
+                        FechaSubida = DateTime.Now
+                    };
+                    
+                    _UnitOfWork.DocumentoRepository.Add(documento);
+                    _UnitOfWork.Save();
+                    response = true;
+
+                }
+
+            }
+
+            return response;
+
+        }
+
+        [HttpPost]
+        public List<TipoDocumento> GetTiposDoc()
+        {
+            return _UnitOfWork.TipoDocumentoRepository.GetAll().ToList();
+        }
+
+
 
     }
 

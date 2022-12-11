@@ -142,6 +142,42 @@ $(document).ready(function () {
 
     }
 
+    $('#enviar_doc_google').click(function (e) { 
+
+        e.preventDefault();
+
+        if(jQuery('#cargar_fichero').val() !== '')
+        {
+            let data = new FormData();
+            jQuery.each(jQuery('#cargar_fichero')[0].files, function(i, file) {
+                data.append('file-'+i, file);
+            });
+
+            $.ajax({
+                type: "POST",
+                url: `cargar_documento?codigoCliente=${$('#codCliente').val()}&tipoDoc=${$('#tiposDoc').val()}`,
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+                    if(data)
+                    {
+                        correcto("Documento subido correctamente");
+                        $('#cargar_fichero').val('');
+                        $("#popup_anadir_doc").modal('hide');
+                    }
+                    else
+                        informacion("No se ha podido subir el documento");
+                }
+                
+            });
+        }
+        else
+            informacion("No se ha seleccionado ningún archivo"); 
+
+    });  
+
     //correcto("Aún sin funcionalidad");
 
     //SignalIr
@@ -155,6 +191,23 @@ $(document).ready(function () {
     // });
 
 });
+
+function cargaroptionsTiposDoc()
+{
+    let options = "";
+    $.ajax({
+        url: "GetTiposDoc",
+        type: "POST",
+        async: false,
+        success: function (data) {
+            $(data).each(function (index, items) {
+                options += "<option value='" + items.idTipoDocumento + "'>" + items.nombreTipoDocumento + "</option>";
+            });
+        }
+    });
+
+    $("#tiposDoc").append(options);
+}
 
 function cargarTablepersonas(JsonData)
 {
@@ -801,7 +854,7 @@ function CargarTablaDocumentos(data, msgdatanotfound)
             contenido += "<td>" + (items.nombreTipoDocumento == null ? MsgNodata : items.nombreTipoDocumento) + "</td>";
             contenido += "<td>" + (items.fechaSubida == null ? MsgNodata : new Date(items.fechaSubida).toLocaleDateString("es-ES")) + "</td>";
 
-            contenido += `<td class='col-md-2'><a href=''  class='boton_primario' id='descarga_doc' onclick='VerDocumento("${items.urlDocumento}");'>Ver documento</a></td>`;
+            contenido += `<td class='col-md-2'><a href=''  class='boton_primario' id='descarga_doc_${items.urlDocumento}' onclick='VerDocumento("${items.urlDocumento}");'>Ver documento</a></td>`;
             contenido += "</tr>";
 
         });
@@ -854,7 +907,14 @@ filtrarDocumentos = (data) => {
 
 function VerDocumento(urlArchivo)
 {
-    $("#descarga_doc").attr({target: '_blank', href : urlArchivo});
+    urlArchivoConcatenado = `https://drive.google.com/file/d/${urlArchivo}/view`;
+    $('#descarga_doc_' + urlArchivo).attr({target: '_blank', href : urlArchivoConcatenado});
+}
+
+function AbrirModalAnadirDocumento()
+{
+    $("#popup_anadir_doc").modal('show');
+    cargaroptionsTiposDoc();
 }
 
 /*detalle*/

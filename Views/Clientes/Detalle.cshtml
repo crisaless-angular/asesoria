@@ -429,8 +429,6 @@
                     </div>
                     @*Modal Publica*@ 
 
-                    
-                     
                  </div>
 
                  <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
@@ -455,6 +453,28 @@
 
 </div>
 
+<div class="modal fade modal-publica" id="popup_anadir_doc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Añada un documento</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div id="modal-body" class="modal-body">
+            <input type="file" id="cargar_fichero" name="cargar_fichero">
+             <select name="tiposDoc" id="tiposDoc"></select>
+            <input id="enviar_doc_google" type="submit">
+            <input type="button" id="close_popup_carga_doc" data-dismiss="modal" value="Cerrar" />
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+
 @section Scripts {
 
     <script>
@@ -470,7 +490,7 @@
 
     @{
         if(Model.MostrarMensajeEmergente){
-            <script>correcto("@Model.MENSAJE_EMERGENTE");</script>
+    <script>correcto("@Model.MENSAJE_EMERGENTE");</script>
         }
     }
    
