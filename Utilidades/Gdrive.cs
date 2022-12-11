@@ -54,39 +54,7 @@ namespace Web.Utilidades
                 Debug.Print($"{driveFile.Name}  {driveFile.MimeType}  {driveFile.Id}");
             }
         }
-
-        public async static Task<string> GuardarArchivo(string fileName, string contentType)
-        {
-            string uploadString = fileName;
-            string CarpetaPrincipal = variables.CarpetaPrincipalGdrive;
-
-            // Upload file Metadata
-            Google.Apis.Drive.v3.Data.File fileMetadata = new Google.Apis.Drive.v3.Data.File()
-            {
-                Name = fileName,
-                Parents = new List<string>() { CarpetaPrincipal }  // folder to upload the file to
-            };
-
-            MemoryStream fsSource = new MemoryStream(Encoding.UTF8.GetBytes(uploadString ?? ""));
-
-            string uploadedFileId;
-
-            // Create a new file, with metadata and stream.
-            var request = Coonnect().Result.Files.Create(fileMetadata, fsSource, contentType);
-            request.Fields = "*";
-            var results = await request.UploadAsync(CancellationToken.None);
-
-            if (results.Status == UploadStatus.Failed)
-            {
-                Debug.Print($"Error uploading file: {results.Exception.Message}");
-                return "";
-            }
-            
-            uploadedFileId = request.ResponseBody?.Id;
-
-            return uploadedFileId;
-        }
-
+        
         public static string CrearCarpeta(string NombreCarpeta)
         {
             string CarpetaPrincipal = variables.CarpetaPrincipalGdrive;
@@ -104,6 +72,29 @@ namespace Web.Utilidades
 
             return file.Id;
         }
+
+
+        public static string UploadFile(Stream file, string fileName, string fileMime, string fileDescription)
+        {
+            Task<DriveService> service = Coonnect();
+            
+            var driveFile = new Google.Apis.Drive.v3.Data.File();
+            driveFile.Name = fileName;
+            driveFile.Description = fileDescription;
+            driveFile.MimeType = fileMime;
+            driveFile.Parents = new string[] { variables.CarpetaPrincipalGdrive };
+            
+            var request = service.Result.Files.Create(driveFile, file, fileMime);
+            request.Fields = "id";
+
+            var response = request.Upload();
+            if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+                throw response.Exception;
+
+            return request.ResponseBody.Id;
+        }
+
+
 
     }
 }

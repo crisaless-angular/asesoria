@@ -166,11 +166,12 @@ $(document).ready(function () {
                         correcto("Documento subido correctamente");
                         $('#cargar_fichero').val('');
                         $("#popup_anadir_doc").modal('hide');
+                        CargarDocumentosCliente($("#codCliente").val());
                     }
                     else
                         informacion("No se ha podido subir el documento");
                 }
-                
+
             });
         }
         else
@@ -194,6 +195,7 @@ $(document).ready(function () {
 
 function cargaroptionsTiposDoc()
 {
+    $("#tiposDoc").empty();
     let options = "";
     $.ajax({
         url: "GetTiposDoc",

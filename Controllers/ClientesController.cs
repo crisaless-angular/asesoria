@@ -859,10 +859,16 @@ namespace Web.Views.Clientes
             {
                 string NombreArchivo = file.FileName;
                 string contentType = file.ContentType;
-
-                result = await Gdrive.GuardarArchivo(NombreArchivo, contentType);
                 
-                if(result != "")
+                using (var ms = new MemoryStream())
+                {
+                    await file.CopyToAsync(ms);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    result = Gdrive.UploadFile(ms, NombreArchivo, contentType, "Prueba");
+                }
+                
+                
+                if (result != "")
                 {
                     Documento documento = new Documento()
                     {
@@ -892,7 +898,7 @@ namespace Web.Views.Clientes
             return _UnitOfWork.TipoDocumentoRepository.GetAll().ToList();
         }
 
-
+        
 
     }
 
