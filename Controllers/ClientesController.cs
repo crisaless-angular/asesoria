@@ -159,7 +159,8 @@ namespace Web.Views.Clientes
                             _UnitOfWork.PersonaContactoRepository.Add(personasContacto);
                             _UnitOfWork.Save();
 
-                            Cliente UpdateClientePersonaContacto = new Cliente { PersonaContacto = personasContacto.IdPersonaContacto };
+                            Cliente UpdateClientePersonaContacto = _UnitOfWork.ClienteRepository.GetEntity(model.CODIGO_CLIENTE);
+                            UpdateClientePersonaContacto.PersonaContacto = personasContacto.IdPersonaContacto;
                             _UnitOfWork.ClienteRepository.Update(UpdateClientePersonaContacto);
                             _UnitOfWork.Save();
                         }
