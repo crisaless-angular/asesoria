@@ -221,7 +221,7 @@ function cargarTablepersonas(JsonData)
         contenido += "<td class='bigword'>" + items.NombrePersona + "</td>";
         contenido += "<td class='bigword'>" + items.TelefonoPersona + "</td>";
         contenido += "<td>" + items.EmailPersona + "</td>";
-        contenido += "<td class='col-md-1 tdPersona'><button type='button' onclick='seleccionPersona(" + `"${items.NombrePersona}"` + ")' class='boton_primario BtnSeleccionarPersona'><span>Seleccionar</span></button></td>";
+        contenido += "<td class='col-md-1 tdPersona'><button type='button' onclick='seleccionPersona(" + `"${items.NombrePersona}"` + ")' class='boton_primario BtnSeleccionarPersona' data-dismiss='modal'><span>Seleccionar</span></button></td>";
         contenido += "<td class='col-md-1 tdPersona'><button onclick='quitarPersonaContacto(" + `"${items.TelefonoPersona}"` + ")' class='boton_primario BtnEliminarPersona'><span>X</span></button></td>";
         contenido += "</tr>";
 
@@ -233,7 +233,7 @@ function cargarTablepersonas(JsonData)
 function seleccionPersona(nombre)
 {
     $("#InputPersonaContacto").val(nombre);
-    $("#btnCerrarModalPersona").click();
+    //$("#btnCerrarModalPersona").click();
 }
 
 function quitarPersonaContacto(telefono)

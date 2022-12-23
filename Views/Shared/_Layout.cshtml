@@ -53,15 +53,15 @@
                                 @if (user.Identity.IsAuthenticated)
                                 {
                             
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Clientes
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Todos los Clientes</a>
-                                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Crear" id="NavCrearfactura">Crear Cliente</a>
-                                        </div>
-                                    </li>
+                                    //<li class="nav-item dropdown">
+                                    //    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    //        Clientes
+                                    //    </a>
+                                    //    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    //        <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Todos los Clientes</a>
+                                    //        <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Crear" id="NavCrearfactura">Crear Cliente</a>
+                                    //    </div>
+                                    //</li>
 
                                         @if (this.User.IsInRole("Admin"))
                                         {
@@ -143,7 +143,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/staterestore/1.2.0/js/dataTables.stateRestore.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="~/lib/bootstrap-toggle-master/js/bootstrap-toggle.js"></script>
 
+    
     <script>
         window.onload = function () {
             Getlogo(); 

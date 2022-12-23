@@ -137,7 +137,13 @@ namespace Web.Views.Clientes
                     if (!ModelState.IsValid)
                         return View(model);
                     
-                    if(model.PERSONA_CONTACTO_CREAR != null)
+                    Cliente modelInsertado = Cast_Cliente_ViewCliente(model);
+                    _UnitOfWork.ClienteRepository.Add(modelInsertado);
+                    _UnitOfWork.Save();
+                    model.CODIGO_CLIENTE = modelInsertado.CodigoCliente;
+                    Save = true;
+
+                    if (model.PERSONA_CONTACTO_CREAR != null)
                     {
                         var objecto = JsonConvert.DeserializeObject<PersonasContacto>(model.PERSONA_CONTACTO_CREAR);
 
@@ -153,15 +159,14 @@ namespace Web.Views.Clientes
                             _UnitOfWork.PersonaContactoRepository.Add(personasContacto);
                             _UnitOfWork.Save();
 
-                            model.PERSONA_CONTACTO = personasContacto.IdPersonaContacto.ToString();
+                            Cliente UpdateClientePersonaContacto = new Cliente { PersonaContacto = personasContacto.IdPersonaContacto };
+                            _UnitOfWork.ClienteRepository.Update(UpdateClientePersonaContacto);
+                            _UnitOfWork.Save();
                         }
                     }
+
                     
-                    Cliente modelInsertado = Cast_Cliente_ViewCliente(model);
-                    _UnitOfWork.ClienteRepository.Add(modelInsertado);
-                    _UnitOfWork.Save();
-                    model.CODIGO_CLIENTE = modelInsertado.CodigoCliente;
-                    Save = true;
+
                 }
                 catch (Exception e)
                 {
