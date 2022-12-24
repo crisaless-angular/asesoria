@@ -166,6 +166,7 @@ $(document).ready(function () {
                         correcto("Documento subido correctamente");
                         $('#cargar_fichero').val('');
                         $("#popup_anadir_doc").modal('hide');
+                        $(".btn_subir_doc_sin_datos").remove();
                         CargarDocumentosCliente($("#codCliente").val());
                     }
                     else
@@ -830,6 +831,9 @@ function ExtraerDocumentosClientes(codCliente)
 
 function CargarTablaDocumentos(data, msgdatanotfound)
 {
+
+    let tableId = document.getElementById("datatableDocumentosCliente_wrapper");
+
     if (data != null && data.length > 0)
     {
         let tableId = document.getElementById("datatableDocumentosCliente_wrapper");
@@ -839,7 +843,7 @@ function CargarTablaDocumentos(data, msgdatanotfound)
 
         let table = '<table class="table nowrap col-sm-12 col-md-10 col-lg-10 col-xl-10" id="datatableDocumentosCliente">';
         table += '<thead><tr class="tr"><th scope="col">Nombre documento</th><th scope="col">Url documento</th>';
-        table += '<th scope="col">Tipo documento</th><th scope="col">Fecha subida</th><th scope="col"></th></tr></thead>';
+        table += '<th scope="col">Tipo documento</th><th scope="col">Fecha subida</th><th scope="col"></th><th scope="col"></th></tr></thead>';
         table += '<tbody id="DocumentosClientes"></tbody></table>';    
 
         $("#table-documentos").append(table);
@@ -848,7 +852,7 @@ function CargarTablaDocumentos(data, msgdatanotfound)
         let contenido = "";
         let MsgNodata = msgdatanotfound;
         
-        $(data).each((index, items) => {
+         $(data).each((index, items) => {
             
             contenido += "<tr class='tr'>";
             contenido += "<td class='bigword'>" + (items.nombreDocumento == null ? MsgNodata : items.nombreDocumento) + "</td>";
@@ -856,7 +860,13 @@ function CargarTablaDocumentos(data, msgdatanotfound)
             contenido += "<td>" + (items.nombreTipoDocumento == null ? MsgNodata : items.nombreTipoDocumento) + "</td>";
             contenido += "<td>" + (items.fechaSubida == null ? MsgNodata : new Date(items.fechaSubida).toLocaleDateString("es-ES")) + "</td>";
 
-            contenido += `<td class='col-md-2'><a href=''  class='boton_primario' id='descarga_doc_${items.urlDocumento}' onclick='VerDocumento("${items.urlDocumento}");'>Ver documento</a></td>`;
+            contenido += `<td class='col-md-2'><a href='javascript:void(0)'  class='boton_primario' id='descarga_doc_${items.urlDocumento}' onclick='VerDocumento("${items.urlDocumento}");'>Ver documento</a></td>`;
+            
+            EsAdmin().then((result) => { 
+                if(result)
+                    contenido += `<td class='col-md-2'><a href='javascript:void(0)'  class='boton_primario' id='eliminar_doc_${items.urlDocumento}' onclick='EliminarDocumento("${items.urlDocumento}");'>Eliminar</a></td>`;
+            })
+            
             contenido += "</tr>";
 
         });
@@ -872,7 +882,12 @@ function CargarTablaDocumentos(data, msgdatanotfound)
     }
     else
     {
-        $("#table-documentos").append("<p>No hay datos</p>");
+        if (tableId)
+            tableId.remove();
+
+        $("#msg_noHaydatos").remove();
+        $("#table-documentos").append("<p id='msg_noHaydatos' class='row'>No hay datos</p>");
+        $("#table-documentos").append("<input type='button' class='col-sm-12 col-md-2 col-lg-2 col-xl-2 ml-2 btn_subir_doc_sin_datos' id='anadirDocumento' value='Añadir documento' onclick='AbrirModalAnadirDocumento();' />");
     }
         
     
@@ -913,10 +928,32 @@ function VerDocumento(urlArchivo)
     $('#descarga_doc_' + urlArchivo).attr({target: '_blank', href : urlArchivoConcatenado});
 }
 
+function EliminarDocumento(urlArchivo)
+{
+
+    $.post("EliminarDocumento", { fileId: urlArchivo }, function (data) {
+        
+        if (data)
+        {
+            correcto("Documento eliminado correctamente");
+            CargarDocumentosCliente($("#codCliente").val());
+        }
+        else
+        {
+            incorrecto("No se ha podido eliminar el documento");
+        }
+    });
+}
+
 function AbrirModalAnadirDocumento()
 {
     $("#popup_anadir_doc").modal('show');
     cargaroptionsTiposDoc();
+}
+
+function EsAdmin()
+{
+    return $.post("EsAdmin", function (data) { });  
 }
 
 /*detalle*/

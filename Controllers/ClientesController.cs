@@ -904,7 +904,43 @@ namespace Web.Views.Clientes
             return _UnitOfWork.TipoDocumentoRepository.GetAll().ToList();
         }
 
-        
+        [HttpPost]
+        public async Task<bool> EliminarDocumento(string fileId)
+        {
+            bool result = await Gdrive.DeleteDriveFile(fileId);
+
+            if (result)
+                DeleteDocument(fileId);
+                    
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<bool> EsAdmin()
+        {
+            bool response = false;
+            IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
+            
+            if (user != null)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                if (roles.Contains("Admin"))
+                {
+                    response = true;
+                }
+            }
+            
+            return response;
+            
+        }
+
+        private void DeleteDocument(string urlDocumento)
+        {
+            Documento GetDocument = _UnitOfWork.DocumentoRepository.GetAll().Where(x => x.UrlDocumento == urlDocumento).FirstOrDefault();
+            _UnitOfWork.DocumentoRepository.Delete(GetDocument);
+            _UnitOfWork.Save();
+        }
+    
 
     }
 

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -94,7 +95,47 @@ namespace Web.Utilidades
             return request.ResponseBody.Id;
         }
 
+        public static async Task<bool> DeleteDriveFile(string fileId)
+        {
+            var request = Coonnect().Result.Files.List();
+            var results = await request.ExecuteAsync();
+            var Encontrar = results.Files.Where(x => x.Id == fileId);
 
+            if (Encontrar.Count() > 0)
+            {
+                try
+                {
+                    Task<DriveService> service = Coonnect();
+                    var getRequest = service.Result.About.Get();
+                    getRequest.Fields = "*";
+                    var getResponse = await getRequest.ExecuteAsync().ConfigureAwait(true);
+
+                    string userPermissionId = getResponse.User.PermissionId;
+                    Debug.Print($"UserPermissionID: {userPermissionId}");
+
+                    var responseFile = service.Result.Permissions.Get(fileId, userPermissionId);
+                    Debug.Print($"FilePermissionID: {responseFile.PermissionId}");
+
+                    string response = "";
+                    var requestDelete = service.Result.Files.Delete(fileId);
+                    requestDelete.SupportsAllDrives = true;
+                    response = await requestDelete.ExecuteAsync().ConfigureAwait(false);
+
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Delete File Error: " + e.Message);
+                }
+                
+            }
+
+            return false;
+
+        }
+
+        
 
     }
 }
