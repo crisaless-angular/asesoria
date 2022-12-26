@@ -811,19 +811,44 @@ namespace Web.Views.Clientes
         }
 
         [HttpPost]
-        public void CambiarPersonaContacto(string objetopersona)
+        public void CambiarPersonaContacto(string objetopersona, int Idcliente = 0)
         {
             var objecto = JsonConvert.DeserializeObject<PersonasContacto>(objetopersona);
             PersonasContacto persona = _UnitOfWork.PersonaContactoRepository.GetEntity(objecto.IdPersonaContacto);
-
-            persona.Nombre = objecto.Nombre;
-            persona.Telefono = objecto.Telefono;
-            persona.Email = objecto.Email;
+            int Idpersona = 0;
             
-
             if (persona != null)
             {
+                persona.Nombre = objecto.Nombre;
+                persona.Telefono = objecto.Telefono;
+                persona.Email = objecto.Email;
+                Idpersona = objecto.IdPersonaContacto;
+
+
                 _UnitOfWork.PersonaContactoRepository.Update(persona);
+                _UnitOfWork.Save();
+            }
+            else
+            {
+                PersonasContacto personaNueva = new PersonasContacto()
+                {
+                    Nombre = objecto.Nombre,
+                    Telefono = objecto.Telefono,
+                    Email = objecto.Email
+                };
+                
+                _UnitOfWork.PersonaContactoRepository.Add(personaNueva);
+                _UnitOfWork.Save();
+
+                Idpersona = personaNueva.IdPersonaContacto;
+
+            }
+
+            if(Idpersona > 0)
+            {
+                Cliente cliente = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == Idcliente).FirstOrDefault();
+                cliente.PersonaContacto = Idpersona;
+                _UnitOfWork.ClienteRepository.Update(cliente);
                 _UnitOfWork.Save();
             }
 

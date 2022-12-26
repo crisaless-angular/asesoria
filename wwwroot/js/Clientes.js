@@ -784,9 +784,10 @@ function PintarBodyTablePersona()
 
 function CambiarPersonaContacto(persona)
 {
-    $.post("CambiarPersonaContacto?objetopersona=" + persona, function (data) {
+    $.post("CambiarPersonaContacto?objetopersona=" + persona + "&Idcliente=" + $("#codCliente").val(), function (data) {
         PintarBodyTablePersona();
         $("#btnCerrarModalPersonaDetalle").click();
+       $("#InputPersonaContactoDetalle").val($("#nombrePersonaDetalle").val());
     });
 }
 
@@ -794,20 +795,15 @@ $("#anadirPersonaDetalle").on('click', function (evt) {
     evt.preventDefault();
     try
     {
-        informacionBoton("¿Guardar los cambios?").then((result) => {
-            if (result.isConfirmed) 
-            {
-                let persona = new Object()
-                persona.IdPersonaContacto = localStorage.getItem("IdPersonaContacto");
-                persona.Nombre = $("#nombrePersonaDetalle").val();
-                persona.Telefono = $("#telefonoPersonaDetalle").val();
-                persona.Email = $("#emailPersonaDetalle").val();
-                persona.Clientes = null;
+        let persona = new Object()
+        persona.IdPersonaContacto = (localStorage.getItem("IdPersonaContacto") == null? 0 : localStorage.getItem("IdPersonaContacto"));
+        persona.Nombre = $("#nombrePersonaDetalle").val();
+        persona.Telefono = $("#telefonoPersonaDetalle").val();
+        persona.Email = $("#emailPersonaDetalle").val();
+        persona.Clientes = null;
 
-                CambiarPersonaContacto(JSON.stringify(persona));
-                Swal.fire('Guardado!', '', 'success');
-            }
-        });
+        CambiarPersonaContacto(JSON.stringify(persona));
+        Swal.fire('Guardado!', '', 'success');
         
     }
     catch (e) {
@@ -957,3 +953,9 @@ function EsAdmin()
 }
 
 /*detalle*/
+// informacionBoton("¿Guardar los cambios?").then((result) => {
+//     if (result.isConfirmed) 
+//     {
+        
+//     }
+// });
