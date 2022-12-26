@@ -787,6 +787,7 @@ function CambiarPersonaContacto(persona)
     $.post("CambiarPersonaContacto?objetopersona=" + persona + "&Idcliente=" + $("#codCliente").val(), function (data) {
         PintarBodyTablePersona();
         //$("#btnCerrarModalPersonaDetalle").click();
+        $("#btnPersonasDetalle").click();
         $("#InputPersonaContactoDetalle").val($("#nombrePersonaDetalle").val());
     });
 }
