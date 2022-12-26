@@ -28,12 +28,25 @@ namespace Web.Business.Services
         public IGenericRepository<PersonasContacto> _PersonaContacto;
         public IGenericRepository<Documento> _Documentos;
         public IGenericRepository<TipoDocumento> _TipoDocumento;
+        public IGenericRepository<PerosnasContactoCliente> _PerosnaContactoCliente;
 
         public UnitOfWork(AsesoriaContext context)
         {
             this._context = context;
         }
 
+        public IGenericRepository<PerosnasContactoCliente> PerosnaContactoClienteRepository
+        {
+            get
+            {
+                if (this._PerosnaContactoCliente == null)
+                    this._PerosnaContactoCliente = new GenericRepository<PerosnasContactoCliente>(_context);
+
+                return _PerosnaContactoCliente;
+            }
+
+        }
+        
         public IGenericRepository<Documento> DocumentoRepository
         {
             get

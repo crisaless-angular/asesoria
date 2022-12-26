@@ -159,10 +159,15 @@ namespace Web.Views.Clientes
                             _UnitOfWork.PersonaContactoRepository.Add(personasContacto);
                             _UnitOfWork.Save();
 
-                            Cliente UpdateClientePersonaContacto = _UnitOfWork.ClienteRepository.GetEntity(model.CODIGO_CLIENTE);
-                            UpdateClientePersonaContacto.PersonaContacto = personasContacto.IdPersonaContacto;
-                            _UnitOfWork.ClienteRepository.Update(UpdateClientePersonaContacto);
+                            PerosnasContactoCliente perosnasContactoCliente = new PerosnasContactoCliente()
+                            {
+                                IdCliente = model.CODIGO_CLIENTE,
+                                IdPersona = personasContacto.IdPersonaContacto
+                            };
+
+                            _UnitOfWork.PerosnaContactoClienteRepository.Add(perosnasContactoCliente);
                             _UnitOfWork.Save();
+
                         }
                     }
 
@@ -795,9 +800,9 @@ namespace Web.Views.Clientes
         public List<PersonasContacto> ReturnPersonasCliente(int codCliente)
         {
             return (from Personas in this._UnitOfWork.PersonaContactoRepository.GetAll()
-                    join Cliente in this._UnitOfWork.ClienteRepository.GetAll()
-                    on Personas.IdPersonaContacto equals Cliente.PersonaContacto
-                    where Cliente.CodigoCliente == codCliente
+                    join ClientePersona in this._UnitOfWork.PerosnaContactoClienteRepository.GetAll()
+                    on Personas.IdPersonaContacto equals ClientePersona.IdPersona
+                    where ClientePersona.IdCliente == codCliente
 
                     select new PersonasContacto()
                     {
@@ -846,10 +851,18 @@ namespace Web.Views.Clientes
 
             if(Idpersona > 0)
             {
-                Cliente cliente = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == Idcliente).FirstOrDefault();
-                cliente.PersonaContacto = Idpersona;
-                _UnitOfWork.ClienteRepository.Update(cliente);
+                PerosnasContactoCliente perosnasContactoCliente = new PerosnasContactoCliente()
+                {
+                    IdCliente = Idcliente,
+                    IdPersona = Idpersona
+                };
+
+                _UnitOfWork.PerosnaContactoClienteRepository.Add(perosnasContactoCliente);
                 _UnitOfWork.Save();
+                //Cliente cliente = _UnitOfWork.ClienteRepository.GetAll().Where(x => x.CodigoCliente == Idcliente).FirstOrDefault();
+                //cliente.PersonaContacto = Idpersona;
+                //_UnitOfWork.ClienteRepository.Update(cliente);
+                //_UnitOfWork.Save();
             }
 
         }

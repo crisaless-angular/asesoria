@@ -23,6 +23,7 @@ namespace Web.Business.Interfaces
         IGenericRepository<PersonasContacto> PersonaContactoRepository { get; }
         IGenericRepository<Documento> DocumentoRepository { get; }
         IGenericRepository<TipoDocumento> TipoDocumentoRepository { get; }
+        IGenericRepository<PerosnasContactoCliente> PerosnaContactoClienteRepository { get; }
 
         void Save();
 

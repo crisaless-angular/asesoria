@@ -42,6 +42,7 @@ namespace Web.Data
         public virtual DbSet<Mandato> Mandatos { get; set; }
         public virtual DbSet<NotaArchivo> NotaArchivos { get; set; }
         public virtual DbSet<Paise> Paises { get; set; }
+        public virtual DbSet<PerosnasContactoCliente> PerosnasContactoClientes { get; set; }
         public virtual DbSet<PersonasContacto> PersonasContactos { get; set; }
         public virtual DbSet<PrioridadTicket> PrioridadTickets { get; set; }
         public virtual DbSet<TickectNota> TickectNotas { get; set; }
@@ -50,7 +51,6 @@ namespace Web.Data
         public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
         public virtual DbSet<TipoIdentificacionFiscal> TipoIdentificacionFiscals { get; set; }
         
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
@@ -621,6 +621,13 @@ namespace Web.Data
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(200)
                     .HasColumnName("DESCRIPCION");
+            });
+
+            modelBuilder.Entity<PerosnasContactoCliente>(entity =>
+            {
+                entity.HasKey(e => new { e.IdPersona, e.IdCliente });
+
+                entity.ToTable("PerosnasContactoCliente");
             });
 
             modelBuilder.Entity<PersonasContacto>(entity =>

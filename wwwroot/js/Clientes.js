@@ -786,8 +786,8 @@ function CambiarPersonaContacto(persona)
 {
     $.post("CambiarPersonaContacto?objetopersona=" + persona + "&Idcliente=" + $("#codCliente").val(), function (data) {
         PintarBodyTablePersona();
-        $("#btnCerrarModalPersonaDetalle").click();
-       $("#InputPersonaContactoDetalle").val($("#nombrePersonaDetalle").val());
+        //$("#btnCerrarModalPersonaDetalle").click();
+        $("#InputPersonaContactoDetalle").val($("#nombrePersonaDetalle").val());
     });
 }
 
@@ -795,15 +795,24 @@ $("#anadirPersonaDetalle").on('click', function (evt) {
     evt.preventDefault();
     try
     {
-        let persona = new Object()
-        persona.IdPersonaContacto = (localStorage.getItem("IdPersonaContacto") == null? 0 : localStorage.getItem("IdPersonaContacto"));
-        persona.Nombre = $("#nombrePersonaDetalle").val();
-        persona.Telefono = $("#telefonoPersonaDetalle").val();
-        persona.Email = $("#emailPersonaDetalle").val();
-        persona.Clientes = null;
+        if(comprobarCamposPersonaDetalle())
+        {
+            let persona = new Object()
+            persona.IdPersonaContacto = 0
+            persona.Nombre = $("#nombrePersonaDetalle").val();
+            persona.Telefono = $("#telefonoPersonaDetalle").val();
+            persona.Email = $("#emailPersonaDetalle").val();
+            persona.Clientes = null;
 
-        CambiarPersonaContacto(JSON.stringify(persona));
-        Swal.fire('Guardado!', '', 'success');
+            CambiarPersonaContacto(JSON.stringify(persona));
+            Swal.fire('Guardado!', '', 'success');
+        }
+        else
+        {
+            Swal.fire('Campos Obligatorios', 'Debe rellenar todos los campos', 'warning');
+        }
+           
+        
         
     }
     catch (e) {
@@ -811,6 +820,17 @@ $("#anadirPersonaDetalle").on('click', function (evt) {
     }
     
 });
+
+comprobarCamposPersonaDetalle = () => {
+    let nombre = $("#nombrePersonaDetalle").val();
+    let telefono = $("#telefonoPersonaDetalle").val();
+    let email = $("#emailPersonaDetalle").val();
+
+    if (nombre == "" || telefono == "" || email == "")
+        return false;
+    else
+        return true;
+}
 
 
 async function CargarDocumentosCliente(codCliente) {
