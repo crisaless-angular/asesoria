@@ -1142,3 +1142,10 @@ hr.sep-3::after {
     cursor: pointer;
     float: left;
 }
+
+/*Botones web*/
+input[type=button], input[type=submit], input[type=reset] {
+    color: #fff;
+    background-color: var(--azul) !important;
+    border-color: var(--azul) !important;
+}
