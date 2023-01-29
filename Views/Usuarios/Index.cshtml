@@ -39,13 +39,12 @@
             let contenido = "";
 
             $(data).each(function (index, items) {
-                console.log(items);
                 
                 contenido += "<tr>";
                 contenido += "<td>" + items.userName + "</td>";
                 contenido += "<td>" + items.nombre + "</td>";
                 contenido += "<td>" + items.email + "</td>";
-                contenido += "<td class='col-md-2'><button class='btn btn-info'>Detalle <span style='font-size: 20px !important';>>>></span></button></td>";
+                contenido += "<td class='col-md-2'><button onclick='ver_detalle_usuario();' data-id_user='"+items.id+"' class='btn btn-info'>Detalle <span style='font-size: 20px !important';>>>></span></button></td>";
                 contenido += "</tr>";
                       
             });

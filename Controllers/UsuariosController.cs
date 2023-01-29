@@ -246,6 +246,7 @@ namespace BA002.Web.Views
 
                 Usuarios Usuario = new Usuarios()
                 {
+                    Id = usuario.Id,
                     UserName = usuario.UserName,
                     Email = usuario.Email,
                     Nombre = usuario.Nombre
